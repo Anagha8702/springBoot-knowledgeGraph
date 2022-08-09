@@ -3,14 +3,61 @@
 <head>
     <title>Getting Started: Handling Form Submission</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js" integrity="sha512-Lii3WMtgA0C0qmmkdCpsG0Gjr6M0ajRyQRQSbTF6BsrVh/nhZdHpVZ76iMIPvQwz1eoXC3DmAg9K51qT5/dEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style type="text/css">
+         .chartbox{
+             height: 600px;
+              width: 600px;
+         }
+     </style>
 </head>
 <body>
 <h1>Form</h1>
 <form action="#" th:action="@{/greeting}" th:object="${q12}" method="post">
-    <p>Season: <input type="text" th:field="*{season}" /></p>
-    <p>Parameter: <input type="text" th:field="*{parameter}" /></p>
-    <p>SoldOrBoughtMonth: <input type="text" th:field="*{soldOrBoughtMonth}" /></p>
+    <h1 style="margin-bottom: -20px;">Statistics</h1>  <br>
+    <h4>Role</h4>
+    <input type="radio" id="w" name="role"  value="soldMonth" checked>
+    <label for="w">Weaver</label><br>
+    <input type="radio" id="r" name="role" value="boughtMonth">
+    <label for="r">Retailer</label><br>
 
+    <h4>Product Spec</h4>
+    <select name="filter1" size="3">
+        <option th:value="pdt.type">Type</option>
+        <option th:value="pdt.category">Category</option>
+        <option th:value="pdt.weave">Weave</option>
+    </select>
+
+    <h4>Filter</h4>
+    <select name="filter2" size="3">
+        <option th:value="r.month">Month</option>
+        <option th:value="r.state">State</option>
+        <option th:value="r.created_date">Year</option>
+    </select>
+
+    <h4>States</h4>
+    <select name="states" multiple size="3" >
+        <option th:each="state: ${states}" th:value="${state}" th:text="${state}"></option>
+    </select>
+
+    <h4>Seasons</h4>
+    <select name="seasons" multiple size="3" >
+        <option th:each="season: ${seasons}" th:value="${season}" th:text="${season}"></option>
+    </select>
+
+    <h4>Years</h4>
+    <select name="years" multiple size="3" >
+        <option th:each="year: ${years}" th:value="${year}" th:text="${year}"></option>
+    </select>
+
+<!--    <p>Season: <input type="text" th:field="*{season}" /></p>-->
+<!--    <p>Parameter: <input type="text" th:field="*{season}" /></p>-->
+<!--&lt;!&ndash;    <p>SoldOrBoughtMonth: <input type="text" th:field="*{soldOrBoughtMonth}" /></p>&ndash;&gt;-->
+<!--    <input type="radio" id="w" name="role" th:field="*{season}" th:value="Weaver" checked="checked" autocomplete="off">-->
+<!--    <label for="w">Weaver</label><br>-->
+<!--    <input type="radio" id="r" th:field="*{season}" name="role" value="Retailer">-->
+<!--    <label for="r">Retailer</label><br>-->
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 
@@ -38,6 +85,95 @@
         User is an administrator
     </table>
 </div>
+<div th:switch="${tableDisplay}" class="chartbox">
+    <canvas th:case=1 id="myChart" width="2" height="2"></canvas>
+</div>
+<div th:switch="${tableDisplay}" class="selectBox">
+    <select th:case=1 id = "p2">
+        <option th:each="val:${param2}" th:value="${val}" th:text="${val}"></option>
+    </select>
+</div>
+
+<script th:inline="javascript">
+    console.log("hksfjh");
+     const plugin = { //bckgrnd color for graph
+   id: 'custom_canvas_background_color',
+   beforeDraw: (chart) => {
+     const ctx = chart.canvas.getContext('2d');
+     ctx.save();
+     ctx.globalCompositeOperation = 'destination-over';
+     ctx.fillStyle = 'lightBlue';
+     ctx.fillRect(0, 0, chart.width, chart.height);
+     ctx.restore();
+   }
+ };
+     var dataset = /*[[${data}]]*/ null; //query solution
+     var r = /*[[${data_row}]]*/ null; //no of rows
+     var c = /*[[${data_col}]]*/ null; //no of cols
+     console.log(r);
+     console.log(c);
+     let Labels = [];
+     let Datapoints = [];
+     var val = 1; //can be between 1 to c-1 (to select specific parameter - city,region,season)
+     for(i=0;i<r-1;i++) { Labels[i]=dataset[i+1][0]; Datapoints[i]=parseInt(dataset[i+1][val]);}
+     console.log(Labels); //x axis vals
+     console.log(Datapoints);//y axis vals
+     const ctx = document.getElementById('myChart').getContext('2d');
+ const myChart = new Chart(ctx, { //graph definition
+     type: 'bar',
+     data: {
+         labels: Labels,
+         datasets: [{
+             data: Datapoints,
+             backgroundColor: [
+             'rgba(255, 99, 132, 0.7)',
+
+                 'rgba(255, 206, 86, 0.7)',
+                 'rgba(75, 192, 192, 0.7)',
+                 'rgba(153, 102, 255, 0.7)',
+                 'rgba(255, 159, 64, 0.7)'
+             ],
+             borderColor: [
+             'rgba(255, 99, 132, 1)',
+
+                 'rgba(255, 206, 86, 1)',
+                 'rgba(75, 192, 192, 1)',
+                 'rgba(153, 102, 255, 1)',
+                 'rgba(255, 159, 64, 1)'
+             ],
+             hoverOffset: 5,
+             borderWidth: 1,
+         }
+         ]
+     },
+     plugins: [plugin],
+     options: {
+       plugins: {
+             title: {
+                 display: true,
+                 text: 'Graph'
+             },
+
+         },
+
+     }
+
+ });
+ var p2val = document.getElementById('p2');
+ p2val.addEventListener('change',param2_tracker);
+ function param2_tracker(){ //function to change graph as selection changes
+     console.log(p2val.value);
+     for(i=1;i<c;i++) if(dataset[0][i]==p2val.value) val=i;
+     for(i=0;i<r-1;i++) Datapoints[i]=parseInt(dataset[i+1][val]);
+     console.log(Datapoints);
+     myChart.data.datasets[0].data = Datapoints;
+     myChart.update();
+ }
+
+
+
+  </script>
+
 
 </body>
 </html>

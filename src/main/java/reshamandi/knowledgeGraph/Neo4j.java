@@ -22,28 +22,25 @@ public class Neo4j implements AutoCloseable {
     public String[][] typeOrCategoryOrWeaveSoldInWhichSeasonByWeaver(String season, String parameter, String soldOrBoughtMonth) {
         String[][] tableData1;
         try (Session session = driver.session()) {
-            String seasonQueryPart = "";
-            switch(season.equals("Summer") ? 0 : (season.equals("Spring") ? 1 : (season.equals("Monsoon") ? 2 : 3))){
-                case 0: seasonQueryPart = "m.month='April' or m.month='May' or m.month='June'";
-                        break;
-                case 1: seasonQueryPart = "m.month='February' or m.month='March'";
-                    break;
-                case 2: seasonQueryPart = "m.month='July' or m.month='August' or m.month='September'";
-                    break;
-                case 3: seasonQueryPart = "m.month='October' or m.month='November' or m.month='December' or m.month='January'";
-                    break;
-            }
-            String sOrBMonth = "(m)-[:" + soldOrBoughtMonth + "]->(p:Product)";
-            String par = "collect(p." + parameter + ")";
-            String query = "MATCH (m:Month) WHERE " + seasonQueryPart + " MATCH" + sOrBMonth + " WITH " + par + "AS paramList UNWIND paramList AS param return param,count(param)";
             tableData1 = session.writeTransaction(tx -> {
-                Result result = tx.run(query);
+                Result result = tx.run("MATCH (m:Month)\n" +
+                        "WITH collect(m) as monthList\n" +
+                        "UNWIND monthList as months\n" +
+                        "MATCH (months)-[r:boughtMonth]->(pdt:Product)\n" +
+                        "WHERE(r.state=\"Karnataka\" or r.state=\"Odisha\") and (r.month=\"January\" or r.month=\"May\")\n" +
+                        "WITH pdt,collect(r.month) AS outputList\n" +
+                        "UNWIND outputList AS eachOutput\n" +
+                        "WITH eachOutput,collect(pdt.category) AS filterList\n" +
+                        "UNWIND filterList AS filters\n" +
+                        "RETURN eachOutput,filters,count(filters)\n" +
+                        "ORDER by eachOutput");
                 List<Record> list = new ArrayList<Record>(result.list());
-                String[][] tableData = new String [list.size()][2];
-                for(int i=0;i <list.size(); i++){
-                    tableData[i][0] = String.valueOf(list.get(i).get("param")).substring(1,String.valueOf(list.get(i).get("param")).length()-1);
-                    tableData[i][1] = String.valueOf(list.get(i).get("count(param)"));
-                }
+                String[][] tableData = new String [list.size()][3];
+                System.out.println(list);
+//                for(int i=0;i <list.size(); i++){
+//                    tableData[i][0] = String.valueOf(list.get(i).get("param")).substring(1,String.valueOf(list.get(i).get("param")).length()-1);
+//                    tableData[i][1] = String.valueOf(list.get(i).get("count(param)"));
+//                }
 //                System.out.println(Arrays.deepToString(tableData));
                 return tableData;
             });
@@ -51,8 +48,8 @@ public class Neo4j implements AutoCloseable {
         return tableData1;
     }
     public static void main(String... args){
-//        try (Neo4j neo = new Neo4j("neo4j+s://ba6b34f2.databases.neo4j.io", "neo4j", "yjPkJyIuUi65j4p5yNUK4Tua1ZzgK3z4VPGc0iU_7rU")) {
-//            neo.printGreeting("Saree", "Tussar silk");
+//        try (Neo4j neo = new Neo4j("neo4j+s://21679c7c.databases.neo4j.io", "neo4j", "mhTn8Mxnjax-SQ9Yj3et3Go49TxZKcJtBLNP3dyarqU")) {
+//            Arrays.deepToString(neo.typeOrCategoryOrWeaveSoldInWhichSeasonByWeaver("Summer", "type", "soldMonth"));
 //        }
 //        catch(Exception e){
 //            System.out.println("Exception");
