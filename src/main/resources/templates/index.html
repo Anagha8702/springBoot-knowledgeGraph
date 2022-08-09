@@ -15,6 +15,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
     <script src="scripts.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -25,6 +28,8 @@
          .chartbox{
              height: 600px;
               width: 600px;
+            margin-left: auto;
+            margin-right: auto;
          }
      </style>
 </head>
@@ -99,7 +104,7 @@
 </div>
 
 <div th:switch="${tableDisplay}" class="tableLayout">
-    <table th:case=1 class="display" style="width:100%">
+    <table id="example" th:case=1 class="display" style="width:100%">
         <thead>
             <tr>
                 <th>
@@ -119,19 +124,19 @@
     </table>
 </div>
 <section>
-    <div class ="container">
-        <div class = "row">
-<div th:switch="${tableDisplay}" class="chartbox col-6">
+    
+<div th:switch="${tableDisplay}" class="chartbox">
     <canvas th:case=1 id="myChart" width="2" height="2"></canvas>
 </div></section>
 <aside>
-<div th:switch="${tableDisplay}" class="selectbox col">
-    <h4>Alter y</h4>
-    <select th:case=1 id = "p2" size="3" width="1">
+<div th:switch="${tableDisplay}">
+    <div>
+    <select th:case=1 id = "p2"  class="box">
         <option th:each="val:${param2}" th:value="${val}" th:text="${val}"></option>
-    </select>
-</div></aside>
-</div>
+    </div>
+    </select></div>
+</aside>
+
 
 <script th:inline="javascript">
     console.log("hksfjh");
