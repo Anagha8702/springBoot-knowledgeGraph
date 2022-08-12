@@ -42,6 +42,9 @@ public class Query1_2 {
         this.states = states;
     }
     public String[] getYears(){ return years; }
+    public void setYears(String[] years){
+        this.years = years;
+    }
 
 }
 
