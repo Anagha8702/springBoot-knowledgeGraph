@@ -66,7 +66,7 @@ public class Neo4j implements AutoCloseable {
         int len = arr.length;
         int i = 0;
         while (i < len) {
-            System.out.println(arr[i].compareTo(t));
+            // System.out.println(arr[i].compareTo(t));
 
             if (arr[i].equals(t)) {
                 return i;
@@ -75,9 +75,9 @@ public class Neo4j implements AutoCloseable {
                 i = i + 1;
             }
         }
-        System.out.println(t);
-        System.out.println(Arrays.deepToString(arr));
-        return 0;
+        // System.out.println(t);
+        // System.out.println(Arrays.deepToString(arr));
+        return -1;
     }
 
     public String[][] statistics(String role, String productSpec, String filter, String[] states, String[] seasons, String[] years){
@@ -145,7 +145,9 @@ public class Neo4j implements AutoCloseable {
                     case "r.month": columns = (seasons != null) ? columnsFromSeasons(seasons) : WebController.months.length;
                                     f = 1;
                                     break;
-                    default: columns = (years != null) ? years.length : 5; f= 2;
+                    default: columns = (years != null) ? years.length : 5; 
+                             f= 2;
+                             break;
                     }
                 String[][] tableData = new String [rows+1][columns+1];
                 String months[] = {};
@@ -157,31 +159,33 @@ public class Neo4j implements AutoCloseable {
                         break;
                     default: for(int k=1;k<=columns;k++) tableData[0][k] = (years != null) ? years[k-1] : WebController.years[k-1];
                 }
-//                System.out.println(list);
-//                System.out.println(list.get(0));
-//                System.out.println(list.get(0).get("filter1").asString());
+               System.out.println(list);
+               System.out.println(list.get(0));
+               System.out.println(list.get(0).get("filter1").asString());
 //                System.out.println(tableData[1][3]);
 //                String s[] = {"Summer", "Winter"};
 //                System.out.println(months[0]);
                 tableData[0][0] = finalProductSpec.substring(4);
                 int rowIndex = 1;
-                for(int j=0; j<list.size()-1; j++,rowIndex++){
+                for(int j=0; j<list.size(); j++,rowIndex++){
+                    System.out.println("lol");
                     tableData[rowIndex][0] = list.get(j).get("filter1").asString();
                     while(j<list.size()-1 && list.get(j).get("filter1").asString().equals(list.get(j+1).get("filter1").asString())){
                         tableData[rowIndex][findIndex(tableData[0], list.get(j).get("filter2").asString())] = String.valueOf(list.get(j).get("count(filter1)"));
                         j++;
                     }
                     tableData[rowIndex][findIndex(tableData[0], list.get(j).get("filter2").asString())] = String.valueOf(list.get(j).get("count(filter1)"));
-                    for(int l=1;l<=columns;l++)
+                    for(int l=1;l<=columns;l++){
                         if(tableData[rowIndex][l] == null)tableData[rowIndex][l] = "0";
+                    }
                 }
 //                for(int i=0;i <list.size(); i++){
 //                    tableData[i][0] = String.valueOf(list.get(i).get("param")).substring(1,String.valueOf(list.get(i).get("param")).length()-1);
 //                    tableData[i][1] = String.valueOf(list.get(i).get("count(param)"));
 //                }
-                System.out.println(Arrays.deepToString(tableData));
-                System.out.println(tableData.length);
-                System.out.println(tableData[0].length);
+                // System.out.println(Arrays.deepToString(tableData));
+                // System.out.println(tableData.length);
+                // System.out.println(tableData[0].length);
 
                 return tableData;
             });

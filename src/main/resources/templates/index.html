@@ -372,7 +372,9 @@ input[type='radio']:checked:after {
             <!--    <label for="w">Weaver</label><br>-->
             <!--    <input type="radio" id="r" th:field="*{season}" name="role" value="Retailer">-->
             <!--    <label for="r">Retailer</label><br>-->
-            <p><input type="submit" value="Submit" class="btn2" /> <input type="reset" value="Reset" class="btn2"/></p>
+            <p><input type="submit" value="Submit" class="btn2" /> 
+                <input type="reset" value="Reset" class="btn2"/>
+            </p>
         </form>
     </div>
 
@@ -385,11 +387,9 @@ input[type='radio']:checked:after {
             </tr>
             </thead>
             <tbody>
-            <tr th:each="row: ${data}">
+            <tr th:each="row: ${data1}">
                 <td th:each="element: ${row}" th:text="${element}">
                 </td>
-                <!--            <td th:text="${row[0]}"></td>-->
-                <!--            <td th:text="${row[1]}"></td>-->
             </tr>
             </tbody>
         </table>

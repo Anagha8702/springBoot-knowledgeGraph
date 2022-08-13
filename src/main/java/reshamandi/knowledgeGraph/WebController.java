@@ -11,7 +11,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class WebController {
     static final Dotenv dotenv = Dotenv.load();
     static final Neo4j neo = new Neo4j(dotenv.get("NEO4J_URI"), dotenv.get("NEO4j_AUTH_USER"), dotenv.get("NEO4j_AUTH_PASSWORD"));
-    static String[] states = {"Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli", "Daman and Diu", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "National Capital Territory of Delhi", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"};
+    static String[] states = {"Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh ", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli", "Daman and Diu", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "National Capital Territory of Delhi", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"};
     static String[] years = {"2016", "2017", "2018", "2019", "2020"};
     static String[] seasons = {"Monsoon", "Spring", "Summer", "Winter"};
     static String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
@@ -29,19 +29,6 @@ public class WebController {
 
     @PostMapping("/query")
     public String greetingSubmit(@ModelAttribute Query1_2 q12, Model model) {
-//        System.out.println(q12.getRole());
-
-//        if(Arrays.deepToString(q12.getStates())== null) System.out.println("ds");
-//        System.out.println(q12.getFilter());
-//        System.out.println(q12.getProductSpec());
-//        System.out.println(Arrays.toString(q12.getSeasons()));
-//        System.out.println(Arrays.toString(q12.getYears()));
-
-
-
-
-
-
 
     //    String data[][] = {{"Type","Blore","Chennai","Hyderabad"},{"Accessore","23","433","134"},{"Saree","334","34","22"}};
         String data[][];
@@ -56,7 +43,7 @@ public class WebController {
             for(int j=0;j<data[0].length;j++)
                 data1[i-1][j] = data[i][j];
         }
-        String param2[] = new String[data[0].length];
+        String param2[] = new String[data[0].length - 1];
         for(int i=1;i<data[0].length;i++) param2[i-1]=data[0][i];
         System.out.println(Arrays.deepToString(data));
         System.out.println(Arrays.deepToString(data1));
