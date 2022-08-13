@@ -159,16 +159,16 @@ public class Neo4j implements AutoCloseable {
                         break;
                     default: for(int k=1;k<=columns;k++) tableData[0][k] = (years != null) ? years[k-1] : WebController.years[k-1];
                 }
-               System.out.println(list);
-               System.out.println(list.get(0));
-               System.out.println(list.get(0).get("filter1").asString());
+            //    System.out.println(list);
+            //    System.out.println(list.get(0));
+            //    System.out.println(list.get(0).get("filter1").asString());
 //                System.out.println(tableData[1][3]);
 //                String s[] = {"Summer", "Winter"};
 //                System.out.println(months[0]);
                 tableData[0][0] = finalProductSpec.substring(4);
                 int rowIndex = 1;
                 for(int j=0; j<list.size(); j++,rowIndex++){
-                    System.out.println("lol");
+                    // System.out.println("lol");
                     tableData[rowIndex][0] = list.get(j).get("filter1").asString();
                     while(j<list.size()-1 && list.get(j).get("filter1").asString().equals(list.get(j+1).get("filter1").asString())){
                         tableData[rowIndex][findIndex(tableData[0], list.get(j).get("filter2").asString())] = String.valueOf(list.get(j).get("count(filter1)"));
