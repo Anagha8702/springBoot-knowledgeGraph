@@ -1,8 +1,11 @@
 package reshamandi.knowledgeGraph;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class PatchAPI {
     public static void main(String args[]){
-        System.out.println(WebController.neo);
+        Dotenv dotenv = Dotenv.load();
+        System.out.println(dotenv.get("LOL"));
+        // System.out.println(System.getenv("LOL"));
         return ;
     }
 
