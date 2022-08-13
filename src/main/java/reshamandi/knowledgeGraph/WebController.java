@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 @Controller
 public class WebController {
-
+    static final Neo4j neo = new Neo4j("neo4j+s://ba6b34f2.databases.neo4j.io", "neo4j", "yjPkJyIuUi65j4p5yNUK4Tua1ZzgK3z4VPGc0iU_7rU");
     static String[] states = {"Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli", "Daman and Diu", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "National Capital Territory of Delhi", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"};
     static String[] years = {"2016", "2017", "2018", "2019", "2020"};
     static String[] seasons = {"Monsoon", "Spring", "Summer", "Winter"};
@@ -44,7 +44,7 @@ public class WebController {
 
     //    String data[][] = {{"Type","Blore","Chennai","Hyderabad"},{"Accessore","23","433","134"},{"Saree","334","34","22"}};
         String data[][];
-        try (Neo4j neo = new Neo4j("neo4j+s://ba6b34f2.databases.neo4j.io", "neo4j", "yjPkJyIuUi65j4p5yNUK4Tua1ZzgK3z4VPGc0iU_7rU")) {
+        try{
             data = neo.statistics(q12.getRole(), q12.getProductSpec(), q12.getFilter(), q12.getStates(), q12.getSeasons(), q12.getYears());
         } catch (Exception e) {
             throw new RuntimeException(e);
