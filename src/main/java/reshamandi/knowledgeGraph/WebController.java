@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.Arrays;
 
 @Controller
-public class Query1_2Controller {
+public class WebController {
 
     static String[] states = {"Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli", "Daman and Diu", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "National Capital Territory of Delhi", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"};
     static String[] years = {"2016", "2017", "2018", "2019", "2020"};
@@ -17,7 +17,7 @@ public class Query1_2Controller {
 //    type = 12
 //    category=16
 //    weave=5
-    @GetMapping("/greeting")
+    @GetMapping("/query")
     public String greetingForm(Model model) {
         model.addAttribute("q12", new Query1_2());
         model.addAttribute("states", states);
@@ -26,7 +26,7 @@ public class Query1_2Controller {
         return "index";
     }
 
-    @PostMapping("/greeting")
+    @PostMapping("/query")
     public String greetingSubmit(@ModelAttribute Query1_2 q12, Model model) {
 //        System.out.println(q12.getRole());
 

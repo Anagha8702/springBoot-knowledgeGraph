@@ -139,10 +139,10 @@ public class Neo4j implements AutoCloseable {
                 int rows,columns,f=1;
                 rows = finalProductSpec.equals("pdt.type") ? 12 : (finalProductSpec.equals("pdt.category") ? 16 : 5);
                 switch (finalFilter){
-                    case "r.state": columns = (states != null) ? states.length : Query1_2Controller.states.length;
+                    case "r.state": columns = (states != null) ? states.length : WebController.states.length;
                                     f = 0;
                                     break;
-                    case "r.month": columns = (seasons != null) ? columnsFromSeasons(seasons) : Query1_2Controller.months.length;
+                    case "r.month": columns = (seasons != null) ? columnsFromSeasons(seasons) : WebController.months.length;
                                     f = 1;
                                     break;
                     default: columns = (years != null) ? years.length : 5; f= 2;
@@ -151,11 +151,11 @@ public class Neo4j implements AutoCloseable {
                 String months[] = {};
                 if(seasons != null) months = seasonToMonth(seasons);
                 switch (f){
-                    case 0: for(int k=1;k<=columns;k++) tableData[0][k] = (states != null) ? states[k-1] : Query1_2Controller.states[k-1];
+                    case 0: for(int k=1;k<=columns;k++) tableData[0][k] = (states != null) ? states[k-1] : WebController.states[k-1];
                         break;
-                    case 1: for(int k=1;k<=columns;k++) tableData[0][k] = (seasons != null) ? months[k-1] : Query1_2Controller.months[k-1];
+                    case 1: for(int k=1;k<=columns;k++) tableData[0][k] = (seasons != null) ? months[k-1] : WebController.months[k-1];
                         break;
-                    default: for(int k=1;k<=columns;k++) tableData[0][k] = (years != null) ? years[k-1] : Query1_2Controller.years[k-1];
+                    default: for(int k=1;k<=columns;k++) tableData[0][k] = (years != null) ? years[k-1] : WebController.years[k-1];
                 }
 //                System.out.println(list);
 //                System.out.println(list.get(0));

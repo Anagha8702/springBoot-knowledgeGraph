@@ -328,7 +328,7 @@ input[type='radio']:checked:after {
     <button onclick="toggle(productSpec)" class="butn">Products</button>
 
     <div id="statSpec" style="display: none;" class="query">
-        <form action="#" th:action="@{/greeting}" th:object="${q12}" method="post">
+        <form action="#" th:action="@{/query}" th:object="${q12}" method="post">
             <h1 style="margin-bottom: -20px;">Statistics</h1>  <br>
             <h4>Role</h4>
             <input type="radio" id="w" name="role"  value="soldMonth" checked>
