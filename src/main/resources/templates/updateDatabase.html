@@ -85,7 +85,7 @@
 
         <label>Sku Listing Status</label>
         <select name="sku_listing_status" multiple size="3" >
-            <option th:each="sku_st: ${sku_listing_status}" th:value="${sku_st}" th:text="${sku_st}"></option>
+            <option th:each="sku_st: ${skuListingStatus}" th:value="${sku_st}" th:text="${sku_st}"></option>
         </select><br>
 
         <label for="w">Landing Price</label><input id="landingPrice" name="landing_price"  value="null">
