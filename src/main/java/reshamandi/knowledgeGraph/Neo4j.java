@@ -196,7 +196,7 @@ public class Neo4j implements AutoCloseable {
         System.out.println(weaverNode);
         try (Session session = driver.session()) {
             session.writeTransaction(tx -> {
-            // tx.run(weaverNode);
+            tx.run(weaverNode);
             System.out.println("Hit");
             return 0;
         });
