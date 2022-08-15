@@ -39,7 +39,7 @@ public class WebController {
 
     @PostMapping("/retailer")
     public String retailerSubmit(@ModelAttribute Retailer ret, Model model){
-        PatchAPI.retailerTransaction(ret);
+        neo.patchRetailerTransaction(ret);
         
         model.addAttribute("ret", new Retailer());
         model.addAttribute("status",status2);

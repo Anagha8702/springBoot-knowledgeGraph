@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Neo4j implements AutoCloseable {
+    dict d = new dict();
+
     private final Driver driver;
 
     public Neo4j(String uri, String user, String password) {
@@ -66,8 +68,6 @@ public class Neo4j implements AutoCloseable {
         int len = arr.length;
         int i = 0;
         while (i < len) {
-            // System.out.println(arr[i].compareTo(t));
-
             if (arr[i].equals(t)) {
                 return i;
             }
@@ -75,8 +75,6 @@ public class Neo4j implements AutoCloseable {
                 i = i + 1;
             }
         }
-        // System.out.println(t);
-        // System.out.println(Arrays.deepToString(arr));
         return -1;
     }
 
@@ -159,12 +157,7 @@ public class Neo4j implements AutoCloseable {
                         break;
                     default: for(int k=1;k<=columns;k++) tableData[0][k] = (years != null) ? years[k-1] : WebController.years[k-1];
                 }
-            //    System.out.println(list);
-            //    System.out.println(list.get(0));
-            //    System.out.println(list.get(0).get("filter1").asString());
-//                System.out.println(tableData[1][3]);
-//                String s[] = {"Summer", "Winter"};
-//                System.out.println(months[0]);
+
                 tableData[0][0] = finalProductSpec.substring(4);
                 int rowIndex = 1;
                 for(int j=0; j<list.size(); j++,rowIndex++){
@@ -179,13 +172,6 @@ public class Neo4j implements AutoCloseable {
                         if(tableData[rowIndex][l] == null)tableData[rowIndex][l] = "0";
                     }
                 }
-//                for(int i=0;i <list.size(); i++){
-//                    tableData[i][0] = String.valueOf(list.get(i).get("param")).substring(1,String.valueOf(list.get(i).get("param")).length()-1);
-//                    tableData[i][1] = String.valueOf(list.get(i).get("count(param)"));
-//                }
-                // System.out.println(Arrays.deepToString(tableData));
-                // System.out.println(tableData.length);
-                // System.out.println(tableData[0].length);
 
                 return tableData;
             });
@@ -200,4 +186,164 @@ public class Neo4j implements AutoCloseable {
 //            System.out.println("Exception");
 //        }
     }
+
+
+
+    ////////////////////////// PATCHING /////////////////////////////////////////////
+    public void patchWeaverTransaction(Weaver w){
+        // creating new product node
+        String nodes = "MERGE (p1:Product{pdtid:'" + d.pdtid(w.gettype(), w.getcategory(), w.getweave()) + "',type:'" + w.gettype() + "' , weave: '" + w.getweave() + "' , category:'" + w.getcategory() + "'})\n" +
+                       "MERGE (t:Type{type:'" + w.gettype() + "'})\n" +
+                       "MERGE (t:Category{category:'" + w.getcategory() + "'})\n" +
+                       "MERGE (t:Weave{weave:'" + w.getweave() + "'})\n" +
+                       "MERGE (m:Month{month : '" + "July" + "'})\n" +
+                       "MERGE (s:State{state : '" + "Karnataka" + "'})";
+                    //    "MERGE (m:Month{month : '" + d.monthName(w.getcreated_date()) + "'})\n" +
+                    //    "MERGE (s:State{state : '" + w.getstate() + "'})";
+        System.out.println(nodes);
+     
+        try (Session session = driver.session()) {
+            session.writeTransaction(tx -> {
+            // tx.run(pdtNode);
+            System.out.println("Hit 1");
+            return 0;
+        });
+    }
+    catch(Exception e){
+        System.out.println("Error");
+    }
+}
+
+
+
+
+    public void patchRetailerTransaction(Retailer ret){
+        // creating new product node
+        String pdtNode = "MERGE (p1:Product{pdtid:'" + d.pdtid(ret.gettype(), ret.getcategory(), ret.getweave()) + "',type:'" + ret.gettype() + "' , weave: '" + ret.getweave() + "' , category:'" + ret.getcategory() + "'})";
+        System.out.println(pdtNode);
+
+        String typeNode = "MERGE (t:Type{type:'" + ret.gettype() + "'})";
+        String catNode = "MERGE (t:Category{category:'" + ret.getcategory() + "'})";
+        String weavenode = "MERGE (t:Weave{weave:'" + ret.getweave() + "'})";
+        try (Session session = driver.session()) {
+            session.writeTransaction(tx -> {
+            tx.run(pdtNode);
+            System.out.println("Hit 1");
+            return 0;
+        });
+    }
+    catch(Exception e){
+        System.out.println("Error");
+    }
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+ /*       
+        MERGE (pdt1:Product{pdtid:"225263",type:"Art-silk" , weave: "JACQUARD" , category:"Girls-Womens-suit"})
+
+MERGE (r1:Retailer{retailer_of:"Saree",name:"Noel Hall",majority_sourced_textile:"Lehnga",id:"12001",state:"Jammu and Kashmir"})
+
+Match (r2:Retailer)
+WHERE (r2.id = "12001")
+MATCH (pdt2:Product)
+WHERE pdt2.pdtid = "225263"
+MERGE (pdt2)-[rl1:boughtBy{selling_price:"108",cst:"4.701949533",discount_amount:"8.010892558",discount:"5.1023674089554305%",gross_amount:"291.2837492",type:"Accessories",sold_quantity:"4.073555387",igst:"5.184966649",gst_amount:"96",uom:"Meters",sku_listing_status:"purchased",warehouseid:"5",sku_total_quantity:"11.30337604",business_type:"ECD",state:"Telangana",id:"10753",landing_price:"166",cost_price:"139",transaction_id:"101072",quantity:"4.573555387",total_pre_tax_price:"123",retailer_id:"12957",pdt_id:"214161",created_by:"8386947675",gst_percentage:"8%",month:"March",total_amount:"298.4914395",sku_count:"25",logistics_amount:"27",created_date:"2016-09-16 04:50:54",category:"AC-Blanket(DOHAR)",weave:"ROYAL-OXFORD",status:"New"}]->(r2)
+
+MERGE (t1:Type{type:"Accessories"})
+
+MATCH (t2:Type)
+WHERE t2.type ="Accessories"
+MATCH (pdt3:Product)
+WHERE pdt3.pdtid = "225263"
+MERGE (t2)-[rl2:typeName{type : "Accessories"}]->(pdt3)
+
+MERGE (t3:Category{category:"AC-Blanket(DOHAR)"})
+
+MATCH (t4:Category)
+WHERE t4.category ="AC-Blanket(DOHAR)"
+MATCH (pdt4:Product)
+WHERE pdt4.pdtid = "225263"
+MERGE (t4)-[rl3:categoryName{category : "AC-Blanket(DOHAR)"}]->(pdt4)
+
+MERGE (t5:Weave{weave:"Plain"})
+
+MATCH (t6:Weave)
+WHERE t6.weave ="Plain"
+MATCH (pdt5:Product)
+WHERE pdt5.pdtid = "225263"
+MERGE (t6)-[rl4:weaveName{weave : "Plain"}]->(pdt5)
+
+MERGE (m1:Month{month : "March"})
+
+MATCH (m2:Month)
+WHERE m2.month = "March"
+MATCH (pdt6:Product)
+WHERE pdt6.pdtid = "225263"
+MERGE (m2)-[rl5:boughtMonth{transaction_id:"210085",month:"January",retailer_id:"12587",state:"Meghalaya",created_date:"2019-08-22 13:31:26",pdt_id:"325361"}]->(pdt6)
+
+MERGE (s:State{state : "Karnataka"})
+
+MATCH (m3:State)
+WHERE m3.state = "Karnataka"
+MATCH (pdt7:Product)
+WHERE pdt7.pdtid = "225263"
+MERGE (m3)-[rl6:boughtState{transaction_id:"210085",month:"January",retailer_id:"12587",state:"Meghalaya",created_date:"2019-08-22 13:31:26",pdt_id:"325361"}]->(pdt7)
+*/
+
+
+
+
+
+
+
+        
+
+        // System.out.println(d.pdtid("Accessories","AC-Blanket(DOHAR)","Yarn Dyed"));
+        // System.out.println(d.monthName("22-07-2018 22:57"));
+        // System.out.println("retailerrrr");
+        // System.out.println(ret.getid());
+        // System.out.println(ret.getcreated_by());
+        // System.out.println(ret.getcreated_date());
+        // System.out.println(ret.getcategory());
+        // System.out.println(ret.getcost_price());
+        // System.out.println(ret.getquantity());
+        // System.out.println(ret.getselling_price());
+        // System.out.println(ret.getstatus());
+        // System.out.println(ret.gettype());
+        // System.out.println(ret.getwarehouseid());
+        // System.out.println(ret.getsold_quantity());
+        // System.out.println(ret.getsku_listing_status());
+        // System.out.println(ret.getlanding_price());
+        // System.out.println(ret.getuom());
+        // System.out.println(ret.getgst_amount());
+        // System.out.println(ret.getgst_percentage());
+        // System.out.println(ret.getlogistics_amount());
+        // System.out.println(ret.getweave());
+        // System.out.println(ret.getcst());
+        // System.out.println(ret.getigst());
+        // System.out.println(ret.gettotal_amount());
+        // System.out.println(ret.gettotal_pre_tax_price());
+        // System.out.println(ret.getsku_count());
+        // System.out.println(ret.getsku_total_quantity());
+        // System.out.println(ret.getstate());
+        // System.out.println(ret.getretailer_id());
+        // System.out.println(ret.getdiscount());
+        // System.out.println(ret.getgross_amount());
+        // System.out.println(ret.getdiscount_amount());
+        // System.out.println(ret.getbusiness_type());
+        // System.out.println(ret.gettransaction_id());
+        return ;
+    }
+
+
+    ////////////////////////// PATCHING /////////////////////////////////////////////
+
 }

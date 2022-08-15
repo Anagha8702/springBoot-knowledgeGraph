@@ -1,12 +1,19 @@
 package reshamandi.knowledgeGraph;
 
 public class PatchAPI {
+    static dict d = new dict();
     public static void main(String args[]){
- 
+        System.out.println(d.pdtid("Accessories","AC-Blanket(DOHAR)","Yarn Dyed"));
+        System.out.println(d.monthName("22-07-2018 22:57"));
+        System.out.println("Hello world!");
         return ;
     }
 
     public static void retailerTransaction(Retailer ret){
+
+        
+
+
         System.out.println("retailerrrr");
         System.out.println(ret.getid());
         System.out.println(ret.getcreated_by());
@@ -47,4 +54,7 @@ public class PatchAPI {
         System.out.println(w.getid());
         return ;
     }
+
 }
+
+

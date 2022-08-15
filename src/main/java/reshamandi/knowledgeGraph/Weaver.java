@@ -2,7 +2,7 @@ package reshamandi.knowledgeGraph;
 
 import java.util.*;
 
-public class weaver {
+public class Weaver {
     private int id;//
     private String created_by;//
     private String created_date;
