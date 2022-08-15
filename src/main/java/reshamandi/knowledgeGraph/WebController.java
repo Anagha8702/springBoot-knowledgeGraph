@@ -34,7 +34,12 @@ public class WebController {
         model.addAttribute("skuListingStatus",skuListingStatus);
         model.addAttribute("uom",uom2);
         model.addAttribute("business_type",businessType);
-        return "updateDatabase";
+         model.addAttribute("w", new Weaver());
+        model.addAttribute("l1",status2);
+        model.addAttribute("l2",skuListingStatus);
+        model.addAttribute("l3",uom2);
+        model.addAttribute("l4",businessType);
+        return "form";
     }
 
     @PostMapping("/retailer")
@@ -53,11 +58,11 @@ public class WebController {
         PatchAPI.weaverTransaction(w);
         
         model.addAttribute("w", new Weaver());
-        model.addAttribute("status",status2);
-        model.addAttribute("skuListingStatus",skuListingStatus);
-        model.addAttribute("uom",uom2);
-        model.addAttribute("business_type",businessType);
-        return "updateDatabase";
+        model.addAttribute("l1",status2);
+        model.addAttribute("l2",skuListingStatus);
+        model.addAttribute("l3",uom2);
+        model.addAttribute("l4",businessType);
+        return "form";
     }
 
 
