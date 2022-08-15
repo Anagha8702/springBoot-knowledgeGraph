@@ -190,22 +190,83 @@ public class Neo4j implements AutoCloseable {
 
 
     ////////////////////////// PATCHING /////////////////////////////////////////////
+
+    // public void patchWeaverRegistration(WeaverReg w){
+    //     String weaverNode = "MERGE (w:Weaver{phone:'" + w.getphone() + "',name:'" + w.getname() + "',yarn_cocoon_type:'" + w.getyarn_cocoon_type() + "',state:'" + w.getstate() + "',id:'" + w.getid() + "',yarn_capacity:'" + w.getyarn_capacity() + "',type:'" + w.gettype() + "',twisted_type:'" + w.gettwisted_type() + "',denier:'" + w.getdenier() + "'})";
+    //     try (Session session = driver.session()) {
+    //         session.writeTransaction(tx -> {
+    //         tx.run(weaverNode);
+    //         System.out.println("Hit");
+    //         return 0;
+    //     });
+    // }
+    // catch(Exception e){
+    //     System.out.println("Error");
+    // }
+    // }
+
     public void patchWeaverTransaction(Weaver w){
-        // creating new product node
+
+        // creating new nodes
         String nodes = "MERGE (p1:Product{pdtid:'" + d.pdtid(w.gettype(), w.getcategory(), w.getweave()) + "',type:'" + w.gettype() + "' , weave: '" + w.getweave() + "' , category:'" + w.getcategory() + "'})\n" +
                        "MERGE (t:Type{type:'" + w.gettype() + "'})\n" +
-                       "MERGE (t:Category{category:'" + w.getcategory() + "'})\n" +
-                       "MERGE (t:Weave{weave:'" + w.getweave() + "'})\n" +
-                       "MERGE (m:Month{month : '" + "July" + "'})\n" +
-                       "MERGE (s:State{state : '" + "Karnataka" + "'})";
-                    //    "MERGE (m:Month{month : '" + d.monthName(w.getcreated_date()) + "'})\n" +
-                    //    "MERGE (s:State{state : '" + w.getstate() + "'})";
+                       "MERGE (t1:Category{category:'" + w.getcategory() + "'})\n" +
+                       "MERGE (t1:Weave{weave:'" + w.getweave() + "'})\n" +
+                       "MERGE (m:Month{month : '" + d.monthName(w.getcreated_date()) + "'})\n" +
+                       "MERGE (s:State{state : '" + w.getstate() + "'})";
         System.out.println(nodes);
+
+
+        //soldbyRelation
+        String soldByRelation = "Match (w:Weaver) WHERE w.id = '" + w.getweaver_id() + "'\n" +
+                                "MATCH (p:Product) WHERE p.pdtid = '" + d.pdtid(w.gettype(), w.getcategory(), w.getweave()) + "'\n" +
+                                "MERGE (w)-[rl:soldBy{selling_price:'" + w.getselling_price() + "',return_quantity:'" + w.getreturn_quantity() + "',cst:'" + w.getcst() + "',discount_amount:'" + w.getdiscount_amount() + "',discount:'" + w.getdiscount() + "',weaver_id:'" + w.getweaver_id() + "',gross_amount:'" + w.getgross_amount() + "',type:'" + w.gettype() + "',sold_quantity:'" + w.getsold_quantity() + "',igst:'" + w.getigst() + "',uom:'" + w.getuom() + "',gst_amount:'" + w.getgst_amount() + "',sku_listing_status:'" + w.getsku_listing_status() + "',warehouseid:'" + w.getwarehouseid() + "',sku_total_quantity:'" + w.getsku_total_quantity() + "',business_type:'" + w.getbusiness_type() + "',returned_defective_quantity:'" + w.getreturned_defective_quantity() + "',state:'" + w.getstate() + "',id:'" + w.getid() + "',landing_price:'" + w.getlanding_price() + "',cost_price:'" + w.getcost_price() + "',transaction_id:'" + w.gettransaction_id() + "',quantity:'" + w.getquantity() + "',total_pre_tax_price:'" + w.gettotal_pre_tax_price() + "',pdt_id:'" + d.pdtid(w.gettype(), w.getcategory(), w.getweave()) + "',created_by:'" + w.getcreated_by() + "',gst_percentage:'" + w.getgst_percentage() + "',month:'" + d.monthName(w.getcreated_date()) + "',total_amount:'" + w.gettotal_amount() + "',sku_count:'" + w.getsku_count() + "',logistics_amount:'" + w.getlogistics_amount() + "',defective_count:'" + w.getdefective_count() + "',created_date:'" + w.getcreated_date() + "',category:'" + w.getcategory() + "',weave:'" + w.getweave() + "',status:'" + w.getstatus() + "'}]->(p)";
+        System.out.println(soldByRelation);
+
      
+        //linking type to product
+        String linkTypeToProduct = "MATCH (t:Type) WHERE t.type ='" + w.gettype() + "'\n" +
+                                   "MATCH (p:Product) WHERE p.pdtid = '" + d.pdtid(w.gettype(), w.getcategory(), w.getweave()) + "'\n" +
+                                   "MERGE (t)-[r:typeName{type : '" + w.gettype() + "'}]->(p)";
+        System.out.println(linkTypeToProduct);
+
+
+        //linking category to product
+        String linkCategoryToProduct = "MATCH (t:Category) WHERE t.category ='" + w.getcategory() + "'\n" +
+                                   "MATCH (p:Product) WHERE p.pdtid = '" + d.pdtid(w.gettype(), w.getcategory(), w.getweave()) + "'\n" +
+                                   "MERGE (t)-[r:categoryName{category : '" + w.getcategory() + "'}]->(p)";
+        System.out.println(linkCategoryToProduct);
+
+
+        //linking weave to product
+        String linkWeaveToProduct = "MATCH (t:Weave) WHERE t.weave ='" + w.getweave() + "'\n" +
+                                   "MATCH (p:Product) WHERE p.pdtid = '" + d.pdtid(w.gettype(), w.getcategory(), w.getweave()) + "'\n" +
+                                   "MERGE (t)-[r:weaveName{weave : '" + w.getweave() + "'}]->(p)";
+        System.out.println(linkWeaveToProduct);
+
+        //linking - soldMonth
+        String soldMonth = "MATCH (m:Month) WHERE m.month = '" + d.monthName(w.getcreated_date()) + "'\n" +
+                           "MATCH (p:Product) WHERE p.pdtid = '" + d.pdtid(w.gettype(), w.getcategory(), w.getweave()) + "'\n" +
+                           "MERGE (m)-[r:soldMonth{transaction_id:'" + w.gettransaction_id() + "',month:'" + d.monthName(w.getcreated_date()) + "',weaver_id:'" + w.getweaver_id() + "',state:'" + w.getstate() + "',created_date:'" + w.getcreated_date() + "',pdt_id:'" + d.pdtid(w.gettype(), w.getcategory(), w.getweave()) + "'}]->(p)";
+        System.out.println(soldMonth);
+
+
+        //linking - soldState
+        String soldState = "MATCH (m:State) WHERE m.state = '" + w.getstate() + "'\n" +
+                           "MATCH (p:Product) WHERE p.pdtid = '" + d.pdtid(w.gettype(), w.getcategory(), w.getweave()) + "'\n" +
+                           "MERGE (m)-[r:soldState{transaction_id:'" + w.gettransaction_id() + "',month:'" + d.monthName(w.getcreated_date()) + "',weaver_id:'" + w.getweaver_id() + "',state:'" + w.getstate() + "',created_date:'" + w.getcreated_date() + "',pdt_id:'" + d.pdtid(w.gettype(), w.getcategory(), w.getweave()) + "'}]->(p)";
+        System.out.println(soldState);
+
         try (Session session = driver.session()) {
             session.writeTransaction(tx -> {
-            // tx.run(pdtNode);
-            System.out.println("Hit 1");
+            tx.run(nodes);
+            tx.run(soldByRelation);
+            tx.run(linkTypeToProduct);
+            tx.run(linkCategoryToProduct);
+            tx.run(linkWeaveToProduct);
+            tx.run(soldMonth);
+            tx.run(soldState);
+            System.out.println("Hit");
             return 0;
         });
     }
@@ -219,7 +280,7 @@ public class Neo4j implements AutoCloseable {
 
     public void patchRetailerTransaction(Retailer ret){
         // creating new product node
-        String pdtNode = "MERGE (p1:Product{pdtid:'" + d.pdtid(ret.gettype(), ret.getcategory(), ret.getweave()) + "',type:'" + ret.gettype() + "' , weave: '" + ret.getweave() + "' , category:'" + ret.getcategory() + "'})";
+        String pdtNode = "MERjGE (p1:Product{pdtid:'" + d.pdtid(ret.gettype(), ret.getcategory(), ret.getweave()) + "',type:'" + ret.gettype() + "' , weave: '" + ret.getweave() + "' , category:'" + ret.getcategory() + "'})";
         System.out.println(pdtNode);
 
         String typeNode = "MERGE (t:Type{type:'" + ret.gettype() + "'})";
@@ -227,8 +288,10 @@ public class Neo4j implements AutoCloseable {
         String weavenode = "MERGE (t:Weave{weave:'" + ret.getweave() + "'})";
         try (Session session = driver.session()) {
             session.writeTransaction(tx -> {
+            // tx.run(pdtNode);
+            // System.out.println("Hit 1");
             tx.run(pdtNode);
-            System.out.println("Hit 1");
+            System.out.println("Hit 2");
             return 0;
         });
     }
