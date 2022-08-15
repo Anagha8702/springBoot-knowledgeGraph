@@ -2,23 +2,23 @@ package reshamandi.knowledgeGraph;
 
 import java.util.*;
 
-public class Weaver {
-    private int id;
-    private String created_by;
-    private Date created_date;
+public class weaver {
+    private int id;//
+    private String created_by;//
+    private String created_date;
     private String category;
     private float cost_price;
     private float quantity;
     private float selling_price;
     private String status;
     private String type;
-    private int skubatchid;
+    //private int skubatchid;
     private int warehouseid;
     private float sold_quantity;
     private int weaver_id;
     private String sku_listing_status;
-    private float defective_count;
-    private float landing_price;
+    private float defective_count;//
+    private float landing_price;//
     private float gross_amount;
     private String uom;
     private float gst_amount;
@@ -28,19 +28,85 @@ public class Weaver {
     private float return_quantity;
     private String weave;
     private float returned_defective_quantity;
+    private float cst;
+    private float igst;//
+    private float total_amount;
+    private int total_pre_tax_price;
+    private int sku_count;
+    private float sku_total_quantity;
+    private String state;
+    private float discount;
+    private String business_type;
+    private int transaction_id;
 
+    public String getstate() {
+        return state;
+    }
+    public void setstate(String a) {
+        state = a;
+    }
+    public String getbusiness_type() {
+        return business_type;
+    }
+    public void setbusiness_type(String a) {
+        business_type = a;
+    }
+
+    public int gettotal_pre_tax_price() {
+        return total_pre_tax_price;
+    }
+    public void settotal_pre_tax_price(int a) {
+        total_pre_tax_price = a;
+    }
+    public int getsku_count() {
+        return sku_count;
+    }
+    public void setsku_count(int a) {
+        sku_count = a;
+    }
+    public int gettransaction_id() {
+        return transaction_id;
+    }
+    public void settransaction_id(int a) {
+        transaction_id = a;
+    }
+    public float getdiscount() {
+        return discount;
+    }
+    public void setdiscount(float a) {
+        discount = a;
+    }
+    public float getcst() {
+        return cst;
+    }
+    public void setcst(float a) {
+        cst = a;
+    }
+    public float getigst() {
+        return igst;
+    }
+    public void setigst(float a) {
+        igst = a;
+    }
+    public float getsku_total_quantity() {
+        return sku_total_quantity;
+    }
+    public void setsku_total_quantity(float a) {
+        sku_total_quantity = a;
+    }
+    public float gettotal_amount() {
+        return total_amount;
+    }
+    public void settotal_amount(float a) {
+        total_amount = a;
+    }
     public int getid() {
         return id;
     }
     public void setid(int a) {
         id = a;
     }
-    public int getskubatchid() {
-        return skubatchid;
-    }
-    public void setskubatchid(int a) {
-        skubatchid = a;
-    }
+    
     public int getwarehouseid() {
         return warehouseid;
     }
@@ -173,10 +239,10 @@ public class Weaver {
     public void setreturned_defective_quantity(float a) {
         returned_defective_quantity = a;
     }
-    public Date getcreated_date() {
+    public String getcreated_date() {
         return created_date;
     }
-    public void setcreated_date(Date a) {
+    public void setcreated_date(String a) {
         created_date = a;
     }
 }
