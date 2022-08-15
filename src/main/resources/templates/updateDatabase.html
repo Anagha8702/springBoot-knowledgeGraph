@@ -47,6 +47,8 @@
     <form action="#" th:action="@{/retailer}" th:object="${ret}" method="post">
         <h1 style="margin-bottom: -20px;">Statistics</h1>  <br>
 
+        <input name="role" value="Retailer" hidden />
+
         <br>
         <label for="w">ID</label><input id="id2" name="id"  value="null">
         <br>
@@ -152,6 +154,30 @@
         <p><input type="submit" value="Submit" class="btn2" /> 
             <input type="reset" value="Reset" class="btn2"/>
         </p>
+    </form>
 
+
+
+
+
+
+
+
+
+
+
+    <form action="#" th:action="@{/weaver}" th:object="${w}" method="post">
+        <h1 style="margin-bottom: -20px;">Statistics</h1>  <br>
+
+        <input name="role" value="Weaver" hidden />
+
+        <br>
+        <label for="w">ID</label><input id="id2" name="id" type="number" min="0" default="0">
+        <br>
+
+        <p><input type="submit" value="Submit" class="btn2" /> 
+            <input type="reset" value="Reset" class="btn2"/>
+        </p>
+    </form>
 </body>
 </html>

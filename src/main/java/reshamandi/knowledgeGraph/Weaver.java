@@ -28,6 +28,7 @@ public class Weaver {
     private float return_quantity;
     private String weave;
     private float returned_defective_quantity;
+
     public int getid() {
         return id;
     }
