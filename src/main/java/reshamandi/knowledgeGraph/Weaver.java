@@ -52,69 +52,69 @@ public class Weaver {
         business_type = a;
     }
 
-    public String gettotal_pre_tax_price() {
-        return String.valueOf(total_pre_tax_price);
+    public int gettotal_pre_tax_price() {
+        return total_pre_tax_price;
     }
     public void settotal_pre_tax_price(int a) {
         total_pre_tax_price = a;
     }
-    public String getsku_count() {
-        return  String.valueOf(sku_count);
+    public int getsku_count() {
+        return  sku_count;
     }
     public void setsku_count(int a) {
         sku_count = a;
     }
-    public String gettransaction_id() {
-        return String.valueOf(transaction_id);
+    public int gettransaction_id() {
+        return transaction_id;
     }
     public void settransaction_id(int a) {
         transaction_id = a;
     }
-    public String getdiscount() {
-        return String.valueOf(discount);
+    public float getdiscount() {
+        return discount;
     }
     public void setdiscount(float a) {
         discount = a;
     }
-    public String getcst() {
-        return String.valueOf(cst);
+    public float getcst() {
+        return cst;
     }
     public void setcst(float a) {
         cst = a;
     }
-    public String getigst() {
-        return String.valueOf(igst);
+    public float getigst() {
+        return igst;
     }
     public void setigst(float a) {
         igst = a;
     }
-    public String getsku_total_quantity() {
-        return String.valueOf(sku_total_quantity);
+    public float getsku_total_quantity() {
+        return sku_total_quantity;
     }
     public void setsku_total_quantity(float a) {
         sku_total_quantity = a;
     }
-    public String gettotal_amount() {
-        return String.valueOf(total_amount);
+    public float gettotal_amount() {
+        return total_amount;
     }
     public void settotal_amount(float a) {
         total_amount = a;
     }
-    public String getid() {
-        return String.valueOf(id);
+    public int getid() {
+        return id;
     }
     public void setid(int a) {
         id = a;
     }
     
-    public String getwarehouseid() {
-        return String.valueOf(warehouseid);
+    public int getwarehouseid() {
+        return warehouseid;
     }
     public void setwarehouseid(int a) {
         warehouseid = a;
     }
-    public String getweaver_id() {
-        return String.valueOf(weaver_id);
+    public int getweaver_id() {
+        return weaver_id;
     }
     public void setweaver_id(int a) {
         weaver_id = a;
@@ -161,80 +161,80 @@ public class Weaver {
     public void setweave(String a) {
         weave = a;
     }
-    public String getcost_price() {
-        return String.valueOf(cost_price);
+    public float getcost_price() {
+        return cost_price;
     }
     public void setcost_price(float a) {
         cost_price = a;
     }
-    public String getquantity() {
-        return String.valueOf(quantity);
+    public float getquantity() {
+        return quantity;
     }
     public void setquantity(float a) {
         quantity = a;
     }
-    public String getselling_price() {
-        return String.valueOf(selling_price);
+    public float getselling_price() {
+        return selling_price;
     }
     public void setselling_price(float a) {
         selling_price = a;
     }
-    public String getsold_quantity() {
-        return String.valueOf(sold_quantity);
+    public float getsold_quantity() {
+        return sold_quantity;
     }
     public void setsold_quantity(float a) {
         sold_quantity = a;
     }
-    public String getdefective_count() {
-        return String.valueOf(defective_count);
+    public float getdefective_count() {
+        return defective_count;
     }
     public void setdefective_count(float a) {
         defective_count = a;
     }
-    public String getlanding_price() {
-        return String.valueOf(landing_price);
+    public float getlanding_price() {
+        return landing_price;
     }
     public void setlanding_price(float a) {
         landing_price = a;
     }
-    public String getgross_amount() {
-        return String.valueOf(gross_amount);
+    public float getgross_amount() {
+        return gross_amount;
     }
     public void setgross_amount(float a) {
         gross_amount = a;
     }
-    public String getgst_percentage() {
-        return String.valueOf(gst_percentage);
+    public float getgst_percentage() {
+        return gst_percentage;
     }
     public void setgst_percentage(float a) {
         gst_percentage = a;
     }
-    public String getdiscount_amount() {
-        return String.valueOf(discount_amount);
+    public float getdiscount_amount() {
+        return discount_amount;
     }
     public void setdiscount_amount(float a) {
         discount_amount = a;
     }
-    public String getgst_amount() {
-        return String.valueOf(gst_amount);
+    public float getgst_amount() {
+        return gst_amount;
     }
     public void setgst_amount(float a) {
         gst_amount = a;
     }
-    public String getlogistics_amount() {
-        return String.valueOf(logistics_amount);
+    public float getlogistics_amount() {
+        return logistics_amount;
     }
     public void setlogistics_amount(float a) {
         logistics_amount = a;
     }
-    public String getreturn_quantity() {
-        return String.valueOf(return_quantity);
+    public float getreturn_quantity() {
+        return return_quantity;
     }
     public void setreturn_quantity(float a) {
         return_quantity = a;
     }
-    public String getreturned_defective_quantity() {
-        return String.valueOf(returned_defective_quantity);
+    public float getreturned_defective_quantity() {
+        return returned_defective_quantity;
     }
     public void setreturned_defective_quantity(float a) {
         returned_defective_quantity = a;

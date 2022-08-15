@@ -211,7 +211,7 @@ public class Neo4j implements AutoCloseable {
         String nodes = "MERGE (p1:Product{pdtid:'" + d.pdtid(w.gettype(), w.getcategory(), w.getweave()) + "',type:'" + w.gettype() + "' , weave: '" + w.getweave() + "' , category:'" + w.getcategory() + "'})\n" +
                        "MERGE (t:Type{type:'" + w.gettype() + "'})\n" +
                        "MERGE (t1:Category{category:'" + w.getcategory() + "'})\n" +
-                       "MERGE (t1:Weave{weave:'" + w.getweave() + "'})\n" +
+                       "MERGE (t2:Weave{weave:'" + w.getweave() + "'})\n" +
                        "MERGE (m:Month{month : '" + d.monthName(w.getcreated_date()) + "'})\n" +
                        "MERGE (s:State{state : '" + w.getstate() + "'})";
         System.out.println(nodes);

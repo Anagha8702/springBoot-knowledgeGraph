@@ -402,7 +402,7 @@ input[type='radio']:checked:after {
     <aside>
         <div th:switch="${tableDisplay}">
             <div>
-                <select th:case=1 id = "p2"  class="box">
+                <select th:case=1 id = "p2" style="width: 10%; margin-left: 45%;">
                     <option th:each="val:${param2}" th:value="${val}" th:text="${val}"></option>
             </div>
             </select></div>

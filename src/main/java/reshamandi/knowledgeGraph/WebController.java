@@ -56,7 +56,7 @@ public class WebController {
     }
     @PostMapping("/weaver")
     public String retailerSubmit(@ModelAttribute Weaver w, Model model){
-        PatchAPI.weaverTransaction(w);
+        neo.patchWeaverTransaction(w);
         
         model.addAttribute("w", new Weaver());
         model.addAttribute("formdisp", 1);
