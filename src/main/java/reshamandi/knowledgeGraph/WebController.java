@@ -67,7 +67,18 @@ public class WebController {
         return "form";
     }
 
+   @GetMapping("/register")
+    public String registrationform(Model model) {
+        model.addAttribute("wr", new WeaverReg());
+        return "weavreg";
+    }
 
+    @PostMapping("/register")
+    public String registrationsubmit(@ModelAttribute WeaverReg wr, Model model) {
+        System.out.println(wr.getname()+ " " + wr.getid());
+        model.addAttribute("wr", new WeaverReg());
+        return "weavreg";
+    }
 
     @GetMapping("/query")
     public String greetingForm(Model model) {
