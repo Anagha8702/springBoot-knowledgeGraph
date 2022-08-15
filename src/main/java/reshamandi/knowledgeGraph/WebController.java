@@ -33,6 +33,7 @@ public class WebController {
         model.addAttribute("status",status2);
         model.addAttribute("skuListingStatus",skuListingStatus);
         model.addAttribute("uom",uom2);
+        model.addAttribute("formdisp", 1);
         model.addAttribute("business_type",businessType);
          model.addAttribute("w", new Weaver());
         model.addAttribute("l1",status2);
@@ -58,6 +59,7 @@ public class WebController {
         PatchAPI.weaverTransaction(w);
         
         model.addAttribute("w", new Weaver());
+        model.addAttribute("formdisp", 1);
         model.addAttribute("l1",status2);
         model.addAttribute("l2",skuListingStatus);
         model.addAttribute("l3",uom2);
