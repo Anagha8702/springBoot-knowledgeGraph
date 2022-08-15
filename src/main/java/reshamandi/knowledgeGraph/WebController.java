@@ -75,7 +75,8 @@ public class WebController {
 
     @PostMapping("/register")
     public String registrationsubmit(@ModelAttribute WeaverReg wr, Model model) {
-        System.out.println(wr.getname()+ " " + wr.getid());
+        neo.patchWeaverRegistration(wr);
+        // System.out.println(wr.getname()+ " " + wr.getid());
         model.addAttribute("wr", new WeaverReg());
         return "weavreg";
     }

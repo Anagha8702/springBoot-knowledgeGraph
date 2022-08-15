@@ -193,9 +193,10 @@ public class Neo4j implements AutoCloseable {
 
     public void patchWeaverRegistration(WeaverReg w){
         String weaverNode = "MERGE (w:Weaver{phone:'" + w.getphone() + "',name:'" + w.getname() + "',yarn_cocoon_type:'" + w.getyarn_cocoon_type() + "',state:'" + w.getstate() + "',id:'" + w.getid() + "',yarn_capacity:'" + w.getyarn_capacity() + "',type:'" + w.gettype() + "',twisted_type:'" + w.gettwisted_type() + "',denier:'" + w.getdenier() + "'})";
+        System.out.println(weaverNode);
         try (Session session = driver.session()) {
             session.writeTransaction(tx -> {
-            tx.run(weaverNode);
+            // tx.run(weaverNode);
             System.out.println("Hit");
             return 0;
         });
