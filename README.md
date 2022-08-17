@@ -9,5 +9,7 @@
 
 ### Routes
 http://localhost:8080/query
+
 http://localhost:8080/patch
+
 http://localhost:8080/register
