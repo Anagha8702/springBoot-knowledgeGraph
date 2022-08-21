@@ -26,8 +26,6 @@ MERGE (w)-[rl:soldBy{selling_price:"176",return_quantity:"192",cst:"5.11064997",
 return rl
 
 creating Boughtby relation
-Match (w:Weaver)
-WHERE w.id = "10001"
 Match (r:Retailer)
 WHERE (r.id = "12001")
 MATCH (p:Product)

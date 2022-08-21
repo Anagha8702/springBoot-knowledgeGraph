@@ -201,24 +201,24 @@ public class Neo4j implements AutoCloseable {
             return 0;
         });
     }
-    catch(Exception e){
-        System.out.println("Error");
-    }
+        catch(Exception e){
+            System.out.println("Error");
+        }
     }
 
-    public void patchRetailerRegistration(WeaverReg w){
-        String weaverNode = "MERGE (w:Weaver{phone:'" + w.getphone() + "',name:'" + w.getname() + "',yarn_cocoon_type:'" + w.getyarn_cocoon_type() + "',state:'" + w.getstate() + "',id:'" + w.getid() + "',yarn_capacity:'" + w.getyarn_capacity() + "',type:'" + w.gettype() + "',twisted_type:'" + w.gettwisted_type() + "',denier:'" + w.getdenier() + "'})";
-        System.out.println(weaverNode);
+    public void patchRetailerRegistration(RetailerReg r){
+        String retailerNode = "MERGE (r:Retailer{phone:'" + r.getPhone() + "',name:'" + r.getName() + "',majority_sourced_textile:'" + r.getMajority_sourced_textile() + "',state:'" + r.getState() + "',id:'" + r.getId() + "',retailer_of:'" + r.getRetailer_of() + "'})";
+        System.out.println(retailerNode);
         try (Session session = driver.session()) {
             session.writeTransaction(tx -> {
-            tx.run(weaverNode);
-            System.out.println("Hit");
+            tx.run(retailerNode);
+            System.out.println("New retailer registered successfully");
             return 0;
         });
     }
-    catch(Exception e){
-        System.out.println("Error");
-    }
+        catch(Exception e){
+            System.out.println("Error");
+        }
     }
 
     public void patchWeaverTransaction(Weaver w){
@@ -292,31 +292,75 @@ public class Neo4j implements AutoCloseable {
 }
 
 
+public void patchRetailerTransaction(Retailer r){
+
+    // creating new nodes
+    String nodes = "MERGE (p1:Product{pdtid:'" + d.pdtid(r.gettype(), r.getcategory(), r.getweave()) + "',type:'" + r.gettype() + "' , weave: '" + r.getweave() + "' , category:'" + r.getcategory() + "'})\n" +
+                   "MERGE (t:Type{type:'" + r.gettype() + "'})\n" +
+                   "MERGE (t1:Category{category:'" + r.getcategory() + "'})\n" +
+                   "MERGE (t2:Weave{weave:'" + r.getweave() + "'})\n" +
+                   "MERGE (m:Month{month : '" + d.monthName(r.getcreated_date()) + "'})\n" +
+                   "MERGE (s:State{state : '" + r.getstate() + "'})";
+    System.out.println(nodes);
 
 
-    public void patchRetailerTransaction(Retailer ret){
-        // creating new product node
-        String pdtNode = "MERjGE (p1:Product{pdtid:'" + d.pdtid(ret.gettype(), ret.getcategory(), ret.getweave()) + "',type:'" + ret.gettype() + "' , weave: '" + ret.getweave() + "' , category:'" + ret.getcategory() + "'})";
-        System.out.println(pdtNode);
+    //BoughtbyRelation
+    String BoughtbyRelation = "Match (r:Retailer) WHERE r.id = '" + r.getretailer_id() + "'\n" +
+                            "MATCH (p:Product) WHERE p.pdtid = '" + d.pdtid(r.gettype(), r.getcategory(), r.getweave()) + "'\n" +
+                            "MERGE (p)-[rl:boughtBy{selling_price:'" + r.getselling_price() + "',cst:'" + r.getcst() + "',discount_amount:'" + r.getdiscount_amount() + "',discount:'" + r.getdiscount() + "',gross_amount:'" + r.getgross_amount() + "',type:'" + r.gettype() + "',sold_quantity:'" + r.getsold_quantity() + "',igst:'" + r.getigst() + "',gst_amount:'" + r.getgst_amount() + "',uom:'" + r.getuom() + "',sku_listing_status:'" + r.getsku_listing_status() + "',warehouseid:'" + r.getwarehouseid() + "',sku_total_quantity:'" + r.getsku_total_quantity() + "',business_type:'" + r.getbusiness_type() + "',state:'" + r.getstate() + "',id:'" + r.getid() + "',landing_price:'" + r.getlanding_price() + "',cost_price:'" + r.getcost_price() + "',transaction_id:'" + r.gettransaction_id() + "',quantity:'" + r.getquantity() + "',total_pre_tax_price:'" + r.gettotal_pre_tax_price() + "',retailer_id:'" + r.getretailer_id() + "',pdt_id:'" + d.pdtid(r.gettype(), r.getcategory(), r.getweave()) + "',created_by:'" + r.getcreated_by() + "',gst_percentage:'" + r.getgst_percentage() + "',month:'" + d.monthName(r.getcreated_date()) + "',total_amount:'" + r.gettotal_amount() + "',sku_count:'" + r.getsku_count() + "',logistics_amount:'" + r.getlogistics_amount() + "',created_date:'" + r.getcreated_date() + "',category:'" + r.getcategory() + "',weave:'" + r.getweave() + "',status:'" + r.getstatus() + "'}]->(r)";
+    System.out.println(BoughtbyRelation);
 
-        String typeNode = "MERGE (t:Type{type:'" + ret.gettype() + "'})";
-        String catNode = "MERGE (t:Category{category:'" + ret.getcategory() + "'})";
-        String weavenode = "MERGE (t:Weave{weave:'" + ret.getweave() + "'})";
-        try (Session session = driver.session()) {
-            session.writeTransaction(tx -> {
-            // tx.run(pdtNode);
-            // System.out.println("Hit 1");
-            tx.run(pdtNode);
-            System.out.println("Hit 2");
-            return 0;
-        });
-    }
+ 
+    //linking type to product
+    String linkTypeToProduct = "MATCH (t:Type) WHERE t.type ='" + r.gettype() + "'\n" +
+                               "MATCH (p:Product) WHERE p.pdtid = '" + d.pdtid(r.gettype(), r.getcategory(), r.getweave()) + "'\n" +
+                               "MERGE (t)-[r:typeName{type : '" + r.gettype() + "'}]->(p)";
+    System.out.println(linkTypeToProduct);
+
+
+    //linking category to product
+    String linkCategoryToProduct = "MATCH (t:Category) WHERE t.category ='" + r.getcategory() + "'\n" +
+                               "MATCH (p:Product) WHERE p.pdtid = '" + d.pdtid(r.gettype(), r.getcategory(), r.getweave()) + "'\n" +
+                               "MERGE (t)-[r:categoryName{category : '" + r.getcategory() + "'}]->(p)";
+    System.out.println(linkCategoryToProduct);
+
+
+    //linking weave to product
+    String linkWeaveToProduct = "MATCH (t:Weave) WHERE t.weave ='" + r.getweave() + "'\n" +
+                               "MATCH (p:Product) WHERE p.pdtid = '" + d.pdtid(r.gettype(), r.getcategory(), r.getweave()) + "'\n" +
+                               "MERGE (t)-[r:weaveName{weave : '" + r.getweave() + "'}]->(p)";
+    System.out.println(linkWeaveToProduct);
+
+    //linking - boughtMonth
+    String boughtMonth = "MATCH (m:Month) WHERE m.month = '" + d.monthName(r.getcreated_date()) + "'\n" +
+                       "MATCH (p:Product) WHERE p.pdtid = '" + d.pdtid(r.gettype(), r.getcategory(), r.getweave()) + "'\n" +
+                       "MERGE (m)-[r:boughtMonth{transaction_id:'" + r.gettransaction_id() + "',month:'" + d.monthName(r.getcreated_date()) + "',retailer_id:'" + r.getretailer_id() + "',state:'" + r.getstate() + "',created_date:'" + r.getcreated_date() + "',pdt_id:'" + d.pdtid(r.gettype(), r.getcategory(), r.getweave()) + "'}]->(p)";
+    System.out.println(boughtMonth);
+
+
+    //linking - boughtState
+    String boughtState = "MATCH (m:State) WHERE m.state = '" + r.getstate() + "'\n" +
+                       "MATCH (p:Product) WHERE p.pdtid = '" + d.pdtid(r.gettype(), r.getcategory(), r.getweave()) + "'\n" +
+                       "MERGE (m)-[r:boughtState{transaction_id:'" + r.gettransaction_id() + "',month:'" + d.monthName(r.getcreated_date()) + "',retailer_id:'" + r.getretailer_id() + "',state:'" + r.getstate() + "',created_date:'" + r.getcreated_date() + "',pdt_id:'" + d.pdtid(r.gettype(), r.getcategory(), r.getweave()) + "'}]->(p)";
+    System.out.println(boughtState);
+
+    try (Session session = driver.session()) {
+        session.writeTransaction(tx -> {
+        tx.run(nodes);
+        tx.run(BoughtbyRelation);
+        tx.run(linkTypeToProduct);
+        tx.run(linkCategoryToProduct);
+        tx.run(linkWeaveToProduct);
+        tx.run(boughtMonth);
+        tx.run(boughtState);
+        System.out.println("Updated database with new retailer transaction");
+        return 0;
+    });
+}
     catch(Exception e){
         System.out.println("Error");
     }
-        return ;
-    }
-
+}
 
     ////////////////////////// PATCHING /////////////////////////////////////////////
 
