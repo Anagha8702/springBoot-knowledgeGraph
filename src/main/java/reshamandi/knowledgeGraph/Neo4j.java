@@ -80,6 +80,8 @@ public class Neo4j implements AutoCloseable {
     public String[][] statistics(String role, String productSpec, String filter, String[] states, String[] seasons, String[] years){
         if(productSpec == null) productSpec = "pdt.type";
         if(filter == null) filter= "r.month";
+        System.out.println(states);
+        System.out.println("Statessssssś");
         String[][] tableData1;
         try (Session session = driver.session()) {
             String qrole = "MATCH (m:Month) WITH collect(m) as monthList UNWIND monthList as months MATCH (months)-[r:" +
@@ -178,14 +180,99 @@ public class Neo4j implements AutoCloseable {
         return tableData1;
     }
     public static void main(String... args){
-//        try (Neo4j neo = new Neo4j("neo4j+s://21679c7c.databases.neo4j.io", "neo4j", "mhTn8Mxnjax-SQ9Yj3et3Go49TxZKcJtBLNP3dyarqU")) {
-//            Arrays.deepToString(neo.typeOrCategoryOrWeaveSoldInWhichSeasonByWeaver("Summer", "type", "soldMonth"));
-//        }
-//        catch(Exception e){
-//            System.out.println("Exception");
-//        }
+        Transactions t = new Transactions();
+        String ids[] = {"12598"};
+        t.setRole("Retailer");
+        t.setID(ids);
+        String months[] = {"January", "March", "July", "August", "September", "October", "December", "November"};
+        String state[] = {"Karnataka", "Goa", "Punjab"};
+        String type[] = null;
+        String cat[] = {"Beads", "Saree"};
+        String weave[] = {"Satin", "Plain", "JACQUARD"};
+        t.setMonth(months);
+        t.setState(state);
+        t.setCategory(cat);
+        t.setType(type);
+        t.setWeave(weave);
+        transactionQuery(t);
+        return ;
     }
 
+    public static String transactionQuery(Transactions t){
+        String tableData[][];
+        String query = "";
+        int i;
+        boolean flag = false;
+
+        if(t.getID() != null){
+            String ids[] = t.getID();
+            StringBuilder qids = new StringBuilder("WHERE (");
+            for(i=0;i<(ids.length)-1;i++)
+                qids.append("n.id='").append(ids[i]).append("' or ");
+            qids.append("n.id='").append(ids[i]).append("') WITH r\n");
+            query += qids;
+        }
+        StringBuilder qstates = new StringBuilder("");
+        StringBuilder qmonths = new StringBuilder("");
+        StringBuilder qtypes = new StringBuilder("");
+        StringBuilder qweaves = new StringBuilder("");
+        StringBuilder qcategories = new StringBuilder("");
+        if(t.getState() != null){
+            flag = true;
+            qstates = new StringBuilder("(");
+            String states[] = t.getState();
+            for(i=0;i<(states.length)-1;i++)
+                qstates.append("r.state='").append(states[i]).append("' or ");
+            qstates.append("r.state='").append(states[i]).append("') ");
+        }
+        if(t.getMonth() != null){
+            String months[] = t.getMonth();
+            if(flag) qmonths = new StringBuilder("and (");
+            else qmonths = new StringBuilder("(");
+            flag = true;
+            for(i=0;i<(months.length)-1;i++)
+                qmonths.append("r.month='").append(months[i]).append("' or ");
+            qmonths.append("r.month='").append(months[i]).append("') ");
+        }
+        if(t.getType() != null){
+            String types[] = t.getType();
+            if(flag) qtypes = new StringBuilder("and (");
+            else qtypes = new StringBuilder("(");
+            flag = true;
+            for(i=0;i<(types.length)-1;i++)
+                qtypes.append("r.type='").append(types[i]).append("' or ");
+            qtypes.append("r.type='").append(types[i]).append("') ");
+        }
+        if(t.getWeave() != null){
+            String weaves[] = t.getWeave();
+            if(flag) qweaves = new StringBuilder("and (");
+            else qweaves = new StringBuilder("(");
+            flag = true;
+            for(i=0;i<(weaves.length)-1;i++)
+                qweaves.append("r.weave='").append(weaves[i]).append("' or ");
+            qweaves.append("r.weave='").append(weaves[i]).append("') ");
+        }
+        if(t.getCategory() != null){
+            String categories[] = t.getCategory();
+            if(flag) qcategories = new StringBuilder("and (");
+            else qcategories = new StringBuilder("(");
+            flag = true;
+            for(i=0;i<(categories.length)-1;i++)
+                qcategories.append("r.category='").append(categories[i]).append("' or ");
+            qcategories.append("r.category='").append(categories[i]).append("') ");
+        }
+
+        if(flag) query += "WHERE " + qstates + qmonths + qtypes + qweaves + qcategories + "\n";
+        
+        if(t.getRole().equals("Weaver")) query = "MATCH (n:Weaver)-[r:soldBy]->(w:Product)\n" + query + "RETURN r.transaction_id AS Transaction_ID,r.weaver_id AS Weaver_ID,r.quantity AS Quantity,r.state AS State,r.month AS Month,left(r.created_date,4) AS Year,r.cost_price AS Cost_Price,r.pdt_id AS Product_ID,r.type AS Type,r.category AS Category,r.weave AS Weave";
+        
+        else query = "MATCH (w:Product)-[r:boughtBy]->(n:Retailer)\n" + query + "RETURN r.transaction_id AS Transaction_ID,r.retailer_id AS Retailer_ID,r.quantity AS Quantity,r.state AS State,r.month AS Month,left(r.created_date,4) AS Year,r.cost_price AS Cost_Price,r.pdt_id AS Product_ID,r.type AS Type,r.category AS Category,r.weave AS Weave"; 
+        
+        System.out.println(query);
+
+        return query;
+    
+}
 
 
     ////////////////////////// PATCHING /////////////////////////////////////////////
