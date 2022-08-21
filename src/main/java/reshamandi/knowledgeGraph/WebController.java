@@ -27,6 +27,16 @@ public class WebController {
     static String[] uom2 = {"Kgs","Meters","Pieces"};
     static String[] businessType= {"ECD","D2R"};
 
+    //Transactions.java implementation
+    static String[] types_list={"Accessories","Art-silk","Bagru","Banarasi","Bhagalpuri","Chanderi-cotton","Cotton-linen","Cotton-tant","Cotton-voile","Tussar-silk","Linnen","Patola"};
+    static String[] cat_list={"AC-Blanket(DOHAR)","Beads","Bedsheet","Bermuda","Shorts","Blouse","Chiffon","Crochet Lace","Fabric","Fusing","Cutting-Roll","Girls-Womens-suit","Saree","Shirt","Skirt","Dupatta"};
+    static String[] weave_list={"ROYAL-OXFORD","Plain","JACQUARD","Yarn Dyed","Satin"};
+    static String[] trans_months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    static String[] trans_states = {"Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh ", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli", "Daman and Diu", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "National Capital Territory of Delhi", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"};
+    static String[] role_list={"Weaver","Retailer"};
+    //This var is used to return all weaver/ retailer id collected in transactions
+    String[] ID_list[]={};
+
     @GetMapping("/patch")
     public String retailerForm(Model model){
         model.addAttribute("ret", new Retailer());
@@ -83,10 +93,23 @@ public class WebController {
 
     @GetMapping("/query")
     public String greetingForm(Model model) {
+        //Statistics part
         model.addAttribute("q12", new Query1_2());
         model.addAttribute("states", states);
         model.addAttribute("years", years);
         model.addAttribute("seasons", seasons);
+
+        //Transactions part
+        model.addAttribute("trans", new Transactions());
+        model.addAttribute("trans_states", trans_states);
+        model.addAttribute("trans_months", trans_months);
+        model.addAttribute("categories", cat_list);
+        model.addAttribute("types", types_list);
+        model.addAttribute("weaves", weave_list);
+        model.addAttribute("role", role_list);
+        model.addAttribute("ID", ID_list);
+
+
         return "index";
     }
 
@@ -123,6 +146,32 @@ public class WebController {
         model.addAttribute("years", years);
         model.addAttribute("seasons", seasons);
         return "index";
+    }
+
+    @PostMapping("/transactions")
+    public String greetingTransactionSubmit(@ModelAttribute Transactions trans, Model model){
+        
+        
+        //Transactions part
+        model.addAttribute("trans", trans);
+        model.addAttribute("trans_states", trans_states);
+        model.addAttribute("trans_months", trans_months);
+        model.addAttribute("categories", cat_list);
+        model.addAttribute("types", types_list);
+        model.addAttribute("weaves", weave_list);
+        model.addAttribute("role", role_list);
+        model.addAttribute("ID", ID_list);
+
+        System.out.println(trans.getRole());
+        System.out.println(Arrays.deepToString(trans.getID()));
+        System.out.println(Arrays.deepToString(trans.getMonth()));
+        System.out.println(Arrays.deepToString(trans.getState()));
+        System.out.println(Arrays.deepToString(trans.getCategory()));
+        System.out.println(Arrays.deepToString(trans.getWeave()));
+        System.out.println(Arrays.deepToString(trans.getType()));
+
+        return "index";
+        
     }
 
 }

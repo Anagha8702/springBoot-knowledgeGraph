@@ -330,6 +330,51 @@ input[type='radio']:checked:after {
     <button onclick="toggle(statSpec)" class="butn">Statistics</button>
     <button onclick="toggle(productSpec)" class="butn">Products</button>
 
+    <div id="transSpec" style="display: none;" class="transactions">
+        <form action="#" th:action="@{/transactions}" th:object="${trans}" method="post">
+            <h1 style="margin-bottom: -20px;">Transactions</h1>  <br>
+            <h4>Role</h4>
+            <input type="radio" id="role" name="role" value="Weaver" checked>
+            <label for="role">Weaver</label><br>
+            <input type="radio" id="role" name="role" value="Retailer">
+            <label for="role">Retailer</label><br>
+
+            <h4>Weaver ID</h4><input id="WeaverID" name="ID">
+            <br>
+
+            <h4>Retailer ID</h4><input id="RetailerID"  name="ID">
+            <br>
+
+            <h4>Month</h4>
+            <select name="Month" multiple size="3" >
+                <option th:each="month: ${trans_months}" th:value="${month}" th:text="${month}"></option>
+            </select>
+
+            <h4>States</h4>
+            <select name="State" multiple size="3" >
+                <option th:each="state: ${trans_states}" th:value="${state}" th:text="${state}"></option>
+            </select>
+
+            <h4>Category</h4>
+            <select name="category" multiple size="3" >
+                <option th:each="category: ${categories}" th:value="${category}" th:text="${category}"></option>
+            </select>
+
+            <h4>Weave</h4>
+            <select name="weave" multiple size="3" >
+                <option th:each="weave: ${weaves}" th:value="${weave}" th:text="${weave}"></option>
+            </select>
+
+            <h4>Type</h4>
+            <select name="type" multiple size="3" >
+                <option th:each="type: ${types}" th:value="${type}" th:text="${type}"></option>
+            </select>
+            <p><input type="submit" value="Submit" class="btn2" /> 
+                <input type="reset" value="Reset" class="btn2"/>
+            </p>
+        </form>
+    </div>
+    
     <div id="statSpec" style="display: none;" class="query">
         <form action="#" th:action="@{/query}" th:object="${q12}" method="post">
             <h1 style="margin-bottom: -20px;">Statistics</h1>  <br>
