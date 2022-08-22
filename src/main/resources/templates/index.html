@@ -330,6 +330,35 @@ input[type='radio']:checked:after {
     <button onclick="toggle(statSpec)" class="butn">Statistics</button>
     <button onclick="toggle(productSpec)" class="butn">Products</button>
 
+    <div id="productSpec" style="display: none;" class="products">
+        <form action="#" th:action="@{/products}" th:object="${prods}" method="post">
+            <h1 style="margin-bottom: -20px;">Products</h1>  <br>
+            <h4>Role</h4>
+            <input type="radio" id="filter" name="filter" value="Split" checked>
+            <label for="filter">Split</label><br>
+            <input type="radio" id="filter" name="filter" value="Total">
+            <label for="filter">Total</label><br>
+
+            <h4>Category</h4>
+            <select name="category" multiple size="3" >
+                <option th:each="category: ${prod_cat}" th:value="${category}" th:text="${category}"></option>
+            </select>
+
+            <h4>Weave</h4>
+            <select name="weave" multiple size="3" >
+                <option th:each="weave: ${prod_weave}" th:value="${weave}" th:text="${weave}"></option>
+            </select>
+
+            <h4>Type</h4>
+            <select name="type" multiple size="3" >
+                <option th:each="type: ${prod_type}" th:value="${type}" th:text="${type}"></option>
+            </select>
+            <p><input type="submit" value="Submit" class="btn2" /> 
+                <input type="reset" value="Reset" class="btn2"/>
+            </p>
+        </form>
+    </div>
+
     <div id="transSpec" style="display: none;" class="transactions">
         <form action="#" th:action="@{/transactions}" th:object="${trans}" method="post">
             <h1 style="margin-bottom: -20px;">Transactions</h1>  <br>

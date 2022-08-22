@@ -37,6 +37,12 @@ public class WebController {
     //This var is used to return all weaver/ retailer id collected in transactions
     String[] ID_list[]={};
 
+    //Products.java implementation
+    static String[] prod_cat_list={"AC-Blanket(DOHAR)","Beads","Bedsheet","Bermuda","Shorts","Blouse","Chiffon","Crochet Lace","Fabric","Fusing","Cutting-Roll","Girls-Womens-suit","Saree","Shirt","Skirt","Dupatta"};
+    static String[] prod_type_list={"Accessories","Art-silk","Bagru","Banarasi","Bhagalpuri","Chanderi-cotton","Cotton-linen","Cotton-tant","Cotton-voile","Tussar-silk","Linnen","Patola"};
+    static String[] prod_weave_list={"ROYAL-OXFORD","Plain","JACQUARD","Yarn Dyed","Satin"};
+    static String[] filter_list={"Split","Total"};
+
     @GetMapping("/patch")
     public String retailerForm(Model model){
         model.addAttribute("ret", new Retailer());
@@ -109,6 +115,12 @@ public class WebController {
         model.addAttribute("role", role_list);
         model.addAttribute("ID", ID_list);
 
+        //Products part
+        model.addAttribute("prods", new Products());
+        model.addAttribute("prod_cat", prod_cat_list);
+        model.addAttribute("prod_type", prod_type_list);
+        model.addAttribute("prod_weave", prod_weave_list);
+        model.addAttribute("filter", filter_list);
 
         return "index";
     }
@@ -174,4 +186,20 @@ public class WebController {
         
     }
 
+    @PostMapping("/products")
+    public String greetingProductsSubmit(@ModelAttribute Products prods, Model model){
+        
+        model.addAttribute("prods", prods);
+        model.addAttribute("prod_cat", prod_cat_list);
+        model.addAttribute("prod_type", prod_type_list);
+        model.addAttribute("prod_weave", prod_weave_list);
+        model.addAttribute("filter", filter_list);
+
+        System.out.println(prods.getFilter());
+        System.out.println(Arrays.deepToString(prods.getCategory()));
+        System.out.println(Arrays.deepToString(prods.getType()));
+        System.out.println(Arrays.deepToString(prods.getWeave()));
+
+        return "index";
+    }
 }
