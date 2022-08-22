@@ -179,24 +179,24 @@ public class Neo4j implements AutoCloseable {
         }
         return tableData1;
     }
-    public static void main(String... args){
-        Transactions t = new Transactions();
-        String ids[] = {"12598"};
-        t.setRole("Retailer");
-        t.setID(ids);
-        String months[] = {"January", "March", "July", "August", "September", "October", "December", "November"};
-        String state[] = {"Karnataka", "Goa", "Punjab"};
-        String type[] = null;
-        String cat[] = {"Beads", "Saree"};
-        String weave[] = {"Satin", "Plain", "JACQUARD"};
-        t.setMonth(months);
-        t.setState(state);
-        t.setCategory(cat);
-        t.setType(type);
-        t.setWeave(weave);
-        transactionQuery(t);
-        return ;
-    }
+    // public static void main(String... args){
+    //     Transactions t = new Transactions();
+    //     String ids[] = {"12598"};
+    //     t.setRole("Retailer");
+    //     t.setID(ids);
+    //     String months[] = {"January", "March", "July", "August", "September", "October", "December", "November"};
+    //     String state[] = {"Karnataka", "Goa", "Punjab"};
+    //     String type[] = null;
+    //     String cat[] = {"Beads", "Saree"};
+    //     String weave[] = {"Satin", "Plain", "JACQUARD"};
+    //     t.setMonth(months);
+    //     t.setState(state);
+    //     t.setCategory(cat);
+    //     t.setType(type);
+    //     t.setWeave(weave);
+    //     transactionQuery(t);
+    //     return ;
+    // }
 
     public static String transactionQuery(Transactions t){
         String tableData[][];
@@ -448,5 +448,222 @@ public class Neo4j implements AutoCloseable {
 }
 
     ////////////////////////// PATCHING /////////////////////////////////////////////
- 
+        ///////////////////////topTenProducts////////////////////////
+        public String[][] topTenProduct(Transactions t) {
+            dict d = new dict();
+            StringBuilder mainQuery = new StringBuilder();
+            StringBuilder catList = new StringBuilder();
+            StringBuilder typeList = new StringBuilder();
+            StringBuilder weaveList = new StringBuilder();
+            StringBuilder stateList = new StringBuilder();
+            StringBuilder monthList = new StringBuilder();
+            if (t.getRole() == "Weaver") {
+                mainQuery.append("MATCH (n:Weaver)-[r:soldBy]->(w:Product)");
+            } else {
+                mainQuery.append("MATCH (w:Product)-[r:boughtBy]->(n:Retailer)");
+            }
+            if (t.getID() != null) {
+                mainQuery.append("\nWHERE (");
+                mainQuery.append("n.id=").append('"' + t.getID()[0] + '"');
+                for (int i = 1; i < t.getID().length; i++) {
+                    mainQuery.append(" or n.id=");
+                    mainQuery.append('"' + t.getID()[i] + '"');
+                }
+                mainQuery.append(")");
+                mainQuery.append("\nWITH r");
+            }
+    
+            if (t.getCategory() != null) {
+                catList.append("(").append("r.category = ").append('"' + t.getCategory()[0] + '"');
+                for (int i = 1; i < t.getCategory().length; i++) {
+                    catList.append(" or r.category = ");
+                    catList.append('"' + t.getCategory()[i] + '"');
+                }
+                catList.append(")");
+            } else
+                catList.append("(true)");
+    
+            if (t.getType() != null) {
+                typeList.append("(").append("r.type = ").append('"' + t.getType()[0] + '"');
+                for (int i = 1; i < t.getType().length; i++) {
+                    typeList.append(" or r.type = ");
+                    typeList.append('"' + t.getType()[i] + '"');
+                }
+                typeList.append(")");
+            } else
+                typeList.append("(true)");
+    
+            if (t.getWeave() != null) {
+                weaveList.append("(r.weave = ").append('"' + t.getWeave()[0] + '"');
+                for (int i = 1; i < t.getWeave().length; i++) {
+                    weaveList.append(" or r.weave = ");
+                    weaveList.append('"' + t.getWeave()[i] + '"');
+                }
+                weaveList.append(")");
+            } else
+                weaveList.append("(true)");
+    
+            if (t.getMonth() != null) {
+                monthList.append("(r.month = ").append('"' + t.getMonth()[0] + '"');
+                for (int i = 1; i < t.getMonth().length; i++) {
+                    monthList.append(" or r.month = ");
+                    monthList.append('"' + t.getMonth()[i] + '"');
+                }
+                monthList.append(")");
+            } else
+                monthList.append("(true)");
+    
+            if (t.getState() != null) {
+                stateList.append("(r.state = ").append('"' + t.getState()[0] + '"');
+                for (int i = 1; i < t.getState().length; i++) {
+                    stateList.append(" or r.state = ");
+                    stateList.append('"' + t.getState()[i] + '"');
+                }
+                stateList.append(")");
+            } else
+                stateList.append("(true)");
+    
+            mainQuery.append(" ").append("\nWHERE ").append(monthList).append(" and ").append(stateList).append(" and ").append(catList).append(" and ");
+            mainQuery.append(typeList).append(" and ").append(weaveList).append("\nRETURN r.pdt_id,sum(toFloat(r.quantity)) AS Quantity,r.type,r.category,r.weave\n" +
+                    "ORDER BY Quantity DESC LIMIT 10");
+    
+    
+            String[][] tableData1 = new String[11][5];
+            try (Session session = driver.session()) {
+                session.writeTransaction(tx -> {
+                    Result result = tx.run(String.valueOf(mainQuery));
+                    List<Record> list = new ArrayList<Record>(result.list());
+                    tableData1[0][0] = "Product ID";
+                    tableData1[0][1] = "Quantity";
+                    tableData1[0][2] = "Type";
+                    tableData1[0][3] = "Category";
+                    tableData1[0][4] = "Weave";
+                    int i = 1;
+                    for (Record r : list) {
+                        int j = 0;
+                        for (var s1 : r.values()) {
+                            tableData1[i][j] = new String(s1.toString());
+                            j++;
+                        }
+                        i++;
+                    }
+                    for (String[] s1 : tableData1) {
+                        for (String s2 : s1) {
+                            System.out.print(s2 + "   ");
+                        }
+                        System.out.println("");
+                    }
+                    return 0;
+                });
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return tableData1;
+        }
+    
+        /////////////////////////Product Stock ///////////////////////////////////////////////
+        public String[][] productStock(Products t) {
+            StringBuilder catList = new StringBuilder();
+            StringBuilder typeList = new StringBuilder();
+            StringBuilder weaveList = new StringBuilder();
+            StringBuilder mainQuery = new StringBuilder();
+            String[][] tableData2 = new String[0][];
+            int size;
+    //        String[][] tableData1;
+            if (t.getCategory() != null) {
+                catList.append("(").append("r.category = ").append('"' + t.getCategory()[0] + '"');
+                for (int i = 1; i < t.getCategory().length; i++) {
+                    catList.append(" or r.category = ");
+                    catList.append('"' + t.getCategory()[i] + '"');
+                }
+                catList.append(")");
+            } else
+                catList.append("(true)");
+    
+            if (t.getType() != null) {
+                typeList.append("(").append("r.type = ").append('"' + t.getType()[0] + '"');
+                for (int i = 1; i < t.getType().length; i++) {
+                    typeList.append(" or r.type = ");
+                    typeList.append('"' + t.getType()[i] + '"');
+                }
+                typeList.append(")");
+            } else
+                typeList.append("(true)");
+    
+            if (t.getWeave() != null) {
+                weaveList.append("(r.weave = ").append('"' + t.getWeave()[0] + '"');
+                for (int i = 1; i < t.getWeave().length; i++) {
+                    weaveList.append(" or r.weave = ");
+                    weaveList.append('"' + t.getWeave()[i] + '"');
+                }
+                weaveList.append(")");
+            } else
+                weaveList.append("(true)");
+    
+            if (t.getFilter() != "Split") {
+                mainQuery.append("MATCH (c:Category)-[r1:categoryName]->(p:Product)\n");
+                mainQuery.append("WHERE ").append(catList).append("\nWITH p \n");
+                mainQuery.append("MATCH (t:Type)-[r1:typeName]->(p)\n");
+                mainQuery.append("WHERE ").append(typeList).append("\nWITH p\n");
+                mainQuery.append("MATCH (w:Weave)-[r3:weaveName]->(p:Product)\n");
+                mainQuery.append("WHERE ").append(weaveList).append("\nWITH p\n");
+                mainQuery.append("MATCH (weav:Weaver)-[r4:soldBy]->(p)\n" +
+                        "WITH p,sum(toFloat(r4.quantity)) AS inQuantity\n" +
+                        "MATCH (p)-[r5:boughtBy]->(ret:Retailer)\n" +
+                        "WITH p,inQuantity,sum(toFloat(r5.quantity)) AS outQuantity\n" +
+                        "RETURN p.pdtId,ceil(abs(inQuantity-outQuantity)) AS Stock,p.type,p.category,p.weave");
+                System.out.println(mainQuery);
+    
+    
+                try (Session session = driver.session()) {
+                    tableData2 = session.writeTransaction(tx -> {
+                        Result result = tx.run(String.valueOf(mainQuery));
+                        List<Record> list = new ArrayList<Record>(result.list());
+                        System.out.println(list.size());
+                        String[][] tableData1 = new String[list.size() + 1][5];
+                        tableData1[0][0] = new String("Product ID");
+                        tableData1[0][1] = "Stock";
+                        tableData1[0][2] = "Type";
+                        tableData1[0][3] = "Category";
+                        tableData1[0][4] = "Weave";
+                        int i = 1;
+                        for (Record r : list) {
+                            System.out.println(r);
+                            int j = 0;
+                            for (var s1 : r.values()) {
+                                tableData1[i][j] = new String(s1.toString());
+                                j++;
+                            }
+                            i++;
+                        }
+                        for (String[] s1 : tableData1) {
+                            for (String s2 : s1) {
+                                System.out.print(s2 + "   ");
+                            }
+                            System.out.println("");
+                        }
+                        return tableData1;
+                    });
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                System.out.println();
+                return tableData2;
+    
+            } else {
+                return tableData2;
+            }
+        }
+    
+        public static void main(String[] args) {
+           Transactions t1 = new Transactions();
+           Products p1 = new Products();
+    //        t.setRole("Retailer");
+           try (Neo4j neo = new Neo4j("neo4j+s://ba6b34f2.databases.neo4j.io", "neo4j", "yjPkJyIuUi65j4p5yNUK4Tua1ZzgK3z4VPGc0iU_7rU")) {
+               neo.productStock(p1);
+           } catch (Exception e) {
+               System.out.println("Exception");
+           }
+        }
+        
 }
