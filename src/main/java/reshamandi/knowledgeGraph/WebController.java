@@ -162,8 +162,6 @@ public class WebController {
 
     @PostMapping("/transactions")
     public String greetingTransactionSubmit(@ModelAttribute Transactions trans, Model model){
-        
-        
         //Transactions part
         model.addAttribute("trans", trans);
         model.addAttribute("trans_states", trans_states);
@@ -173,6 +171,14 @@ public class WebController {
         model.addAttribute("weaves", weave_list);
         model.addAttribute("role", role_list);
         model.addAttribute("ID", ID_list);
+
+        String data[][];
+        try{
+            data = neo.topTenProduct(trans);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        
 
         System.out.println(trans.getRole());
         System.out.println(Arrays.deepToString(trans.getID()));
