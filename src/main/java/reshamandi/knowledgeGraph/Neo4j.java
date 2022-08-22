@@ -179,24 +179,24 @@ public class Neo4j implements AutoCloseable {
         }
         return tableData1;
     }
-    // public static void main(String... args){
-    //     Transactions t = new Transactions();
-    //     String ids[] = {"12598"};
-    //     t.setRole("Retailer");
-    //     t.setID(ids);
-    //     String months[] = {"January", "March", "July", "August", "September", "October", "December", "November"};
-    //     String state[] = {"Karnataka", "Goa", "Punjab"};
-    //     String type[] = null;
-    //     String cat[] = {"Beads", "Saree"};
-    //     String weave[] = {"Satin", "Plain", "JACQUARD"};
-    //     t.setMonth(months);
-    //     t.setState(state);
-    //     t.setCategory(cat);
-    //     t.setType(type);
-    //     t.setWeave(weave);
-    //     transactionQuery(t);
-    //     return ;
-    // }
+    public static void main(String... args){
+        Transactions t = new Transactions();
+        String ids[] = {"12598"};
+        t.setRole("Retailer");
+        t.setID(ids);
+        String months[] = {"January", "March", "July", "August", "September", "October", "December", "November"};
+        String state[] = {"Karnataka", "Goa", "Punjab"};
+        String type[] = null;
+        String cat[] = {"Beads", "Saree"};
+        String weave[] = {"Satin", "Plain", "JACQUARD"};
+        t.setMonth(months);
+        t.setState(state);
+        t.setCategory(cat);
+        t.setType(type);
+        t.setWeave(weave);
+        transactionQuery(t);
+        return ;
+    }
 
     public static String transactionQuery(Transactions t){
         String tableData[][];
@@ -652,18 +652,19 @@ public class Neo4j implements AutoCloseable {
     
             } else {
                 return tableData2;
+                //not completed for split
             }
         }
     
-        public static void main(String[] args) {
-           Transactions t1 = new Transactions();
-           Products p1 = new Products();
-    //        t.setRole("Retailer");
-           try (Neo4j neo = new Neo4j("neo4j+s://ba6b34f2.databases.neo4j.io", "neo4j", "yjPkJyIuUi65j4p5yNUK4Tua1ZzgK3z4VPGc0iU_7rU")) {
-               neo.productStock(p1);
-           } catch (Exception e) {
-               System.out.println("Exception");
-           }
-        }
+    //     public static void main(String[] args) {
+    //        Transactions t1 = new Transactions();
+    //        Products p1 = new Products();
+    // //        t.setRole("Retailer");
+    //        try (Neo4j neo = new Neo4j("neo4j+s://ba6b34f2.databases.neo4j.io", "neo4j", "yjPkJyIuUi65j4p5yNUK4Tua1ZzgK3z4VPGc0iU_7rU")) {
+    //            neo.productStock(p1);
+    //        } catch (Exception e) {
+    //            System.out.println("Exception");
+    //        }
+    //     }
         
 }
