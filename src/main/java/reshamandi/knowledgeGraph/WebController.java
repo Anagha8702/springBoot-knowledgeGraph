@@ -154,14 +154,34 @@ public class WebController {
         model.addAttribute("data_row", data.length);
         model.addAttribute("data_col", data[0].length);
         model.addAttribute("param2", param2);
+        
+        //Transactions
         model.addAttribute("states", states);
         model.addAttribute("years", years);
         model.addAttribute("seasons", seasons);
+
+        model.addAttribute("trans_states", trans_states);
+        model.addAttribute("trans_months", trans_months);
+        model.addAttribute("categories", cat_list);
+        model.addAttribute("types", types_list);
+        model.addAttribute("weaves", weave_list);
+        model.addAttribute("role", role_list);
+        model.addAttribute("ID", ID_list);
+
+        model.addAttribute("prod_cat", prod_cat_list);
+        model.addAttribute("prod_type", prod_type_list);
+        model.addAttribute("prod_weave", prod_weave_list);
+        model.addAttribute("filter", filter_list);
         return "index";
     }
 
     @PostMapping("/transactions")
     public String greetingTransactionSubmit(@ModelAttribute Transactions trans, Model model){
+        //Statistics
+        model.addAttribute("states", states);
+        model.addAttribute("years", years);
+        model.addAttribute("seasons", seasons);
+        
         //Transactions part
         model.addAttribute("trans", trans);
         model.addAttribute("trans_states", trans_states);
@@ -171,6 +191,12 @@ public class WebController {
         model.addAttribute("weaves", weave_list);
         model.addAttribute("role", role_list);
         model.addAttribute("ID", ID_list);
+
+        //Products
+        model.addAttribute("prod_cat", prod_cat_list);
+        model.addAttribute("prod_type", prod_type_list);
+        model.addAttribute("prod_weave", prod_weave_list);
+        model.addAttribute("filter", filter_list);
 
         String data[][];
         try{
@@ -195,6 +221,21 @@ public class WebController {
     @PostMapping("/products")
     public String greetingProductsSubmit(@ModelAttribute Products prods, Model model){
         
+        //Statistics
+        model.addAttribute("states", states);
+        model.addAttribute("years", years);
+        model.addAttribute("seasons", seasons);
+
+        //Transactions
+        model.addAttribute("trans_states", trans_states);
+        model.addAttribute("trans_months", trans_months);
+        model.addAttribute("categories", cat_list);
+        model.addAttribute("types", types_list);
+        model.addAttribute("weaves", weave_list);
+        model.addAttribute("role", role_list);
+        model.addAttribute("ID", ID_list);
+
+        //Products
         model.addAttribute("prods", prods);
         model.addAttribute("prod_cat", prod_cat_list);
         model.addAttribute("prod_type", prod_type_list);

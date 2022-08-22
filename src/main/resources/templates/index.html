@@ -330,7 +330,7 @@ input[type='radio']:checked:after {
     <button onclick="toggle(statSpec)" class="butn">Statistics</button>
     <button onclick="toggle(productSpec)" class="butn">Products</button>
 
-    <div id="productSpec" style="display: none;" class="products">
+    <div id="productSpec" style="display: none;" class="query">
         <form action="#" th:action="@{/products}" th:object="${prods}" method="post">
             <h1 style="margin-bottom: -20px;">Products</h1>  <br>
             <h4>Role</h4>
@@ -359,7 +359,7 @@ input[type='radio']:checked:after {
         </form>
     </div>
 
-    <div id="transSpec" style="display: none;" class="transactions">
+    <div id="transSpec" style="display: none;" class="query">
         <form action="#" th:action="@{/transactions}" th:object="${trans}" method="post">
             <h1 style="margin-bottom: -20px;">Transactions</h1>  <br>
             <h4>Role</h4>
