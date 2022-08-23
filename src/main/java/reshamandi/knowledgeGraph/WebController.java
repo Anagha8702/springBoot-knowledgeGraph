@@ -198,9 +198,10 @@ public class WebController {
         model.addAttribute("prod_weave", prod_weave_list);
         model.addAttribute("filter", filter_list);
 
-        String data[][];
+        String topTenData[][], data[][];
         try{
-            data = neo.topTenProduct(trans);
+            data = neo.transactionQuery(trans);
+            topTenData = neo.topTenProduct(trans);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -213,6 +214,7 @@ public class WebController {
         System.out.println(Arrays.deepToString(trans.getCategory()));
         System.out.println(Arrays.deepToString(trans.getWeave()));
         System.out.println(Arrays.deepToString(trans.getType()));
+        System.out.println(Arrays.deepToString(data));
 
         return "index";
         

@@ -6,6 +6,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class Neo4j implements AutoCloseable {
     dict d = new dict();
@@ -181,11 +182,11 @@ public class Neo4j implements AutoCloseable {
     }
     public static void main(String... args){
         Transactions t = new Transactions();
-        String ids[] = {"12598"};
+        // String ids[] = {"12598"};
         t.setRole("Retailer");
-        t.setID(ids);
-        String months[] = {"January", "March", "July", "August", "September", "October", "December", "November"};
-        String state[] = {"Karnataka", "Goa", "Punjab"};
+        // t.setID(ids);
+        String months[] = {"January", "March"};
+        String state[] = {"Karnataka", "Goa"};
         String type[] = null;
         String cat[] = {"Beads", "Saree"};
         String weave[] = {"Satin", "Plain", "JACQUARD"};
@@ -194,17 +195,22 @@ public class Neo4j implements AutoCloseable {
         t.setCategory(cat);
         t.setType(type);
         t.setWeave(weave);
-        transactionQuery(t);
+        Dotenv dotenv = Dotenv.load();
+        Neo4j neo = new Neo4j(dotenv.get("NEO4J_URI"), dotenv.get("NEO4j_AUTH_USER"), dotenv.get("NEO4j_AUTH_PASSWORD"));
+        System.out.println(Arrays.deepToString(neo.transactionQuery(t)[1]));
+        // System.out.println(neo.transactionQuery(t)[0]);
+        System.out.println(neo.transactionQuery(t)[1][2]);
+
+        System.out.println("hello");
         return ;
     }
 
-    public static String transactionQuery(Transactions t){
-        String tableData[][];
+    public String[][] transactionQuery(Transactions t){
         String query = "";
         int i;
         boolean flag = false;
 
-        if(t.getID() != null){
+        if(t.getID().length != 0){
             String ids[] = t.getID();
             StringBuilder qids = new StringBuilder("WHERE (");
             for(i=0;i<(ids.length)-1;i++)
@@ -269,9 +275,27 @@ public class Neo4j implements AutoCloseable {
         else query = "MATCH (w:Product)-[r:boughtBy]->(n:Retailer)\n" + query + "RETURN r.transaction_id AS Transaction_ID,r.retailer_id AS Retailer_ID,r.quantity AS Quantity,r.state AS State,r.month AS Month,left(r.created_date,4) AS Year,r.cost_price AS Cost_Price,r.pdt_id AS Product_ID,r.type AS Type,r.category AS Category,r.weave AS Weave"; 
         
         System.out.println(query);
-
-        return query;
-    
+        String finalQuery = query;
+        String[][] answer = {};
+        try (Session session = driver.session()) {
+            answer = session.writeTransaction(tx -> {
+                Result result = tx.run(finalQuery);
+                List<Record> list = new ArrayList<Record>(result.list());
+                String queryAnswer[][] = new String[list.size()+1][11];
+                queryAnswer[0] = list.get(0).keys().toArray(new String[0]);
+                for(int j=0; j<11; j++) queryAnswer[0][j] = queryAnswer[0][j].replace('_', ' ');
+                for(int k=0;k<list.size();k++)
+                    for(int j=0;j<11;j++)
+                        queryAnswer[k+1][j] = list.get(k).get(j).toString();
+                return queryAnswer;
+            });
+        }
+        catch(Exception e){
+            System.out.println(e);
+            System.out.println("Error");
+        }
+        // System.out.println(Arrays.deepToString(answer));
+        return answer;
 }
 
 
@@ -448,6 +472,7 @@ public class Neo4j implements AutoCloseable {
 }
 
     ////////////////////////// PATCHING /////////////////////////////////////////////
+
         ///////////////////////topTenProducts////////////////////////
         public String[][] topTenProduct(Transactions t) {
             dict d = new dict();
@@ -462,7 +487,7 @@ public class Neo4j implements AutoCloseable {
             } else {
                 mainQuery.append("MATCH (w:Product)-[r:boughtBy]->(n:Retailer)");
             }
-            if (t.getID() != null) {
+            if (t.getID().length != 0) {
                 mainQuery.append("\nWHERE (");
                 mainQuery.append("n.id=").append('"' + t.getID()[0] + '"');
                 for (int i = 1; i < t.getID().length; i++) {

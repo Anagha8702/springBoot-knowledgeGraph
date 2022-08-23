@@ -1,3 +1,3 @@
 document.addEventListener('DOMContentLoaded', () => {
-    alert("Testing script linking");
+    console.log("Testing script linking");
 });
