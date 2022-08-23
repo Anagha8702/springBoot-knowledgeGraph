@@ -201,10 +201,23 @@ public class WebController {
         String topTenData[][], data[][];
         try{
             data = neo.transactionQuery(trans);
-            topTenData = neo.topTenProduct(trans);
+            String headData[] = data[0];
+            String data1[][] = new String[data.length-1][data[0].length];
+            for(int i=1;i<data.length;i++){
+                for(int j=0;j<data[0].length;j++)
+                    data1[i-1][j] = data[i][j];
+            }
+            System.out.println(Arrays.deepToString(data));
+            model.addAttribute("data1", data1);
+            model.addAttribute("headData", headData);
+            model.addAttribute("tableDisplay", 1);
+            // topTenData = neo.topTenProduct(trans);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
+            // throw new RuntimeException(e);
         }
+
+        
         
 
         System.out.println(trans.getRole());
@@ -214,7 +227,6 @@ public class WebController {
         System.out.println(Arrays.deepToString(trans.getCategory()));
         System.out.println(Arrays.deepToString(trans.getWeave()));
         System.out.println(Arrays.deepToString(trans.getType()));
-        System.out.println(Arrays.deepToString(data));
 
         return "index";
         

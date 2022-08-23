@@ -286,7 +286,7 @@ public class Neo4j implements AutoCloseable {
                 for(int j=0; j<11; j++) queryAnswer[0][j] = queryAnswer[0][j].replace('_', ' ');
                 for(int k=0;k<list.size();k++)
                     for(int j=0;j<11;j++)
-                        queryAnswer[k+1][j] = list.get(k).get(j).toString();
+                        queryAnswer[k+1][j] = list.get(k).get(j).asString();
                 return queryAnswer;
             });
         }
@@ -487,7 +487,7 @@ public class Neo4j implements AutoCloseable {
             } else {
                 mainQuery.append("MATCH (w:Product)-[r:boughtBy]->(n:Retailer)");
             }
-            if (t.getID().length != 0) {
+            if (t.getID() != null) {
                 mainQuery.append("\nWHERE (");
                 mainQuery.append("n.id=").append('"' + t.getID()[0] + '"');
                 for (int i = 1; i < t.getID().length; i++) {
