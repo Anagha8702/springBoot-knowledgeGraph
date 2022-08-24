@@ -217,8 +217,13 @@ public class WebController {
             // throw new RuntimeException(e);
         }
 
-        
-        
+        topTenData=neo.topTenProduct(trans);
+        for (String[] s1 : topTenData) {
+            for (String s2 : s1) {
+                System.out.print(s2 + "   ");
+            }
+            System.out.println("");
+        }
 
         System.out.println(trans.getRole());
         System.out.println(Arrays.deepToString(trans.getID()));

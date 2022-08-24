@@ -487,7 +487,7 @@ public class Neo4j implements AutoCloseable {
             } else {
                 mainQuery.append("MATCH (w:Product)-[r:boughtBy]->(n:Retailer)");
             }
-            if (t.getID() != null) {
+            if (t.getID().length != 0) {
                 mainQuery.append("\nWHERE (");
                 mainQuery.append("n.id=").append('"' + t.getID()[0] + '"');
                 for (int i = 1; i < t.getID().length; i++) {
@@ -571,12 +571,6 @@ public class Neo4j implements AutoCloseable {
                             j++;
                         }
                         i++;
-                    }
-                    for (String[] s1 : tableData1) {
-                        for (String s2 : s1) {
-                            System.out.print(s2 + "   ");
-                        }
-                        System.out.println("");
                     }
                     return 0;
                 });
