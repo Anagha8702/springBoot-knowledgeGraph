@@ -191,7 +191,7 @@ public class WebController {
         model.addAttribute("weaves", weave_list);
         model.addAttribute("role", role_list);
         model.addAttribute("ID", ID_list);
-
+        model.addAttribute("m", months);
         //Products
         model.addAttribute("prod_cat", prod_cat_list);
         model.addAttribute("prod_type", prod_type_list);
