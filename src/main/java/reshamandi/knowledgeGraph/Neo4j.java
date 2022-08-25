@@ -585,10 +585,14 @@ public class Neo4j implements AutoCloseable {
             StringBuilder catList = new StringBuilder();
             StringBuilder typeList = new StringBuilder();
             StringBuilder weaveList = new StringBuilder();
-            StringBuilder mainQuery = new StringBuilder();
-            String[][] tableData2 = new String[0][];
-            int size;
-    //        String[][] tableData1;
+            StringBuilder mainQuery1 = new StringBuilder();
+            StringBuilder query1 = new StringBuilder();
+            StringBuilder query2 = new StringBuilder();
+            StringBuilder pquery = new StringBuilder();
+            String[][] pdtData = new String[0][];
+            String[][] inQData = new String[0][];
+            String[][] outQData = new String[0][];
+            int noOfPdt,noOfInq,noOfout2;
             if (t.getCategory() != null) {
                 catList.append("(").append("r.category = ").append('"' + t.getCategory()[0] + '"');
                 for (int i = 1; i < t.getCategory().length; i++) {
@@ -620,57 +624,158 @@ public class Neo4j implements AutoCloseable {
                 weaveList.append("(true)");
     
             if (t.getFilter() != "Split") {
-                mainQuery.append("MATCH (c:Category)-[r1:categoryName]->(p:Product)\n");
-                mainQuery.append("WHERE ").append(catList).append("\nWITH p \n");
-                mainQuery.append("MATCH (t:Type)-[r1:typeName]->(p)\n");
-                mainQuery.append("WHERE ").append(typeList).append("\nWITH p\n");
-                mainQuery.append("MATCH (w:Weave)-[r3:weaveName]->(p:Product)\n");
-                mainQuery.append("WHERE ").append(weaveList).append("\nWITH p\n");
-                mainQuery.append("MATCH (weav:Weaver)-[r4:soldBy]->(p)\n" +
-                        "WITH p,sum(toFloat(r4.quantity)) AS inQuantity\n" +
-                        "MATCH (p)-[r5:boughtBy]->(ret:Retailer)\n" +
-                        "WITH p,inQuantity,sum(toFloat(r5.quantity)) AS outQuantity\n" +
-                        "RETURN p.pdtId,ceil(abs(inQuantity-outQuantity)) AS Stock,p.type,p.category,p.weave");
-                System.out.println(mainQuery);
-    
+                mainQuery1.append("MATCH (c:Category)-[r1:categoryName]->(p1:Product)\n");
+                mainQuery1.append("WHERE ").append(catList).append("\nWITH p1 \n");
+                mainQuery1.append("MATCH (t:Type)-[r2:typeName]->(p1)\n");
+                mainQuery1.append("WHERE ").append(typeList).append("\nWITH p1\n");
+                mainQuery1.append("MATCH (w:Weave)-[r3:weaveName]->(p1:Product)\n");
+                mainQuery1.append("WHERE ").append(weaveList);
+                query1.append(mainQuery1).append("\nWITH p1\n").append("MATCH (weav:Weaver)-[r4:soldBy]->(p1)\n" +
+                        "WITH p1,sum(toFloat(r4.quantity)) AS inQuantity\n" +
+                        "RETURN p1.pdtId,ceil(inQuantity) AS Stock,p1.type,p1.category,p1.weave\n"+
+                        "ORDER BY p1.pdtId\n");
+                query2.append(mainQuery1).append("\nWITH p1\n").append("MATCH (p1)-[r5:boughtBy]->(ret:Retailer)\n" +
+                "WITH p1,sum(toFloat(r5.quantity)) AS outQuantity\n" +
+                "RETURN p1.pdtId,ceil(outQuantity) AS Stock,p1.type,p1.category,p1.weave\n"+
+                        "ORDER BY p1.pdtId\n");
+                pquery.append(mainQuery1).append("RETURN p1.pdtId,p1.type,p1.category,p1.weave\n"+
+                        "ORDER BY p1.pdtId\n");
+                System.out.println(pquery);
+                System.out.println(query1);
+                System.out.println(query2);
     
                 try (Session session = driver.session()) {
-                    tableData2 = session.writeTransaction(tx -> {
-                        Result result = tx.run(String.valueOf(mainQuery));
+
+                    //listing all products with given combination
+                    pdtData = session.writeTransaction(tx -> {
+                        Result result = tx.run(String.valueOf(pquery));
                         List<Record> list = new ArrayList<Record>(result.list());
                         System.out.println(list.size());
                         String[][] tableData1 = new String[list.size() + 1][5];
                         tableData1[0][0] = new String("Product ID");
-                        tableData1[0][1] = "Stock";
-                        tableData1[0][2] = "Type";
-                        tableData1[0][3] = "Category";
-                        tableData1[0][4] = "Weave";
+                        tableData1[0][1] = "Type";
+                        tableData1[0][2] = "Category";
+                        tableData1[0][3] = "Weave";
+                        tableData1[0][4] = Integer.toString(list.size());
                         int i = 1;
                         for (Record r : list) {
-                            System.out.println(r);
                             int j = 0;
                             for (var s1 : r.values()) {
-                                tableData1[i][j] = new String(s1.toString());
+                                tableData1[i][j] = s1.asString();
                                 j++;
                             }
                             i++;
                         }
-                        for (String[] s1 : tableData1) {
-                            for (String s2 : s1) {
-                                System.out.print(s2 + "   ");
-                            }
-                            System.out.println("");
-                        }
+                        // for (String[] s1 : tableData1) {
+                        //     for (String s2 : s1) {
+                        //         System.out.print(s2 + "   ");
+                        //     }
+                        //     System.out.println("");
+                        // }
                         return tableData1;
                     });
+                    noOfPdt = Integer.parseInt(pdtData[0][4]);
+                    pdtData[0][4] = "Stock";
+                    System.out.println("Returned list of products ");
+                    //listing all products sold by weavers to company along with stock
+                    inQData = session.writeTransaction(tx -> {
+                        Result result = tx.run(String.valueOf(query1));
+                        List<Record> list = new ArrayList<Record>(result.list());
+                        String[][] tableData1 = new String[list.size() + 1][6];
+                        tableData1[0][0] = new String("Product ID");
+                        tableData1[0][2] = "Type";
+                        tableData1[0][3] = "Category";
+                        tableData1[0][4] = "Weave";
+                        tableData1[0][1] = "Stock";
+                        tableData1[0][5] = Integer.toString(list.size());
+                        int i = 1;
+                        for (Record r : list) {
+                            int j = 0;
+                            for (var s1 : r.values()) {
+                                if(j==1){
+                                    tableData1[i][j] = s1.toString();
+                                    j++;
+                                }else{
+                                    tableData1[i][j] = s1.asString();
+                                    j++;
+                                }
+                            }
+                            i++;
+                        }
+                        // for (String[] s1 : tableData1) {
+                        //     for (String s2 : s1) {
+                        //         System.out.print(s2 + "   ");
+                        //     }
+                        //     System.out.println("");
+                        // }
+                        return tableData1;
+                    });
+                    noOfInq = Integer.parseInt(inQData[0][5]);
+
+                    //listing all products bought by retailer from company along with stock
+                    outQData = session.writeTransaction(tx -> {
+                        Result result = tx.run(String.valueOf(query2));
+                        List<Record> list = new ArrayList<Record>(result.list());
+                        System.out.println(list.size());
+                        String[][] tableData1 = new String[list.size() + 1][6];
+                        tableData1[0][0] = new String("Product ID");
+                        tableData1[0][2] = "Type";
+                        tableData1[0][3] = "Category";
+                        tableData1[0][4] = "Weave";
+                        tableData1[0][1] = "Stock";
+                        tableData1[0][5] = Integer.toString(list.size());
+                        int i = 1;
+                        for (Record r : list) {
+                            int j = 0;
+                            for (var s1 : r.values()) {
+                                if(j==1){
+                                    tableData1[i][j] = s1.toString();
+                                    j++;
+                                }else{
+                                    tableData1[i][j] = s1.asString();
+                                    j++;
+                                }
+                            }
+                            i++;
+                        }
+                        // for (String[] s1 : tableData1) {
+                        //     for (String s2 : s1) {
+                        //         System.out.print(s2 + "   ");
+                        //     }
+                        //     System.out.println("");
+                        // }
+                        return tableData1;
+                    });
+                    noOfout2 = Integer.parseInt(outQData[0][5]);
+                    int m=1,n=1;
+                    for(int i=1;i<noOfPdt;i++){
+                        if(m<noOfInq && pdtData[i][0].equals(inQData[m][0])){
+                            pdtData[i][4] = inQData[m][1];
+                            m++;
+                        }else{
+                            pdtData[i][4] = "0.0";
+                        }
+                        if(n<noOfout2 && pdtData[i][0].equals(outQData[n][0])){
+                            pdtData[i][4] = Float.toString(Float.parseFloat(pdtData[i][4])-Float.parseFloat(outQData[n][1]));
+                            n++;
+                        }
+                    }
+
+                    for (String[] s1 : pdtData) {
+                        for (String s2 : s1) {
+                            System.out.print(s2 + "   ");
+                        }
+                        System.out.println("");
+                    }
+
                 } catch (Exception e) {
                     System.out.println(e);
                 }
                 System.out.println();
-                return tableData2;
+                return pdtData;
     
             } else {
-                return tableData2;
+                return pdtData;
                 //not completed for split
             }
         }
