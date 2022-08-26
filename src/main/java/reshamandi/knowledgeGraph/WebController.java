@@ -301,6 +301,31 @@ public class WebController {
         model.addAttribute("prod_weave", prod_weave_list);
         model.addAttribute("filter", filter_list);
 
+        String productdata[][];
+        try{
+            productdata = neo.productStock(prods);
+            
+            
+
+            String headData_prod[] = productdata[0];
+            String datap[][] = new String[productdata.length - 1][productdata[0].length];
+
+            for (int i = 1; i < productdata.length; i++) {
+                for (int j = 0; j < productdata[0].length; j++) {
+                    datap[i - 1][j] = productdata[i][j];
+                }
+            }
+
+            model.addAttribute("data1", datap);
+            model.addAttribute("headData", headData_prod);
+            model.addAttribute("tableDisplay", 1);
+            
+            
+        } catch (Exception e) {
+            System.out.println(e);
+            
+        }
+
         System.out.println(prods.getFilter());
         System.out.println(Arrays.deepToString(prods.getCategory()));
         System.out.println(Arrays.deepToString(prods.getType()));
