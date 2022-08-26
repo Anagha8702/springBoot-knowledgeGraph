@@ -198,7 +198,7 @@ public class WebController {
         model.addAttribute("prod_weave", prod_weave_list);
         model.addAttribute("filter", filter_list);
 
-        String topTenData[][], data[][];
+        String topTenData[][],topTenData1[][], data[][];
         try{
             data = neo.transactionQuery(trans);
             String headData[] = data[0];
@@ -220,9 +220,16 @@ public class WebController {
         try{
             if(trans.getID().length ==0 ){
                 topTenData=neo.topTenProduct(trans);
-                
+                topTenData1=neo.topTenWeavers(trans);
                 //Printing on terminal top10 table
                 for (String[] s1 : topTenData) {
+                    for (String s2 : s1) {
+                        System.out.print(s2 + "   ");
+                    }
+                    System.out.println("");
+                }
+                System.out.println("Top 10 Weavers no \n");
+                for (String[] s1 : topTenData1) {
                     for (String s2 : s1) {
                         System.out.print(s2 + "   ");
                     }
@@ -231,17 +238,32 @@ public class WebController {
 
                 String headData_top10[] = topTenData[0];
                 String data10[][] = new String[topTenData.length-1][topTenData[0].length];
+                String data10_wr[][] = new String[topTenData1.length-1][topTenData1[0].length];
 
                 for(int i=1;i<topTenData.length;i++){
                     for(int j=0;j<topTenData[0].length;j++){
                         data10[i-1][j] = topTenData[i][j];
                     }
                 }
+
+                for(int i=1;i<topTenData1.length;i++){
+                    for(int j=0;j<topTenData1[0].length;j++){
+                        data10_wr[i-1][j] = topTenData1[i][j];
+                    }
+                }
                 
+                String headData2_top10[] = new String[2];
+                System.out.println("hey see here:"+trans.getRole());
+                if(trans.getRole().equals("Weaver")) headData2_top10[0] = "Weaver ID";
+                else headData2_top10[0] = "Retailer ID";
+                headData2_top10[1] = "Quantity";
                 System.out.println(Arrays.deepToString(topTenData));
                 System.out.println(headData_top10);
+
                 model.addAttribute("data10", data10);
+                model.addAttribute("data10_wr", data10_wr);
                 model.addAttribute("headData_top10", headData_top10);
+                model.addAttribute("headData2_top10", headData2_top10);
                 model.addAttribute("tableDisplay_top10", 1);   
 
                 for(int i=1;i<topTenData.length;i++){

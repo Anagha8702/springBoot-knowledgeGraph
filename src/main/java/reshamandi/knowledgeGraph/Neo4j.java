@@ -679,6 +679,125 @@ public class Neo4j implements AutoCloseable {
         return tableData1;
     }
 
+ /////////////////////// topTenWeavers////////////////////////
+     int weaver = 0;
+ public String[][] topTenWeavers(Transactions t) {
+    dict d = new dict();
+   
+    StringBuilder mainQuery = new StringBuilder();
+    StringBuilder catList = new StringBuilder();
+    StringBuilder typeList = new StringBuilder();
+    StringBuilder weaveList = new StringBuilder();
+    StringBuilder stateList = new StringBuilder();
+    StringBuilder monthList = new StringBuilder();
+    if (t.getRole().equals("Weaver")) {
+        mainQuery.append("MATCH (n:Weaver)-[r:soldBy]->(w:Product)"); weaver = 1;
+    } else {
+        mainQuery.append("MATCH (w:Product)-[r:boughtBy]->(n:Retailer)");
+    }
+    if (t.getID().length != 0) {
+        mainQuery.append("\nWHERE (");
+        mainQuery.append("n.id=").append('"' + t.getID()[0] + '"');
+        for (int i = 1; i < t.getID().length; i++) {
+            mainQuery.append(" or n.id=");
+            mainQuery.append('"' + t.getID()[i] + '"');
+        }
+        mainQuery.append(")");
+        mainQuery.append("\nWITH r");
+    }
+
+    if (t.getCategory() != null) {
+        catList.append("(").append("r.category = ").append('"' + t.getCategory()[0] + '"');
+        for (int i = 1; i < t.getCategory().length; i++) {
+            catList.append(" or r.category = ");
+            catList.append('"' + t.getCategory()[i] + '"');
+        }
+        catList.append(")");
+    } else
+        catList.append("(true)");
+
+    if (t.getType() != null) {
+        typeList.append("(").append("r.type = ").append('"' + t.getType()[0] + '"');
+        for (int i = 1; i < t.getType().length; i++) {
+            typeList.append(" or r.type = ");
+            typeList.append('"' + t.getType()[i] + '"');
+        }
+        typeList.append(")");
+    } else
+        typeList.append("(true)");
+
+    if (t.getWeave() != null) {
+        weaveList.append("(r.weave = ").append('"' + t.getWeave()[0] + '"');
+        for (int i = 1; i < t.getWeave().length; i++) {
+            weaveList.append(" or r.weave = ");
+            weaveList.append('"' + t.getWeave()[i] + '"');
+        }
+        weaveList.append(")");
+    } else
+        weaveList.append("(true)");
+
+    if (t.getMonth() != null) {
+        monthList.append("(r.month = ").append('"' + t.getMonth()[0] + '"');
+        for (int i = 1; i < t.getMonth().length; i++) {
+            monthList.append(" or r.month = ");
+            monthList.append('"' + t.getMonth()[i] + '"');
+        }
+        monthList.append(")");
+    } else
+        monthList.append("(true)");
+
+    if (t.getState() != null) {
+        stateList.append("(r.state = ").append('"' + t.getState()[0] + '"');
+        for (int i = 1; i < t.getState().length; i++) {
+            stateList.append(" or r.state = ");
+            stateList.append('"' + t.getState()[i] + '"');
+        }
+        stateList.append(")");
+    } else
+        stateList.append("(true)");
+
+    mainQuery.append(" ").append("\nWHERE ").append(monthList).append(" and ").append(stateList).append(" and ")
+            .append(catList).append(" and ");
+    mainQuery.append(typeList).append(" and ").append(weaveList);
+    if (t.getRole().equals("Weaver"))
+            mainQuery.append("\nRETURN r.weaver_id,sum(toFloat(r.quantity)) AS Quantity\n" +
+                    "ORDER BY Quantity DESC LIMIT 10");
+            else 
+            mainQuery.append("\nRETURN r.retailer_id,sum(toFloat(r.quantity)) AS Quantity\n" +
+            "ORDER BY Quantity DESC LIMIT 10");
+
+
+    String[][] tableData1 = new String[11][2];
+    try (Session session = driver.session()) {
+        session.writeTransaction(tx -> {
+            Result result = tx.run(String.valueOf(mainQuery));
+            List<Record> list = new ArrayList<Record>(result.list());
+            if (t.getRole().equals("Weaver")){
+            tableData1[0][0] = "Weaver ID"; }
+            else {tableData1[0][0] = "Retailer ID"; }
+            tableData1[0][1] = "Quantity";
+         
+            int i = 1;
+            for (Record r : list) {
+                int j = 0;
+                for (var s1 : r.values()) {
+                    tableData1[i][j] = new String(s1.toString());
+                    j++;
+                }
+                i++;
+            }
+            return 0;
+        });
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+    return tableData1;
+}
+
+
+///////////////end of top 10 weavers /////////
+///////////
+
     ///////////////////////// Product Stock
     ///////////////////////// ///////////////////////////////////////////////
     public String[][] productStock(Products t) {
