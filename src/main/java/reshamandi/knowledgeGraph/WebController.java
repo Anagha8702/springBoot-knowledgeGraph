@@ -217,12 +217,52 @@ public class WebController {
             // throw new RuntimeException(e);
         }
 
-        topTenData=neo.topTenProduct(trans);
-        for (String[] s1 : topTenData) {
-            for (String s2 : s1) {
-                System.out.print(s2 + "   ");
-            }
-            System.out.println("");
+        try{
+            if(trans.getID().length ==0 ){
+                topTenData=neo.topTenProduct(trans);
+                
+                //Printing on terminal top10 table
+                for (String[] s1 : topTenData) {
+                    for (String s2 : s1) {
+                        System.out.print(s2 + "   ");
+                    }
+                    System.out.println("");
+                }
+
+                String headData_top10[] = topTenData[0];
+                String data10[][] = new String[topTenData.length-1][topTenData[0].length];
+
+                for(int i=1;i<topTenData.length;i++){
+                    for(int j=0;j<topTenData[0].length;j++){
+                        data10[i-1][j] = topTenData[i][j];
+                    }
+                }
+                
+                System.out.println(Arrays.deepToString(topTenData));
+                System.out.println(headData_top10);
+                model.addAttribute("data10", data10);
+                model.addAttribute("headData_top10", headData_top10);
+                model.addAttribute("tableDisplay_top10", 1);   
+
+                for(int i=1;i<topTenData.length;i++){
+                        for(int j=0;j<topTenData[0].length;j++){
+                            data10[i-1][j] = topTenData[i][j];
+                        }
+                    }
+                
+                System.out.println(Arrays.deepToString(topTenData));
+                System.out.println(headData_top10);
+                model.addAttribute("data10", data10);
+                model.addAttribute("headData_top10", headData_top10);
+                model.addAttribute("tableDisplay_top10", 1);    
+            
+            
+                
+            }else
+            model.addAttribute("tableDisplay_top10", 0);
+        }
+        catch (Exception e){
+            System.out.println(e);
         }
 
         System.out.println(trans.getRole());

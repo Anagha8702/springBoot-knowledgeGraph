@@ -468,6 +468,22 @@ input[type='radio']:checked:after {
             </tbody>
         </table>
     </div>
+    <div th:switch="${tableDisplay_top10}" class="tableLayout">
+        <table id="example10" th:case=1 class="display1" style="width:100%">
+            <thead>
+            <tr>
+                <th th:each="element: ${headData_top10}" th:text="${element}">
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="row: ${data10}">
+                <td id="ex2" th:each="element: ${row}"  th:if= "${element != null}" th:text="${element}">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <section>
 
         <div th:switch="${tableDisplay}" class="chartbox">
