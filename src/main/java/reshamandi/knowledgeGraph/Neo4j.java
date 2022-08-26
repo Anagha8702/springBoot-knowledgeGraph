@@ -816,9 +816,9 @@ public class Neo4j implements AutoCloseable {
         String[] slist = new String[0];
         int noOfPdt, noOfInq, noOfout2, noOfStates;
         if (t.getCategory() != null) {
-            catList.append("(").append("r.category = ").append('"' + t.getCategory()[0] + '"');
+            catList.append("(").append("r1.category = ").append('"' + t.getCategory()[0] + '"');
             for (int i = 1; i < t.getCategory().length; i++) {
-                catList.append(" or r.category = ");
+                catList.append(" or r1.category = ");
                 catList.append('"' + t.getCategory()[i] + '"');
             }
             catList.append(")");
@@ -826,9 +826,9 @@ public class Neo4j implements AutoCloseable {
             catList.append("(true)");
 
         if (t.getType() != null) {
-            typeList.append("(").append("r.type = ").append('"' + t.getType()[0] + '"');
+            typeList.append("(").append("r2.type = ").append('"' + t.getType()[0] + '"');
             for (int i = 1; i < t.getType().length; i++) {
-                typeList.append(" or r.type = ");
+                typeList.append(" or r2.type = ");
                 typeList.append('"' + t.getType()[i] + '"');
             }
             typeList.append(")");
@@ -836,9 +836,9 @@ public class Neo4j implements AutoCloseable {
             typeList.append("(true)");
 
         if (t.getWeave() != null) {
-            weaveList.append("(r.weave = ").append('"' + t.getWeave()[0] + '"');
+            weaveList.append("(r3.weave = ").append('"' + t.getWeave()[0] + '"');
             for (int i = 1; i < t.getWeave().length; i++) {
-                weaveList.append(" or r.weave = ");
+                weaveList.append(" or r3.weave = ");
                 weaveList.append('"' + t.getWeave()[i] + '"');
             }
             weaveList.append(")");
