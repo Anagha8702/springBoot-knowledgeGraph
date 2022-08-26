@@ -511,6 +511,9 @@ input[type='radio']:checked:after {
         <div th:switch="${tableDisplay}" class="chartbox">
             <canvas th:case=1 id="myChart2" width="2" height="2"></canvas>
         </div>
+        <div th:switch="${tableDisplay}" class="chartbox">
+            <canvas th:case=1 id="myChart3" width="2" height="2"></canvas>
+        </div>
     </section>
     <aside>
         <div th:switch="${tableDisplay}">
@@ -754,7 +757,7 @@ console.log(m + typeof(m))
        plugins: {
              title: {
                  display: true,
-                 text: 'Graph'
+                 text: 'Product vs Quantity'
              },
 
          },
@@ -763,7 +766,68 @@ console.log(m + typeof(m))
 
  });
 
- var p2val = document.getElementById('p2');
+
+ var weavtop10 = /*[[${data10_wr}]]*/ null; //query solution
+var wid =[]; var wq =[]; let b;
+for(b=0;b<weavtop10.length && weavtop10[b][0]!=null ;b++){
+    wid[b] = weavtop10[b][0];
+    wq[b] = parseFloat(weavtop10[b][1]);
+}
+console.log("wid " + wid);
+console.log("wid2 " + wq);
+
+const ctx3 = document.getElementById('myChart3').getContext('2d');
+ const myChart3 = new Chart(ctx3, { //graph definition
+     type: 'doughnut',
+     data: {
+         labels: wid,
+         datasets: [{
+             data: wq,
+             backgroundColor: [
+             '#003f5c',
+                '#2f4b7c',
+                '#665191',
+                '#a05195',
+                '#d45087',
+                '#f95d6a',
+                '#ff7c43',
+                '#ffa600',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 206, 86, 0.9)',
+             ],
+             borderColor: [
+             '#003f5c',
+                '#2f4b7c',
+                '#665191',
+                '#a05195',
+                '#d45087',
+                '#f95d6a',
+                '#ff7c43',
+                '#ffa600',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 206, 86, 0.9)',
+             ],
+             hoverOffset: 5,
+             borderWidth: 1,
+         }
+         ]
+     },
+     plugins: [plugin],
+     options: {
+       plugins: {
+             title: {
+                 display: true,
+                 text: /*[[${lab}]]*/ null
+             },
+
+         },
+
+     }
+
+ });
+
+
+var p2val = document.getElementById('p2');
  p2val.addEventListener('change',param2_tracker);
  function param2_tracker(){ //function to change graph as selection changes
      console.log(p2val.value);

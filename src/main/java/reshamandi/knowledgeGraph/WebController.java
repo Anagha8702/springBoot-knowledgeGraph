@@ -253,9 +253,9 @@ public class WebController {
                 }
                 
                 String headData2_top10[] = new String[2];
-                System.out.println("hey see here:"+trans.getRole());
-                if(trans.getRole().equals("Weaver")) headData2_top10[0] = "Weaver ID";
-                else headData2_top10[0] = "Retailer ID";
+               String lab = new String();
+                if(trans.getRole().equals("Weaver")) { lab = "Top Weavers"; headData2_top10[0] = "Weaver ID"; }
+                else { headData2_top10[0] = "Retailer ID"; lab= "Top Retailers"; }
                 headData2_top10[1] = "Quantity";
                 System.out.println(Arrays.deepToString(topTenData));
                 System.out.println(headData_top10);
@@ -264,6 +264,7 @@ public class WebController {
                 model.addAttribute("data10_wr", data10_wr);
                 model.addAttribute("headData_top10", headData_top10);
                 model.addAttribute("headData2_top10", headData2_top10);
+                model.addAttribute("lab", lab);   
                 model.addAttribute("tableDisplay_top10", 1);   
 
                 for(int i=1;i<topTenData.length;i++){
