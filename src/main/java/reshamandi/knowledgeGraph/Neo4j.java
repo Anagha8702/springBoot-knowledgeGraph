@@ -6,6 +6,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Collections;
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class Neo4j implements AutoCloseable {
@@ -99,6 +100,15 @@ public class Neo4j implements AutoCloseable {
         }
         return -1;
     }
+
+    public <T> List<T> twoDArrayToList(T[][] twoDArray) {
+        List<T> list = new ArrayList<T>();
+        for (T[] array : twoDArray) {
+            list.addAll(Arrays.asList(array));
+        }
+        return list;
+    }
+
 
     public String[][] statistics(String role, String productSpec, String filter, String[] states, String[] seasons,
             String[] years) {
@@ -208,10 +218,10 @@ public class Neo4j implements AutoCloseable {
                 for (int j = 0; j < list.size(); j++, rowIndex++) {
                     // System.out.println("lol");
                     tableData[rowIndex][0] = list.get(j).get("filter1").asString();
-                    while (j < list.size() - 1 && list.get(j).get("filter1").asString()
-                            .equals(list.get(j + 1).get("filter1").asString())) {
-                        tableData[rowIndex][findIndex(tableData[0], list.get(j).get("filter2").asString())] = String
-                                .valueOf(list.get(j).get("count(filter1)"));
+                    while (j < list.size() - 1 && list.get(j).get("filter1").asString().equals(list.get(j + 1).get("filter1").asString())) {
+                        if(findIndex(tableData[0], list.get(j).get("filter2").asString()) == -1)System.out.println("x");
+                        else tableData[rowIndex][findIndex(tableData[0], list.get(j).get("filter2").asString())] = String
+                            .valueOf(list.get(j).get("count(filter1)"));
                         j++;
                     }
                     tableData[rowIndex][findIndex(tableData[0], list.get(j).get("filter2").asString())] = String
@@ -222,7 +232,17 @@ public class Neo4j implements AutoCloseable {
                     }
                 }
 
-                return tableData;
+                List<String> x = twoDArrayToList(tableData);
+                x.removeAll(Collections.singleton(null));
+                for(int j=0;j<x.size();j++)
+                    if(x.get(j) == null)x.remove(j);
+                String ansTable[][] = new String[x.size()/(columns+1)][columns+1];
+                int j = 0;
+                for(int k=0;k<ansTable.length;k++)
+                    for(int l=0;l<ansTable[0].length;l++)
+                        ansTable[k][l] = x.get(j++);
+
+                return ansTable;
             });
         }
         return tableData1;
