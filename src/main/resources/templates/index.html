@@ -502,17 +502,20 @@ input[type='radio']:checked:after {
     </div>
     <section>
 
-        <div th:switch="${tableDisplay}" class="chartbox">
+        <div th:switch="${chart}" class="chartbox">
             <canvas th:case=1 id="myChart" width="2" height="2"></canvas>
         </div>
-        <div th:switch="${tableDisplay}" class="chartbox">
+        <div th:switch="${chart1}" class="chartbox">
             <canvas th:case=1 id="myChart1" width="2" height="2"></canvas>
         </div>
-        <div th:switch="${tableDisplay}" class="chartbox">
+        <div th:switch="${chart2}" class="chartbox">
             <canvas th:case=1 id="myChart2" width="2" height="2"></canvas>
         </div>
-        <div th:switch="${tableDisplay}" class="chartbox">
+        <div th:switch="${chart3}" class="chartbox">
             <canvas th:case=1 id="myChart3" width="2" height="2"></canvas>
+        </div>
+        <div th:switch="${chart4}" class="chartbox">
+            <canvas th:case=1 id="myChart4" width="2" height="2"></canvas>
         </div>
     </section>
     <aside>
@@ -556,13 +559,15 @@ input[type='radio']:checked:after {
      console.log(q);
      var q1=[];
      let i;
+        let weavers = [];
+     if(q!=null){
      for(i=0;i<q.length;i++){
         q1[i]=q[i][2];
      }
-     let weavers = [];
+  
      for(i=0;i<q.length;i++){
         weavers[i]=q[i][1];
-     }
+     }}
      W = new Set(weavers);
      console.log(q1);
      console.log(W);
@@ -634,47 +639,10 @@ console.log(Pquan);  console.log(Pname);
      for(i=0;i<r-1;i++) { Labels[i]=dataset[i+1][0]; Datapoints[i]=parseInt(dataset[i+1][val]);}
      console.log(Labels); //x axis vals
      console.log(Datapoints);//y axis vals
-     const ctx = document.getElementById('myChart').getContext('2d');
- const myChart = new Chart(ctx, { //graph definition
-     type: 'bar',
-     data: {
-         labels: Labels,
-         datasets: [{
-             data: Datapoints,
-             backgroundColor: [
-             'rgba(255, 99, 132, 0.7)',
 
-                 'rgba(255, 206, 86, 0.7)',
-                 'rgba(75, 192, 192, 0.7)',
-                 'rgba(153, 102, 255, 0.7)',
-                 'rgba(255, 159, 64, 0.7)'
-             ],
-             borderColor: [
-             'rgba(255, 99, 132, 1)',
+     var cha = /*[[${chart}]]*/ null;
 
-                 'rgba(255, 206, 86, 1)',
-                 'rgba(75, 192, 192, 1)',
-                 'rgba(153, 102, 255, 1)',
-                 'rgba(255, 159, 64, 1)'
-             ],
-             hoverOffset: 5,
-             borderWidth: 1,
-         }
-         ]
-     },
-     plugins: [plugin],
-     options: {
-       plugins: {
-             title: {
-                 display: true,
-                 text: 'Graph'
-             },
-
-         },
-
-     }
-
- });
+  
  var DATA=[]
  let k=0;
  for(item of W.values()){
@@ -707,7 +675,8 @@ console.log(Pquan);  console.log(Pname);
 console.log(DATA + typeof(DATA));
 console.log(m + typeof(m))
 
- const ctx1 = document.getElementById('myChart1').getContext('2d');
+var c1 = /*[[${chart1}]]*/ null;
+if(c1==1){ const ctx1 = document.getElementById('myChart1').getContext('2d');
  const myChart1 = new Chart(ctx1, { //graph definition
      type: 'line',
      data: {
@@ -726,7 +695,10 @@ console.log(m + typeof(m))
 
      }
 
- });
+ });}
+
+ var c2 = /*[[${chart2}]]*/ null;
+ if(c2==1){
  const ctx2 = document.getElementById('myChart2').getContext('2d');
  const myChart2 = new Chart(ctx2, { //graph definition
      type: 'bar',
@@ -768,16 +740,19 @@ console.log(m + typeof(m))
      }
 
  });
-
+ }
  var weavtop10 = /*[[${data10_wr}]]*/ null; //query solution
 var wid =[]; var wq =[]; let b;
+if(weavtop10!=null){
 for(b=0;b<weavtop10.length && weavtop10[b][0]!=null ;b++){
     wid[b] = weavtop10[b][0];
     wq[b] = parseFloat(weavtop10[b][1]);
 }
 console.log("wid " + wid);
 console.log("wid2 " + wq);
-
+}
+var c3 = /*[[${chart3}]]*/ null;
+if(c3==1){
 const ctx3 = document.getElementById('myChart3').getContext('2d');
  const myChart3 = new Chart(ctx3, { //graph definition
      type: 'doughnut',
@@ -827,7 +802,126 @@ const ctx3 = document.getElementById('myChart3').getContext('2d');
      }
 
  });
+}
+
  
+
+ function toggle(ele){
+    const divs = document.querySelectorAll('.query');
+    for(let i = 0;i<divs.length;i++){
+        divs[i].style.display = "none";
+    }
+    ele.style.display = "block";
+}
+
+var dataset1 = /*[[${data1}]]*/ null; //query solution
+
+var P = []; var Q=[];
+
+for(i=0;i<dataset1.length;i++){
+    P[i]=dataset1[i][1]+" "+dataset1[i][2]+" "+dataset1[i][3];
+    Q[i]=Math.abs(parseFloat(dataset1[i][4]));
+}
+console.log("dataset1"+P);
+console.log("dataset1"+Q);
+var c4 = /*[[${chart4}]]*/ null;
+if(c4==1){
+const ctx4 = document.getElementById('myChart4').getContext('2d');
+ const myChart4 = new Chart(ctx4, { //graph definition
+     type: 'bar',
+     data: {
+         labels: P,
+         datasets: [{
+             data: Q,
+             backgroundColor: [
+             '#003f5c',
+                '#2f4b7c',
+                '#665191',
+                '#a05195',
+                '#d45087',
+                '#f95d6a',
+                '#ff7c43',
+                '#ffa600',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 206, 86, 0.9)',
+             ],
+             borderColor: [
+             '#003f5c',
+                '#2f4b7c',
+                '#665191',
+                '#a05195',
+                '#d45087',
+                '#f95d6a',
+                '#ff7c43',
+                '#ffa600',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 206, 86, 0.9)',
+             ],
+             hoverOffset: 5,
+             borderWidth: 1,
+         }
+         ]
+     },
+     plugins: [plugin],
+     options: {
+       plugins: {
+             title: {
+                 display: true,
+                 text: "Product vs Stock"
+             },
+
+         },
+
+     }
+
+ });}
+
+ // has to be last thing
+
+
+ const ctx = document.getElementById('myChart').getContext('2d');
+ const myChart = new Chart(ctx, { //graph definition
+     type: 'bar',
+     data: {
+         labels: Labels,
+         datasets: [{
+             data: Datapoints,
+             backgroundColor: [
+             'rgba(255, 99, 132, 0.7)',
+
+                 'rgba(255, 206, 86, 0.7)',
+                 'rgba(75, 192, 192, 0.7)',
+                 'rgba(153, 102, 255, 0.7)',
+                 'rgba(255, 159, 64, 0.7)'
+             ],
+             borderColor: [
+             'rgba(255, 99, 132, 1)',
+
+                 'rgba(255, 206, 86, 1)',
+                 'rgba(75, 192, 192, 1)',
+                 'rgba(153, 102, 255, 1)',
+                 'rgba(255, 159, 64, 1)'
+             ],
+             hoverOffset: 5,
+             borderWidth: 1,
+         }
+         ]
+     },
+     plugins: [plugin],
+     options: {
+       plugins: {
+             title: {
+                 display: true,
+                 text: 'Graph'
+             },
+
+         },
+
+     }
+
+ });
+
+
  var p2val = document.getElementById('p2');
  p2val.addEventListener('change',param2_tracker);
  function param2_tracker(){ //function to change graph as selection changes
@@ -838,15 +932,6 @@ const ctx3 = document.getElementById('myChart3').getContext('2d');
      myChart.data.datasets[0].data = Datapoints;
      myChart.update();
  }
-
- function toggle(ele){
-    const divs = document.querySelectorAll('.query');
-    for(let i = 0;i<divs.length;i++){
-        divs[i].style.display = "none";
-    }
-    ele.style.display = "block";
-}
-
   </script>
 
 

@@ -151,6 +151,7 @@ public class WebController {
         model.addAttribute("data1", data1);
         model.addAttribute("headData", headData);
         model.addAttribute("tableDisplay", 1);
+        model.addAttribute("chart", 1);
         model.addAttribute("data_row", data.length);
         model.addAttribute("data_col", data[0].length);
         model.addAttribute("param2", param2);
@@ -211,6 +212,17 @@ public class WebController {
             model.addAttribute("data1", data1);
             model.addAttribute("headData", headData);
             model.addAttribute("tableDisplay", 1);
+
+            if(trans.getID().length ==0 ){
+                model.addAttribute("chart2", 1);
+                model.addAttribute("chart3", 1);
+                model.addAttribute("chart1", 0);
+                }
+                else{
+                    model.addAttribute("chart2", 0);
+                    model.addAttribute("chart3", 0);
+                    model.addAttribute("chart1", 1);
+                }
             // topTenData = neo.topTenProduct(trans);
         } catch (Exception e) {
             System.out.println(e);
@@ -277,7 +289,7 @@ public class WebController {
                 model.addAttribute("headData_top10", headData_top10);
                 model.addAttribute("tableDisplay_top10", 1);    
             
-            
+             
                 
             }else
             model.addAttribute("tableDisplay_top10", 0);
@@ -340,7 +352,7 @@ public class WebController {
             model.addAttribute("data1", datap);
             model.addAttribute("headData", headData_prod);
             model.addAttribute("tableDisplay", 1);
-            
+            model.addAttribute("chart4", 1);
             
         } catch (Exception e) {
             System.out.println(e);
