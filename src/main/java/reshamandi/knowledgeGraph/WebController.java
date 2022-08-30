@@ -61,7 +61,7 @@ public class WebController {
 
     @PostMapping("/retailer")
     public String retailerSubmit(@ModelAttribute Retailer ret, Model model){
-        //neo.patchRetailerTransaction(ret);
+        neo.patchRetailerTransaction(ret);
         
         model.addAttribute("ret", new Retailer());
         model.addAttribute("formdisp", 1);
@@ -110,7 +110,7 @@ public class WebController {
 
     @PostMapping("/weaver")
     public String retailerSubmit(@ModelAttribute Weaver w, Model model){
-        //neo.patchWeaverTransaction(w);
+        neo.patchWeaverTransaction(w);
         
         model.addAttribute("w", new Weaver());
         model.addAttribute("formdisp", 1);
