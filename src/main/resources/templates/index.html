@@ -369,11 +369,11 @@ input[type='radio']:checked:after {
   </span> Reshamandi</h1>
   <div id="image">
       <div class="row">
-        <div class="col-md-3" style="margin-top: 75px; background-color: white;">
-          <button onclick="toggle(productSpec)" class="butn hoverr" style="background-color: #cef5de">Products</button>
-          <button onclick="toggle(statSpec)" class="butn hoverr" style="background-color: #cef5de">Statistics</button>
-          <button onclick="toggle(transSpec)" class="butn hoverr" style="background-color: #cef5de">Transactions</button>
-          <button onClick="parent.open('/register')" class="butn hoverr" style="background-color: #cef5de; width: 100%;">Update DB</button>
+        <div class="col-md-3" style="margin-top: 25px; padding-top:50px; background-color: white; padding-bottom: 60px;">
+          <button onclick="toggle(productSpec)" class="butn hoverr" style="background-color: #befa90">Products</button>
+          <button onclick="toggle(statSpec)" class="butn hoverr" style="background-color: #befa90">Statistics</button>
+          <button onclick="toggle(transSpec)" class="butn hoverr" style="background-color: #befa90">Transactions</button>
+          <button onClick="parent.open('/patch')" class="butn hoverr" style="background-color: #befa90; width: 100%;">Update DB</button>
         </div>
         <div class="col-md-9">
           <div id="productSpec" style="display: none; margin-top: 75px;" class="query">
@@ -582,6 +582,14 @@ input[type='radio']:checked:after {
     </div>
     <section>
 
+      <aside>
+        <div th:switch="${tableDisplay}">
+            <div>
+                <select th:case=1 id = "p2" style="width: 10%; margin-left: 45%;">
+                    <option th:each="val:${param2}" th:value="${val}" th:text="${val}"></option>
+            </div>
+            </select></div>
+    </aside>
         <div th:switch="${chart}" class="chartbox">
             <canvas th:case=1 id="myChart" width="2" height="2"></canvas>
         </div>
@@ -597,15 +605,9 @@ input[type='radio']:checked:after {
         <div th:switch="${chart4}" class="chartbox">
             <canvas th:case=1 id="myChart4" width="2" height="2"></canvas>
         </div>
-    </section>
-    <aside>
-        <div th:switch="${tableDisplay}">
-            <div>
-                <select th:case=1 id = "p2" style="width: 10%; margin-left: 45%;">
-                    <option th:each="val:${param2}" th:value="${val}" th:text="${val}"></option>
-            </div>
-            </select></div>
-    </aside>
+        
+  </section>
+
 
 
     <script th:inline="javascript">
