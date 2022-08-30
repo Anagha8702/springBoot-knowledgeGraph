@@ -4,6 +4,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.thymeleaf.engine.AttributeName;
 
 import java.util.Arrays;
@@ -61,7 +62,7 @@ public class WebController {
 
     @PostMapping("/retailer")
     public String retailerSubmit(@ModelAttribute Retailer ret, Model model){
-        neo.patchRetailerTransaction(ret);
+        //neo.patchRetailerTransaction(ret);
         
         model.addAttribute("ret", new Retailer());
         model.addAttribute("formdisp", 1);
@@ -107,7 +108,7 @@ public class WebController {
         
         return "form";
     }
-
+    
     @PostMapping("/weaver")
     public String retailerSubmit(@ModelAttribute Weaver w, Model model){
         neo.patchWeaverTransaction(w);
@@ -438,4 +439,12 @@ public class WebController {
 
         return "index";
     }
+
+
+    @RequestMapping(value="/register")
+    public String doStuffMethod() {
+        System.out.println("Success");
+        return "weavereg";
+    }
+
 }

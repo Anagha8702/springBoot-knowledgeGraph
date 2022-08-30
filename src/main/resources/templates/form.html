@@ -4,7 +4,10 @@
     <title>Reshmandi</title>
     <link th:href="@{/css/sample.css}" rel="stylesheet" />
     <script type="text/javascript" th:src="@{/js/sample.js}"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -332,6 +335,10 @@ input[type='radio']:checked:after {
     <div id="weaveSpec" style="display: none;" class="patch">
         <form name="Weav_form" action="#" th:action="@{/weaver}" th:object="${w}" method="post">
             <h1 style="margin-bottom: -20px;">Weavers</h1>  <br>
+            <div class="w3-row-padding w3-center w3-margin-top">
+
+            <div class="w3-third">
+            <div class="w3-card w3-container" style="min-height:460px">
             <br><label>ID</label>
             <input type="number" min="0"  placeholder="e.g. 1234567" name="id">
             <br><label>Created by</label>
@@ -339,86 +346,118 @@ input[type='radio']:checked:after {
             <br><label for="email">Created Date</label>
             <input type="date"    placeholder="dd-mm-yyyy"
                min="1997-01-01" max="2030-12-31" name="created_date">
-            <br><label>Transaction ID</label>
-            <input type="number" min="0"   name="transaction_id">
-            <br><label>Category</label>
-            <input type="text"   name="category">
+               <input type="text"   name="type">
+            <br><label>Status</label><br>
+            <select name="status">
+              <option th:each="s: ${l1}" th:value="${s}" th:text="${s}"></option>
+            </select>
             <br><label>Cost Price</label>
             <input type="number" min="0"  name="cost_price">
+            <br><label>Selling Price</label>
+            <input type="number" min="0"   name="selling_price">
+            <br><label>Transaction ID</label>
+            <input type="number" min="0"   name="transaction_id">
+            <br><label>Weaver ID</label>
+            <input type="number" min="0"   name="weaver_id">
+            <br><label>Business type</label>
+            <select name="business_type">
+               <option th:each="s: ${l4}" th:value="${s}" th:text="${s}"></option>
+            </select>
+            <br><label>state</label>
+            <input type="text"   name="state">
+            </div>
+            </div>
+
+            <div class="w3-third">
+            <div class="w3-card w3-container" style="min-height:460px">
+            <br><label>Category</label>
+            <input type="text"   name="category">
+            <br><label>Type</label>
+            <input type="text"   name="type">
+            <br><label >Weave</label>
+            <input type="text"   name="weave">
             <br><label>Quantity</label>
             <input type="number" min="0"   name="quantity">
             <br><label>Warehouse ID</label>
             <input type="number" min="0"   name="warehouseid">
-            <br><label>Selling Price</label>
-            <input type="number" min="0"   name="selling_price">
             <br><label>Sold Quantity</label>
             <input type="number" min="0"   name="sold_quantity">
-            <br><label>Type</label>
-            <input type="text"   name="type">
-            <br><label>Status</label><br>
-            <select name="status">
-               <option th:each="s: ${l1}" th:value="${s}" th:text="${s}"></option>
-            </select>
+            </div>
+            </div>
+
+            <div class="w3-third">
+            <div class="w3-card w3-container" style="min-height:460px">
+            
             <br><label>Sku Listing Status</label>
             <select name="sku_listing_status">
                <option th:each="s: ${l2}" th:value="${s}" th:text="${s}"></option>
             </select>
             <br>
-            <br><label>Weaver ID</label>
-            <input type="number" min="0"   name="weaver_id">
-            <br><label>total_amount</label>
-            <input type="number" min="0"   name="total_amount">
-            <br><label>Total pre tax price</label>
-            <input type="number" min="0"   name="total_pre_tax_price">
+            <br><label>sku_total_quantity</label>
+            <input type="number" min="0"   name="sku_total_quantity">
+            <br><label>sku_count</label>
+            <input type="number" min="0"   name="sku_count">
+            <br><label>Defective Count</label>
+            <input type="number" min="0"   name="defective_count">
+            <br><label >Return Quantity</label>
+            <input type="number" min="0"   name="return_quantity">
+            <br><label>Returned Defective Quantity</label>
+            <input type="number" min="0"   name="returned_defective_quantity">
+            </div>
+            </div>
+            
+            <div class="w3-third">
+            <div class="w3-card w3-container" style="min-height:460px">
+
             <br><label>UOM</label><br>
             <select name="uom">
                <option th:each="s: ${l3}" th:value="${s}" th:text="${s}"></option>
             </select>
-            <br><label>Business type</label>
-            <select name="business_type">
-               <option th:each="s: ${l4}" th:value="${s}" th:text="${s}"></option>
-            </select>
-            <br><label>Defective Count</label>
-            <input type="number" min="0"   name="defective_count">
-            <br><label>Landing Price</label>
-            <input type="number" min="0"    name="landing_price">
-            <br><label>IGST</label>
-            <input type="number" min="0"   name="igst">
-            <br><label>Returned Defective Quantity</label>
-            <input type="number" min="0"   name="returned_defective_quantity">
-            <br><label>sku_count</label>
-            <input type="number" min="0"   name="sku_count">
-            <br><label>sku_total_quantity</label>
-            <input type="number" min="0"   name="sku_total_quantity">
-            <br><label>state</label>
-            <input type="text"   name="state">
-            <br><label>discount</label>
-            <input type="number" min="0"   name="discount">
-            <br><label>Gross Amount</label>
-            <input type="number" min="0"   name="gross_amount">
             <br><label>cst</label>
             <input type="number" min="0"  name="cst">
-            <br><label >GST Amount</label>
-            <input type="number" min="0"   name="gst_amount">
+            <br><label>IGST</label>
+            <input type="number" min="0"   name="igst">
+            <br><label>discount</label>
+            <input type="number" min="0"   name="discount">
             <br><label >GST Percentage</label>
             <input type="text"   name="gst_percentage">
-            <br><label>Discount Amount</label>
-            <input type="number" min="0"   name="discount_amount">
+            </div>
+            </div>
+
+            <div class="w3-third">
+            <div class="w3-card w3-container" style="min-height:460px">
+
+            <br><label>Landing Price</label>
+            <input type="number" min="0"    name="landing_price">
+            <br><label>Gross Amount</label>
+            <input type="number" min="0"   name="gross_amount">
             <br><label>Logistics Amount</label>
             <input type="number" min="0"   name="logistics_amount">
-            <br><label >Return Quantity</label>
-            <input type="number" min="0"   name="return_quantity">
-            <br><label >Weave</label>
-            <input type="text"   name="weave">
+            <br><label>Discount Amount</label>
+            <input type="number" min="0"   name="discount_amount">
+            <br><label>Total pre tax price</label>
+            <input type="number" min="0"   name="total_pre_tax_price">
+            <br><label >GST Amount</label>
+            <input type="number" min="0"   name="gst_amount">
+            <br><label>total_amount</label>
+            <input type="number" min="0"   name="total_amount">
+            </div>
+            </div>
+
+            </div>
             <p><input type="submit" value="Submit" onclick="return checkform()" class="btn2" /> 
                 <input type="reset" value="Reset" class="btn2"/>
             </p>
+            <button class="butn"><a th:href="@{register}">New Weaver</a></button>
         </form>
     </div>
     
     <div id="retailSpec" style="display: none;" class="patch">
         <form name="Retail_form" action="#" th:action="@{/retailer}" th:object="${ret}" method="post">
-            <h1 style="margin-bottom: -20px;">Retailers</h1>  <br>
+          <div class="w3-row-padding w3-center w3-margin-top">
+
+            <div class="w3-third">
+            <div class="w3-card w3-container" style="min-height:460px">
             <br><label>ID</label>
             <input type="number" min="0"  placeholder="e.g. 1234567" name="id">
             <br><label>Created by</label>
@@ -426,75 +465,103 @@ input[type='radio']:checked:after {
             <br><label for="email">Created Date</label>
             <input type="date"    placeholder="dd-mm-yyyy"
                min="1997-01-01" max="2030-12-31" name="created_date">
-            <br><label>Transaction ID</label>
-            <input type="number" min="0"   name="transaction_id">
-            <br><label>Category</label>
-            <input type="text"   name="category">
+               <input type="text"   name="type">
+            <br><label>Status</label><br>
+            <select name="status">
+              <option th:each="s: ${l1}" th:value="${s}" th:text="${s}"></option>
+            </select>
             <br><label>Cost Price</label>
             <input type="number" min="0"  name="cost_price">
+            <br><label>Selling Price</label>
+            <input type="number" min="0"   name="selling_price">
+            <br><label>Transaction ID</label>
+            <input type="number" min="0"   name="transaction_id">
+            <br><label>Retailer ID</label>
+            <input type="number" min="0"   name="retailer_id">
+            <br><label>Business type</label>
+            <select name="business_type">
+               <option th:each="s: ${l4}" th:value="${s}" th:text="${s}"></option>
+            </select>
+            <br><label>state</label>
+            <input type="text"   name="state">
+            </div>
+            </div>
+
+            <div class="w3-third">
+            <div class="w3-card w3-container" style="min-height:460px">
+            <br><label>Category</label>
+            <input type="text"   name="category">
+            <br><label>Type</label>
+            <input type="text"   name="type">
+            <br><label >Weave</label>
+            <input type="text"   name="weave">
             <br><label>Quantity</label>
             <input type="number" min="0"   name="quantity">
             <br><label>Warehouse ID</label>
             <input type="number" min="0"   name="warehouseid">
-            <br><label>Selling Price</label>
-            <input type="number" min="0"   name="selling_price">
             <br><label>Sold Quantity</label>
             <input type="number" min="0"   name="sold_quantity">
-            <br><label>Type</label>
-            <input type="text"   name="type">
-            <br><label>Status</label><br>
-            <select name="status">
-               <option th:each="s: ${l1}" th:value="${s}" th:text="${s}"></option>
-            </select>
+            </div>
+            </div>
+
+            <div class="w3-third">
+            <div class="w3-card w3-container" style="min-height:460px">
+            
             <br><label>Sku Listing Status</label>
             <select name="sku_listing_status">
                <option th:each="s: ${l2}" th:value="${s}" th:text="${s}"></option>
             </select>
             <br>
-            <br><label>Retailer ID</label>
-            <input type="number" min="0"   name="retailer_id">
-            <br><label>total_amount</label>
-            <input type="number" min="0"   name="total_amount">
-            <br><label>Total pre tax price</label>
-            <input type="number" min="0"   name="total_pre_tax_price">
+            <br><label>sku_total_quantity</label>
+            <input type="number" min="0"   name="sku_total_quantity">
+            <br><label>sku_count</label>
+            <input type="number" min="0"   name="sku_count">
+            </div>
+            </div>
+            
+            <div class="w3-third">
+            <div class="w3-card w3-container" style="min-height:460px">
+
             <br><label>UOM</label><br>
             <select name="uom">
                <option th:each="s: ${l3}" th:value="${s}" th:text="${s}"></option>
             </select>
-            <br><label>Business type</label>
-            <select name="business_type">
-               <option th:each="s: ${l4}" th:value="${s}" th:text="${s}"></option>
-            </select>
-            <br><label>Landing Price</label>
-            <input type="number" min="0"   name="landing_price">
-            <br><label>IGST</label>
-            <input type="number" min="0"   name="igst">
-            <br><label>sku_count</label>
-            <input type="number" min="0"   name="sku_count">
-            <br><label>sku_total_quantity</label>
-            <input type="number" min="0"   name="sku_total_quantity">
-            <br><label>state</label>
-            <input type="text"   name="state">
-            <br><label>discount</label>
-            <input type="number" min="0"   name="discount">
-            <br><label>Gross Amount</label>
-            <input type="number" min="0"   name="gross_amount">
             <br><label>cst</label>
             <input type="number" min="0"  name="cst">
-            <br><label >GST Amount</label>
-            <input type="number" min="0"   name="gst_amount">
+            <br><label>IGST</label>
+            <input type="number" min="0"   name="igst">
+            <br><label>discount</label>
+            <input type="number" min="0"   name="discount">
             <br><label >GST Percentage</label>
             <input type="text"   name="gst_percentage">
-            <br><label>Discount Amount</label>
-            <input type="number" min="0"   name="discount_amount">
+            </div>
+            </div>
+
+            <div class="w3-third">
+            <div class="w3-card w3-container" style="min-height:460px">
+
+            <br><label>Landing Price</label>
+            <input type="number" min="0"    name="landing_price">
+            <br><label>Gross Amount</label>
+            <input type="number" min="0"   name="gross_amount">
             <br><label>Logistics Amount</label>
             <input type="number" min="0"   name="logistics_amount">
-            <br><label >Weave</label>
-            <input type="text"   name="weave">
-            
+            <br><label>Discount Amount</label>
+            <input type="number" min="0"   name="discount_amount">
+            <br><label>Total pre tax price</label>
+            <input type="number" min="0"   name="total_pre_tax_price">
+            <br><label >GST Amount</label>
+            <input type="number" min="0"   name="gst_amount">
+            <br><label>total_amount</label>
+            <input type="number" min="0"   name="total_amount">
+            </div>
+            </div>
+
+            </div>
             <p><input type="submit" value="Submit" onclick="return checkformr()" class="btn2" /> 
                 <input type="reset" value="Reset" class="btn2"/>
             </p>
+            <button class="butn"><a th:href="@{register}">New Retailer</a></button>
         </form>
     </div>
     <script th:inline="javascript">
