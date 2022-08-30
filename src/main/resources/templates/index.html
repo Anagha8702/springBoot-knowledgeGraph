@@ -27,21 +27,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js" integrity="sha512-Lii3WMtgA0C0qmmkdCpsG0Gjr6M0ajRyQRQSbTF6BsrVh/nhZdHpVZ76iMIPvQwz1eoXC3DmAg9K51qT5/dEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
     <style type="text/css">
     body{
     margin: 0 !important;
     font-family: 'Montserrat', sans-serif;
-    background-color: #f7f7f7;
+    background-color: transparent;
 }
 
 .resh{
     font-family: 'Merienda', cursive;
-    text-align: center;
-    background-color: #f7f7f7;
-    color: #152D35;
+    text-align: left;
+    background-color: transparent;
+    color: #BEFB31;
     margin: 0 ;
     font-size: 50px;
-    padding: 50px 0 10px;
+    padding: 70px 0 10px 50px;
 }
 
 .line{
@@ -128,14 +130,16 @@ h2{
     color: #34573c;
 }
 
+
 #productSpec, #transSpec, #statSpec{
-    margin: 50px auto;
-    padding: 5px 5px 30px;
-    width: 30%;
+  /* position: absolute; */
+    margin: -50px auto 0 350px;
+    padding: 5px 5px 10px;
+    width: 50%;
     border-radius: 8px;
     background-color: white;
     text-align: center;
-    box-shadow: 5px 5px 20px #c0c0c0;
+    box-shadow: 5px 5px 20px #6d6d6d;
 }
 
 h4{
@@ -154,14 +158,17 @@ p{
 }
 
 .butn{
+    /* position: absolute; */
     font-weight: lighter;
-    border: 1px solid #80d741;
+    /* border: 1px solid #80d741; */
+    font-weight: 600;
     padding: 15px 30px;
     font-size: 30px;
-    background-color: #80d741;
+    background-color: #4a8854;
+    border: none;
     border-radius: 5px;
-    color: white;
-    margin: 100px 0 0 193px;
+    color: black;
+    margin: 30px 0 0 150px;
     transition: transform 0.5s ease;
 }
 
@@ -169,8 +176,25 @@ p{
     transition-duration: 0.5s;
     transform: translateY(-5px);
     cursor: pointer;
-    background-color: white;
-    color: #80d741;
+    /* background-color: white; */
+    /* color: #80d741; */
+  }
+
+.hoverr {
+  --s: 0.5em;   /* the thickness of the line */
+  --c: #80d741; /* the color */
+  
+  color: #0000;
+  padding-bottom: var(--s);
+  background: 
+    linear-gradient(90deg,var(--c) 50%,#000 0) calc(100% - var(--_p,0%))/200% 100%,
+    linear-gradient(var(--c) 0 0) 0% 100%/var(--_p,0%) var(--s) no-repeat;
+  -webkit-background-clip: text,padding-box;
+          background-clip: text,padding-box;
+  transition: 0.5s;
+}
+.hoverr:hover {
+  --_p: 100%
 }
 
 canvas{
@@ -201,7 +225,7 @@ select {
 }
 
 .btn2{
-    margin-top: 30px;
+    margin-top: 10px;
     display: inline-block;
     width: 80%;
     padding: 15px;
@@ -307,150 +331,206 @@ input[type='radio']:checked:after {
             margin-left: auto;
             margin-right: auto;
          }
-     </style>
+  #frontcover{
+    background: url("https://i0.wp.com/reshamandi.com/wp-content/uploads/2022/06/Supply-Chain-Vector-Landscape-3.png?fit=1536%2C864&ssl=1");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 1440px;
+    height: 822px;
+  }
+
+  .float-container {
+    padding: 5px;
+}
+
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 5px;
+    /* background-color: #ddfb99; */
+}  
+  </style>
 </head>
 <body>
-<div class="w3-top" style="background-color: white;">
-    <div class="w3-bar w3-left-align w3-large" style="padding-top:5px;color: #9acd30;"><div id="navbar">
-        <a href="https://www.facebook.com/fbreshamandi"><i class="fa fa-facebook w3-hover-opacity" style="text-indent: 7.5em;">&emsp;</i></a>
-        <a href="https://www.instagram.com/resha_mandi/"><i class="fa fa-instagram w3-hover-opacity">&emsp;</i></a>
-        <a href="https://www.linkedin.com/company/inreshamandi?original_referer=https%3A%2F%2Freshamandi.com%2F"><i class="fa fa-linkedin w3-hover-opacity">&emsp;</i></a>
-        <a href="https://twitter.com/reshamandi"><i class="fa fa-twitter w3-hover-opacity"></i></a>
-        <a href="tel:+917338694594" style="text-indent: 47em;font-size: 15px;text-decoration: none;">&ensp;<i class="fa fa-phone"></i>+91 7338694594</a>
-        <a href="mailto:support@reshamandi.com?subject=Support information need" style="text-indent: 0.5em;font-size: 15px;text-decoration: none;">&ensp;<i class="fa fa-envelope">&ensp;</i>support@reshamandi.com</a>
-        <br><hr style=" margin: 0.3em auto;">
-    </div>
-        <a href="https://reshamandi.com/" style="text-decoration:none;padding-left: 7.5em;"><img src="navlogo.png" width="95" height="95" ></a>
-    </div><hr style=" margin: 0.3em auto;">
-</div>
-<br><br><br><br><br><br>
-<h1 class="resh">Reshamandi</h1>
-<div id="image">
-    <button onclick="toggle(transSpec)" class="butn">Transactions</button>
-    <button onclick="toggle(statSpec)" class="butn">Statistics</button>
-    <button onclick="toggle(productSpec)" class="butn">Products</button>
-
-    <div id="productSpec" style="display: none;" class="query">
-        <form action="#" th:action="@{/products}" th:object="${prods}" method="post">
-            <h1 style="margin-bottom: -20px;">Products</h1>  <br>
-            <h4>Role</h4>
-            <input type="radio" id="filter" name="filter" value="Split" checked>
-            <label for="filter">Split</label><br>
-            <input type="radio" id="filter" name="filter" value="Total">
-            <label for="filter">Total</label><br>
-
-            <h4>Category</h4>
-            <select name="category" multiple size="3" >
-                <option th:each="category: ${prod_cat}" th:value="${category}" th:text="${category}"></option>
-            </select>
-
-            <h4>Weave</h4>
-            <select name="weave" multiple size="3" >
-                <option th:each="weave: ${prod_weave}" th:value="${weave}" th:text="${weave}"></option>
-            </select>
-
-            <h4>Type</h4>
-            <select name="type" multiple size="3" >
-                <option th:each="type: ${prod_type}" th:value="${type}" th:text="${type}"></option>
-            </select>
-            <p><input type="submit" value="Submit" class="btn2" /> 
-                <input type="reset" value="Reset" class="btn2"/>
-            </p>
-        </form>
-    </div>
-
-    <div id="transSpec" style="display: none;" class="query">
-        <form action="#" th:action="@{/transactions}" th:object="${trans}" method="post">
-            <h1 style="margin-bottom: -20px;">Transactions</h1>  <br>
-            <h4>Role</h4>
-            <input type="radio" id="role" name="role" value="Weaver" checked>
-            <label for="role">Weaver</label><br>
-            <input type="radio" id="role" name="role" value="Retailer">
-            <label for="role">Retailer</label><br>
-
-            <h4>ID</h4><input id="ID" name="ID">
-            <br>
-
-            <h4>Month</h4>
-            <select name="Month" multiple size="3" >
-                <option th:each="month: ${trans_months}" th:value="${month}" th:text="${month}"></option>
-            </select>
-
-            <h4>States</h4>
-            <select name="State" multiple size="3" >
-                <option th:each="state: ${trans_states}" th:value="${state}" th:text="${state}"></option>
-            </select>
-
-            <h4>Category</h4>
-            <select name="category" multiple size="3" >
-                <option th:each="category: ${categories}" th:value="${category}" th:text="${category}"></option>
-            </select>
-
-            <h4>Weave</h4>
-            <select name="weave" multiple size="3" >
-                <option th:each="weave: ${weaves}" th:value="${weave}" th:text="${weave}"></option>
-            </select>
-
-            <h4>Type</h4>
-            <select name="type" multiple size="3" >
-                <option th:each="type: ${types}" th:value="${type}" th:text="${type}"></option>
-            </select>
-            <p><input type="submit" value="Submit" class="btn2" /> 
-                <input type="reset" value="Reset" class="btn2"/>
-            </p>
-        </form>
-    </div>
+  <div id="frontcover">
+    <div class="w3-top" style="background-color: transparent">
+      <div class="w3-bar w3-left-align w3-large" style="padding-top:5px;color: #9acd30;"><div id="navbar">
+          <a href="https://www.facebook.com/fbreshamandi"><i class="fa fa-facebook w3-hover-opacity" style="text-indent: 7.5em;">&emsp;</i></a>
+          <a href="https://www.instagram.com/resha_mandi/"><i class="fa fa-instagram w3-hover-opacity">&emsp;</i></a>
+          <a href="https://www.linkedin.com/company/inreshamandi?original_referer=https%3A%2F%2Freshamandi.com%2F"><i class="fa fa-linkedin w3-hover-opacity">&emsp;</i></a>
+          <a href="https://twitter.com/reshamandi"><i class="fa fa-twitter w3-hover-opacity"></i></a>
+          <a href="tel:+917338694594" style="text-indent: 47em;font-size: 15px;text-decoration: none;">&ensp;<i class="fa fa-phone"></i>+91 7338694594</a>
+          <a href="mailto:support@reshamandi.com?subject=Support information need" style="text-indent: 0.5em;font-size: 15px;text-decoration: none;">&ensp;<i class="fa fa-envelope">&ensp;</i>support@reshamandi.com</a>
+          <br>
+      </div>
+      </div>
+  </div>
+  <h1 class="resh"><span><a href="https://reshamandi.com/" style="text-decoration:none;"><img src="Logo.png" width="80" height="70" ></a>
+  </span> Reshamandi</h1>
+  <div id="image">
+      <div class="row">
+        <div class="col-md-3" style="margin-top: 75px; background-color: white;">
+          <button onclick="toggle(productSpec)" class="butn hoverr" style="background-color: #cef5de">Products</button>
+          <button onclick="toggle(statSpec)" class="butn hoverr" style="background-color: #cef5de">Statistics</button>
+          <button onclick="toggle(transSpec)" class="butn hoverr" style="background-color: #cef5de">Transactions</button>
+          <button onClick="parent.open('/register')" class="butn hoverr" style="background-color: #cef5de; width: 100%;">Update DB</button>
+        </div>
+        <div class="col-md-9">
+          <div id="productSpec" style="display: none; margin-top: 75px;" class="query">
+            <form action="#" th:action="@{/products}" th:object="${prods}" method="post">
+                <h1 style="margin-bottom: -20px;">Products</h1>  <br>
+                <div class="float-container">
+                  <div class="float-child">
+                    <h4>Role</h4>
+                  <input type="radio" id="filter" name="filter" value="Split" checked>
+                  <label for="filter">Split</label><br>
+                  <input type="radio" id="filter" name="filter" value="Total">
+                  <label for="filter">Total</label><br>
+                  </div>
+                  <div class="float-child">
+                    <h4>Type</h4>
+                    <select name="type" multiple size="3" >
+                    <option th:each="type: ${prod_type}" th:value="${type}" th:text="${type}"></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="float-container">
+                  <div class="float-child">
+                      <h4>Category</h4>
+                      <select name="category" multiple size="3" >
+                          <option th:each="category: ${prod_cat}" th:value="${category}" th:text="${category}"></option>
+                      </select>
+                    </div> 
+                    <div class="float-child">
+                      <h4>Weave</h4>
+                      <select name="weave" multiple size="3" >
+                          <option th:each="weave: ${prod_weave}" th:value="${weave}" th:text="${weave}"></option>
+                      </select>                  
+                    </div>
+                  </div>
+                <p><input type="submit" value="Submit" class="btn2" /> 
+                    <input type="reset" value="Reset" class="btn2"/>
+                </p>
+            </form>
+        </div>
     
-    <div id="statSpec" style="display: none;" class="query">
-        <form action="#" th:action="@{/query}" th:object="${q12}" method="post">
-            <h1 style="margin-bottom: -20px;">Statistics</h1>  <br>
-            <h4>Role</h4>
-            <input type="radio" id="w" name="role"  value="soldMonth" checked>
-            <label for="w">Weaver</label><br>
-            <input type="radio" id="r" name="role" value="boughtMonth">
-            <label for="r">Retailer</label><br>
+        <div id="transSpec" style="display: none;" class="query">
+            <form action="#" th:action="@{/transactions}" th:object="${trans}" method="post">
+                <h1 style="margin-bottom: -20px;">Transactions</h1>  <br>
 
-            <h4>Product Spec</h4>
-            <select name="productSpec" size="3">
-                <option th:value="pdt.type">Type</option>
-                <option th:value="pdt.category">Category</option>
-                <option th:value="pdt.weave">Weave</option>
-            </select>
 
-            <h4>Filter</h4>
-            <select name="filter" size="3">
-                <option th:value="r.month">Month</option>
-                <option th:value="r.state">State</option>
-                <option th:value="r.created_date">Year</option>
-            </select>
+                <h4>Role</h4>
+                <input type="radio" id="role" name="role" value="Weaver" checked>
+                <label for="role">Weaver</label><br>
+                <input type="radio" id="role" name="role" value="Retailer">
+                <label for="role">Retailer</label><br>
+                <div class="float-container">
+                  <div class="float-child">
+                    <h4>ID</h4><input id="ID" name="ID">
+                    <br>
+                  </div>
+                  <div class="float-child">
+                    <h4>Month</h4>
+                    <select name="Month" multiple size="3" >
+                        <option th:each="month: ${trans_months}" th:value="${month}" th:text="${month}"></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="float-container">
+                  <div class="float-child">
+                    <h4>States</h4>
+                    <select name="State" multiple size="3" >
+                        <option th:each="state: ${trans_states}" th:value="${state}" th:text="${state}"></option>
+                    </select>
+                  </div>
+                  <div class="float-child">
+                    <h4>Category</h4>
+                    <select name="category" multiple size="3" >
+                        <option th:each="category: ${categories}" th:value="${category}" th:text="${category}"></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="float-container">
+                  <div class="float-child">
+                    <h4>Weave</h4>
+                    <select name="weave" multiple size="3" >
+                        <option th:each="weave: ${weaves}" th:value="${weave}" th:text="${weave}"></option>
+                    </select>
+                  </div>
+                  <div class="float-child">
+                    <h4>Type</h4>
+                    <select name="type" multiple size="3" >
+                        <option th:each="type: ${types}" th:value="${type}" th:text="${type}"></option>
+                    </select>
+                  </div>
+                </div>
+                <p><input type="submit" value="Submit" class="btn2" /> 
+                    <input type="reset" value="Reset" class="btn2"/>
+                </p>
+            </form>
+        </div>
+        
+        <div id="statSpec" style="display: none; margin-top: 10px;" class="query">
+            <form action="#" th:action="@{/query}" th:object="${q12}" method="post">
+                <h1 style="margin-bottom: -20px;">Statistics</h1>  <br>
+                <div class="float-container">
+                  <div class="float-child">
+                    <h4>Role</h4>
+                    <input type="radio" id="w" name="role"  value="soldMonth" checked>
+                    <label for="w">Weaver</label><br>
+                    <input type="radio" id="r" name="role" value="boughtMonth">
+                    <label for="r">Retailer</label><br>
+                  </div>
+                  <div class="float-child">
+                    <h4>Product Spec</h4>
+                    <select name="productSpec" size="3">
+                        <option th:value="pdt.type">Type</option>
+                        <option th:value="pdt.category">Category</option>
+                        <option th:value="pdt.weave">Weave</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="float-container">
+                  <div class="float-child">
+                    <h4>Filter</h4>
+                    <select name="filter" size="3">
+                        <option th:value="r.month">Month</option>
+                        <option th:value="r.state">State</option>
+                        <option th:value="r.created_date">Year</option>
+                    </select>
+                  </div>
+                  <div class="float-child">
+                    <h4>States</h4>
+                    <select name="states" multiple size="3" >
+                        <option th:each="state: ${states}" th:value="${state}" th:text="${state}"></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="float-container">
+                  <div class="float-child">
+                    <h4>Seasons</h4>
+                    <select name="seasons" multiple size="3" >
+                        <option th:each="season: ${seasons}" th:value="${season}" th:text="${season}"></option>
+                    </select>
+                  </div>
+                  <div class="float-child">
+                    <h4>Years</h4>
+                    <select name="years" multiple size="3" >
+                        <option th:each="year: ${years}" th:value="${year}" th:text="${year}"></option>
+                    </select>
+                  </div>
+                </div>
+                <p><input type="submit" value="Submit" class="btn2" /> 
+                    <input type="reset" value="Reset" class="btn2"/>
+                </p>
+            </form>
+        </div>
+        </div>
+      </div>
 
-            <h4>States</h4>
-            <select name="states" multiple size="3" >
-                <option th:each="state: ${states}" th:value="${state}" th:text="${state}"></option>
-            </select>
+  </div>
+  </div>
 
-            <h4>Seasons</h4>
-            <select name="seasons" multiple size="3" >
-                <option th:each="season: ${seasons}" th:value="${season}" th:text="${season}"></option>
-            </select>
-
-            <h4>Years</h4>
-            <select name="years" multiple size="3" >
-                <option th:each="year: ${years}" th:value="${year}" th:text="${year}"></option>
-            </select>
-
-            <!--    <p>Season: <input type="text" th:field="*{season}" /></p>-->
-            <!--    <p>Parameter: <input type="text" th:field="*{season}" /></p>-->
-            <!--&lt;!&ndash;    <p>SoldOrBoughtMonth: <input type="text" th:field="*{soldOrBoughtMonth}" /></p>&ndash;&gt;-->
-            <!--    <input type="radio" id="w" name="role" th:field="*{season}" th:value="Weaver" checked="checked" autocomplete="off">-->
-            <!--    <label for="w">Weaver</label><br>-->
-            <!--    <input type="radio" id="r" th:field="*{season}" name="role" value="Retailer">-->
-            <!--    <label for="r">Retailer</label><br>-->
-            <p><input type="submit" value="Submit" class="btn2" /> 
-                <input type="reset" value="Reset" class="btn2"/>
-            </p>
-        </form>
-    </div>
 
     <div th:switch="${tableDisplay}" class="tableLayout">
         <table id="example" th:case=1 class="display" style="width:100%">

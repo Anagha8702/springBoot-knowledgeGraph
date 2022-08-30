@@ -215,7 +215,7 @@ public class Neo4j implements AutoCloseable {
 
                 tableData[0][0] = finalProductSpec.substring(4);
                 int rowIndex = 1;
-                for (int j = 0; j < list.size(); j++, rowIndex++) {
+                for (int j = 0; j < list.size() && rowIndex <= rows; j++, rowIndex++) {
                     // System.out.println("lol");
                     tableData[rowIndex][0] = list.get(j).get("filter1").asString();
                     while (j < list.size() - 1 && list.get(j).get("filter1").asString().equals(list.get(j + 1).get("filter1").asString())) {
