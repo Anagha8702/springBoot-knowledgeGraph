@@ -869,7 +869,7 @@ public class Neo4j implements AutoCloseable {
         } else
             weaveList.append("(true)");
 
-        if (t.getFilter() != "Split") {
+        if (t.getFilter().equals("Total")) {
             mainQuery1.append("MATCH (c:Category)-[r1:categoryName]->(p1:Product)\n");
             mainQuery1.append("WHERE ").append(catList).append("\nWITH p1 \n");
             mainQuery1.append("MATCH (t:Type)-[r2:typeName]->(p1)\n");

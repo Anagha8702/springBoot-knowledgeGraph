@@ -2,9 +2,9 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Reshmandi</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link th:href="@{/css/sample.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/sample.js}"></script>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -17,18 +17,300 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="../static/styles.css"> -->
+    <link rel="stylesheet" href="../static/styles.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
+    <script src="../static/scripts.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js" integrity="sha512-Lii3WMtgA0C0qmmkdCpsG0Gjr6M0ajRyQRQSbTF6BsrVh/nhZdHpVZ76iMIPvQwz1eoXC3DmAg9K51qT5/dEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style type="text/css">
+    body{
+    margin: 0 !important;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f7f7f7;
+}
+
+.resh{
+    font-family: 'Merienda', cursive;
+    text-align: center;
+    background-color: #f7f7f7;
+    color: #152D35;
+    margin: 0 ;
+    font-size: 50px;
+    padding: 50px 0 10px;
+}
+
+.line{
+    border: 3px solid #152D35;
+    width: 20%;
+}
+.tableLayout{
+    margin: 50px 20px 30px;
+    max-width: 1400px;
+    overflow-x: auto;
+    padding: 20px 0;
+    background-color: #f7f7f7;
+}
+
+#example_filter{
+    margin: 20px 0 20px 1188px;
+    position: absolute;
+    width: max-content;
+}
+.transactions{
+    background-color: transparent;
+    margin: 50px auto 20px;
+    text-align: center;
+    overflow-y: scroll;
+    height: fit-content;
+    width: fit-content;
+    max-height: 457px;
+    box-shadow: 15px 8px 20px #505050;
+    display: block;
+}
+
+th, td{
+    border: transparent;
+    padding: 15px 20px;
+}
+
+/* .transactions thead tr{
+    background-color: #a7bea4 !important;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    height: 60px;
+}
+
+.transactions tr:nth-child(even){
+    background-color: #b0d1ba;
+}
+
+.transactions tr:nth-child(odd){
+    background-color: #e1ffe2;
+} */
+
+.top{
+    background-color: #efefef;
+    margin: 50px;
+    box-shadow: 10px 5px 15px #989898;
+}
+
+.container{
+    display: inline-block;
+    padding: 40px 115px
+}
+
+thead{
+    background-color: #abaaaa;
+}
+
+tr:nth-child(even){
+    background-color: #c3c3c3;
+}
+
+#example thead{
+    background-color: #dfdfdf;
+}
+
+.top h2{
+    text-align: center;
+    color: #727272;
+    padding-top: 50px;
+}
+
+h2{
+    text-align: center;
+    color: #34573c;
+}
+
+#productSpec, #transSpec, #statSpec{
+    margin: 50px auto;
+    padding: 5px 5px 30px;
+    width: 30%;
+    border-radius: 8px;
+    background-color: white;
+    text-align: center;
+    box-shadow: 5px 5px 20px #c0c0c0;
+}
+
+h4{
+    text-align: left;
+    padding-left: 60px;
+    margin-bottom: 5px;
+    color: #152D35;
+}
+
+h1{
+    color: #345B63;
+}
+
+p{
+    text-align: center;
+}
+
+.butn{
+    font-weight: lighter;
+    border: 1px solid #80d741;
+    padding: 15px 30px;
+    font-size: 30px;
+    background-color: #80d741;
+    border-radius: 5px;
+    color: white;
+    margin: 100px 0 0 193px;
+    transition: transform 0.5s ease;
+}
+
+.butn:hover{
+    transition-duration: 0.5s;
+    transform: translateY(-5px);
+    cursor: pointer;
+    background-color: white;
+    color: #80d741;
+}
+
+canvas{
+    margin: 15px;
+    width: 98%;
+}
+
+.input {
+    width: 78%;
+    padding: 5px;
+    border-radius: 3px;
+    border: none;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+
+}
+.input:hover, select:hover{
+    cursor: pointer;
+    background-color: #f5f5f5;
+}
+
+select {
+    background-color: #f5f5f5;
+    width: 80%;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: none;
+}
+
+.btn2{
+    margin-top: 30px;
+    display: inline-block;
+    width: 80%;
+    padding: 15px;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: #80d741;
+    color: white;
+    border: 1px solid #80d741 ;
+    transition-duration: 0.75s;
+}
+
+.btn2:hover{
+    transition-duration: 0.25s;
+    background-color: white;
+    color: #80d741;
+    cursor: pointer;
+}
+
+input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: white;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid #80d741;
+}
+
+input[type='radio']:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #80d741;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid #80d741;
+}
+
+/* #image{
+    height: 1000px;
+    background-image: url('Logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+} */
+
+
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .box select {
+    background-color: #0563af;
+    color: white;
+    padding: 12px;
+    width: 250px;
+    border: none;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+  }
+
+  .box::before {
+    content: "\f13a";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    font-size: 28px;
+    line-height: 45px;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+  }
+
+  .box:hover::before {
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .box select option {
+    padding: 30px;
+  }
+         .chartbox{
+             height: 600px;
+              width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+         }
+     </style>
 </head>
 <body>
-  <div class="w3-top" style="background-color: white;">
+<div class="w3-top" style="background-color: white;">
     <div class="w3-bar w3-left-align w3-large" style="padding-top:5px;color: #9acd30;"><div id="navbar">
         <a href="https://www.facebook.com/fbreshamandi"><i class="fa fa-facebook w3-hover-opacity" style="text-indent: 7.5em;">&emsp;</i></a>
         <a href="https://www.instagram.com/resha_mandi/"><i class="fa fa-instagram w3-hover-opacity">&emsp;</i></a>
@@ -38,275 +320,199 @@
         <a href="mailto:support@reshamandi.com?subject=Support information need" style="text-indent: 0.5em;font-size: 15px;text-decoration: none;">&ensp;<i class="fa fa-envelope">&ensp;</i>support@reshamandi.com</a>
         <br><hr style=" margin: 0.3em auto;">
     </div>
-        <a href="https://reshamandi.com/" style="text-decoration:none;padding-left: 7.5em;"><img src="navlogo.png" width="35" height="30" ></a>
+        <a href="https://reshamandi.com/" style="text-decoration:none;padding-left: 7.5em;"><img src="navlogo.png" width="95" height="95" ></a>
     </div><hr style=" margin: 0.3em auto;">
 </div>
-<br><br><br><br>
+<br><br><br><br><br><br>
+<h1 class="resh">Reshamandi</h1>
 <div id="image">
-<div class="d-lg-flex half">
-    <div class="bg order-1 order-md-2" style="background-image: url('bg_1.jpg')"></div>
-    <div class="contents order-2 order-md-1">
-      <div th:switch="${formdisp}" class="container">
-        <div  th:case=1  class="row align-items-center justify-content-center">
-          <div class="col-md-12 py-8">
-            <h3>Weaver Transaction</h3>
-            <form action="#" name="Weav_form" th:action="@{/weaver}" th:object="${w}" onsubmit ="return checkform()" method="post">
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>ID</label>
-                    <input type="number" min="0" class="form-control" placeholder="e.g. 1234567" name="id">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Created by</label>
-                    <input type="text" class="form-control" placeholder="e.g. Smith" name="created_by">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label for="email">Created Date</label>
-                    <input type="date" class="form-control"   placeholder="dd-mm-yyyy"
-                    min="1997-01-01" max="2030-12-31" name="created_date">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Transaction ID</label>
-                    <input type="number" min="0" class="form-control"  name="transaction_id">
-                  </div>    
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group first">
-                      <label>Category</label>
-                      <input type="text" class="form-control"  name="category">
-                    </div>    
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group first">
-                      <label>Cost Price</label>
-                      <input type="number" min="0" class="form-control" name="cost_price">
-                    </div>    
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group first">
-                      <label>Quantity</label>
-                      <input type="number" min="0" class="form-control"  name="quantity">
-                    </div>    
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group first">
-                      <label>Warehouse ID</label>
-                      <input type="number" min="0" class="form-control"  name="warehouseid">
-                    </div>    
-                  </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Selling Price</label>
-                    <input type="number" min="0" class="form-control"  name="selling_price">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Sold Quantity</label>
-                    <input type="number" min="0" class="form-control"  name="sold_quantity">
-                  </div>    
-                </div>
-                
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Type</label>
-                    <input type="text" class="form-control"  name="type">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Status</label><br>
-                    <select name="status">
-                      <option th:each="s: ${l1}" th:value="${s}" th:text="${s}"></option>
-                  </select>
-                  <label>Sku Listing Status</label>
-                  <select name="sku_listing_status">
-                    <option th:each="s: ${l2}" th:value="${s}" th:text="${s}"></option>
-                </select><br>
-               
-                  </div>    
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Weaver ID</label>
-                    <input type="number" min="0" class="form-control"  name="weaver_id">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>total_amount</label>
-                    <input type="number" min="0" class="form-control"  name="total_amount">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Total pre tax price</label>
-                    <input type="number" min="0" class="form-control"  name="total_pre_tax_price">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>UOM</label><br>
-                    <select name="uom">
-                      <option th:each="s: ${l3}" th:value="${s}" th:text="${s}"></option>
-                  </select>
-                  <label>Business type</label>
-                    <select name="business_type">
-                      <option th:each="s: ${l4}" th:value="${s}" th:text="${s}"></option>
-                  </select>
-                  </div>    
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Defective Count</label>
-                    <input type="number" min="0" class="form-control"  name="defective_count">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Landing Price</label>
-                    <input type="number" min="0" class="form-control"  name="landing_price">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>IGST</label>
-                    <input type="number" min="0" class="form-control"  name="igst">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group last mb-3">
-                    <label>Returned Defective Quantity</label>
-                    <input type="number" min="0" class="form-control"  name="returned_defective_quantity">
-                  </div>
-                </div>
-                </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>sku_count</label>
-                    <input type="number" min="0" class="form-control"  name="sku_count">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>sku_total_quantity</label>
-                    <input type="number" min="0" class="form-control"  name="sku_total_quantity">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>state</label>
-                    <input type="text" class="form-control"  name="state">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>discount</label>
-                    <input type="number" min="0" class="form-control"  name="discount">
-                  </div>    
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Gross Amount</label>
-                    <input type="number" min="0" class="form-control"  name="gross_amount">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>cst</label>
-                    <input type="number" min="0"class="form-control"  name="cst">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label >GST Amount</label>
-                    <input type="number" min="0" class="form-control"  name="gst_amount">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label >GST Percentage</label>
-                    <input type="text" class="form-control"  name="gst_percentage">
-                  </div>    
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Discount Amount</label>
-                    <input type="number" min="0" class="form-control"  name="discount_amount">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label>Logistics Amount</label>
-                    <input type="number" min="0" class="form-control"  name="logistics_amount">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label >Return Quantity</label>
-                    <input type="number" min="0" class="form-control"  name="return_quantity">
-                  </div>    
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group first">
-                    <label >Weave</label>
-                    <input type="text" class="form-control"  name="weave">
-                  </div>    
-                </div>
-              </div>
-              <div class="row">
-              
-                <div class="col-md-3">
-                  <div class="form-group last mb-3">
-                    <input type="submit" value="Submit" onclick = "return checkform()" class="btn2">
-                  </div>
-                </div>
-                <div class="col-md-5">
-                  <div class="form-group last mb-3">
-                    <div id = "myalert" class="alert alert-info collapse" style ="display: none;">
-                      <p style = "color:#000;" id="mytext">_</p>
-                  </div>
-                  </div>
-                </div>
-                
+    <button onclick="toggle(weaveSpec)" class="butn">Weavers</button>
+    <button onclick="toggle(retailSpec)" class="butn">Retailers</button>
 
-               
-              </div>
-              </div>
-
-             
-
-            </form>
-          </div>
-        </div>
-      </div>
+    <div id="weaveSpec" style="display: none;" class="patch">
+        <form name="Weav_form" action="#" th:action="@{/weaver}" th:object="${w}" method="post">
+            <h1 style="margin-bottom: -20px;">Weavers</h1>  <br>
+            <br><label>ID</label>
+            <input type="number" min="0"  placeholder="e.g. 1234567" name="id">
+            <br><label>Created by</label>
+            <input type="text"  placeholder="e.g. Smith" name="created_by">
+            <br><label for="email">Created Date</label>
+            <input type="date"    placeholder="dd-mm-yyyy"
+               min="1997-01-01" max="2030-12-31" name="created_date">
+            <br><label>Transaction ID</label>
+            <input type="number" min="0"   name="transaction_id">
+            <br><label>Category</label>
+            <input type="text"   name="category">
+            <br><label>Cost Price</label>
+            <input type="number" min="0"  name="cost_price">
+            <br><label>Quantity</label>
+            <input type="number" min="0"   name="quantity">
+            <br><label>Warehouse ID</label>
+            <input type="number" min="0"   name="warehouseid">
+            <br><label>Selling Price</label>
+            <input type="number" min="0"   name="selling_price">
+            <br><label>Sold Quantity</label>
+            <input type="number" min="0"   name="sold_quantity">
+            <br><label>Type</label>
+            <input type="text"   name="type">
+            <br><label>Status</label><br>
+            <select name="status">
+               <option th:each="s: ${l1}" th:value="${s}" th:text="${s}"></option>
+            </select>
+            <br><label>Sku Listing Status</label>
+            <select name="sku_listing_status">
+               <option th:each="s: ${l2}" th:value="${s}" th:text="${s}"></option>
+            </select>
+            <br>
+            <br><label>Weaver ID</label>
+            <input type="number" min="0"   name="weaver_id">
+            <br><label>total_amount</label>
+            <input type="number" min="0"   name="total_amount">
+            <br><label>Total pre tax price</label>
+            <input type="number" min="0"   name="total_pre_tax_price">
+            <br><label>UOM</label><br>
+            <select name="uom">
+               <option th:each="s: ${l3}" th:value="${s}" th:text="${s}"></option>
+            </select>
+            <br><label>Business type</label>
+            <select name="business_type">
+               <option th:each="s: ${l4}" th:value="${s}" th:text="${s}"></option>
+            </select>
+            <br><label>Defective Count</label>
+            <input type="number" min="0"   name="defective_count">
+            <br><label>Landing Price</label>
+            <input type="number" min="0"    name="landing_price">
+            <br><label>IGST</label>
+            <input type="number" min="0"   name="igst">
+            <br><label>Returned Defective Quantity</label>
+            <input type="number" min="0"   name="returned_defective_quantity">
+            <br><label>sku_count</label>
+            <input type="number" min="0"   name="sku_count">
+            <br><label>sku_total_quantity</label>
+            <input type="number" min="0"   name="sku_total_quantity">
+            <br><label>state</label>
+            <input type="text"   name="state">
+            <br><label>discount</label>
+            <input type="number" min="0"   name="discount">
+            <br><label>Gross Amount</label>
+            <input type="number" min="0"   name="gross_amount">
+            <br><label>cst</label>
+            <input type="number" min="0"  name="cst">
+            <br><label >GST Amount</label>
+            <input type="number" min="0"   name="gst_amount">
+            <br><label >GST Percentage</label>
+            <input type="text"   name="gst_percentage">
+            <br><label>Discount Amount</label>
+            <input type="number" min="0"   name="discount_amount">
+            <br><label>Logistics Amount</label>
+            <input type="number" min="0"   name="logistics_amount">
+            <br><label >Return Quantity</label>
+            <input type="number" min="0"   name="return_quantity">
+            <br><label >Weave</label>
+            <input type="text"   name="weave">
+            <p><input type="submit" value="Submit" onclick="return checkform()" class="btn2" /> 
+                <input type="reset" value="Reset" class="btn2"/>
+            </p>
+        </form>
     </div>
- 
     
-  </div>
-  
-        <script>
-            function checkform(){
+    <div id="retailSpec" style="display: none;" class="patch">
+        <form name="Retail_form" action="#" th:action="@{/retailer}" th:object="${ret}" method="post">
+            <h1 style="margin-bottom: -20px;">Retailers</h1>  <br>
+            <br><label>ID</label>
+            <input type="number" min="0"  placeholder="e.g. 1234567" name="id">
+            <br><label>Created by</label>
+            <input type="text"  placeholder="e.g. Smith" name="created_by">
+            <br><label for="email">Created Date</label>
+            <input type="date"    placeholder="dd-mm-yyyy"
+               min="1997-01-01" max="2030-12-31" name="created_date">
+            <br><label>Transaction ID</label>
+            <input type="number" min="0"   name="transaction_id">
+            <br><label>Category</label>
+            <input type="text"   name="category">
+            <br><label>Cost Price</label>
+            <input type="number" min="0"  name="cost_price">
+            <br><label>Quantity</label>
+            <input type="number" min="0"   name="quantity">
+            <br><label>Warehouse ID</label>
+            <input type="number" min="0"   name="warehouseid">
+            <br><label>Selling Price</label>
+            <input type="number" min="0"   name="selling_price">
+            <br><label>Sold Quantity</label>
+            <input type="number" min="0"   name="sold_quantity">
+            <br><label>Type</label>
+            <input type="text"   name="type">
+            <br><label>Status</label><br>
+            <select name="status">
+               <option th:each="s: ${l1}" th:value="${s}" th:text="${s}"></option>
+            </select>
+            <br><label>Sku Listing Status</label>
+            <select name="sku_listing_status">
+               <option th:each="s: ${l2}" th:value="${s}" th:text="${s}"></option>
+            </select>
+            <br>
+            <br><label>Retailer ID</label>
+            <input type="number" min="0"   name="retailer_id">
+            <br><label>total_amount</label>
+            <input type="number" min="0"   name="total_amount">
+            <br><label>Total pre tax price</label>
+            <input type="number" min="0"   name="total_pre_tax_price">
+            <br><label>UOM</label><br>
+            <select name="uom">
+               <option th:each="s: ${l3}" th:value="${s}" th:text="${s}"></option>
+            </select>
+            <br><label>Business type</label>
+            <select name="business_type">
+               <option th:each="s: ${l4}" th:value="${s}" th:text="${s}"></option>
+            </select>
+            <br><label>Landing Price</label>
+            <input type="number" min="0"   name="landing_price">
+            <br><label>IGST</label>
+            <input type="number" min="0"   name="igst">
+            <br><label>sku_count</label>
+            <input type="number" min="0"   name="sku_count">
+            <br><label>sku_total_quantity</label>
+            <input type="number" min="0"   name="sku_total_quantity">
+            <br><label>state</label>
+            <input type="text"   name="state">
+            <br><label>discount</label>
+            <input type="number" min="0"   name="discount">
+            <br><label>Gross Amount</label>
+            <input type="number" min="0"   name="gross_amount">
+            <br><label>cst</label>
+            <input type="number" min="0"  name="cst">
+            <br><label >GST Amount</label>
+            <input type="number" min="0"   name="gst_amount">
+            <br><label >GST Percentage</label>
+            <input type="text"   name="gst_percentage">
+            <br><label>Discount Amount</label>
+            <input type="number" min="0"   name="discount_amount">
+            <br><label>Logistics Amount</label>
+            <input type="number" min="0"   name="logistics_amount">
+            <br><label >Weave</label>
+            <input type="text"   name="weave">
+            
+            <p><input type="submit" value="Submit" onclick="return checkformr()" class="btn2" /> 
+                <input type="reset" value="Reset" class="btn2"/>
+            </p>
+        </form>
+    </div>
+    <script th:inline="javascript">
+
+      function toggle(ele){
+          const divs = document.querySelectorAll('.query');
+          for(let i = 0;i<divs.length;i++){
+              divs[i].style.display = "none";
+          }
+          ele.style.display = "block";
+      }
+      $(document).ready(function () {
+          $('#example').DataTable({
+              pagingType: 'full_numbers',
+          });
+      });
+
+      function checkform(){
                 var flag = 1;
                 console.log("flag " + flag);
                 if(!document.Weav_form.created_by.value || !document.Weav_form.gross_amount.value || !document.Weav_form.uom.value||
@@ -334,185 +540,37 @@
                     return false;
                 }
             }
+
+            function checkformr(){
+                var flag = 1;
+                console.log("flag " + flag);
+                if(!document.Retail_form.created_by.value || !document.Retail_form.gross_amount.value || !document.Retail_form.uom.value||
+                !document.Retail_form.type.value|| !document.Retail_form.landing_price.value|| !document.Retail_form.gst_amount.value|| 
+                !document.Retail_form.status.value|| !document.Retail_form.gst_percentage.value ||
+                !document.Retail_form.selling_price.value || !document.Retail_form.sku_listing_status.value || !document.Retail_form.discount_amount.value ||
+                !document.Retail_form.cost_price.value|| !document.Retail_form.weaver_id.value|| !document.Retail_form.logistics_amount.value ||
+                !document.Retail_form.category.value || !document.Retail_form.sold_quantity.value || 
+                !document.Retail_form.created_date.value || !document.Retail_form.warehouseid.value || !document.Retail_form.weave.value ||
+                !document.Retail_form.id.value ||
+                !document.Retail_form.cst.value || !document.Retail_form.igst.value|| !document.Retail_form.total_amount.value||
+                !document.Retail_form.total_pre_tax_price.value|| !document.Retail_form.sku_count.value|| !document.Retail_form.sku_total_quantity.value||
+                !document.Retail_form.state.value|| !document.Retail_form.business_type.value || !document.Retail_form.discount.value ||
+                !document.Retail_form.transaction_id.value ){
+                    mytext.innerHTML = "<strong> Incomplete! </strong> Please enter all the details!";
+                    flag = 0;
+                }
+                console.log("flag " + flag);
+                if(flag) { document.Retail_form.submit();  alert("Successful form submission"); }
+                else{
+                    $('#myalert').show('fade');
+                    setTimeout(function(){
+                        $('#myalert').hide('fade');
+                    },5000);
+                    return false;
+                }
+            }
         </script>
-        <style>
-          body {
-  font-family: "Roboto", sans-serif;
-  background-color: #fff; }
 
-p {
-  color: #b3b3b3;
-  font-weight: 300; }
 
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "Roboto", sans-serif; }
-
-a {
-  -webkit-transition: .3s all ease;
-  -o-transition: .3s all ease;
-  transition: .3s all ease; }
-  a:hover {
-    text-decoration: none !important; }
-
-.content {
-  padding: 7rem 0; }
-
-h2 {
-  font-size: 20px; }
-
-.half, .half .container > .row {
-  height: 100vh;
-  min-height: 900px; }
-
-  .btn2{
-    margin-top: 30px;
-    display: inline-block;
-    width: 100%;
-    padding: 5px;
-    font-size: 20px;
-    border-radius: 5px;
-    background-color: #80d741;
-    color: white;
-    border: 1px solid #80d741 ;
-    transition-duration: 0.75s;
-}
-
-.btn2:hover{
-    transition-duration: 0.25s;
-    background-color: white;
-    color: #80d741;
-    cursor: pointer;
-}
-
-@media (max-width: 991.98px) {
-  .half .bg {
-    height: 200px; } }
-
-.half .contents {
-  background: #f6f7fc; }
-
-.half .contents {
-  width: 80%; }
-
-.half .bg {
-  width: 20%; }
-
-@media (max-width: 991.98px) {
-  .half .contents, .half .bg {
-    width: 100%; } }
-
-.half .contents .form-control, .half .bg .form-control {
-  border: none;
-  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  height: 54px;
-  background: #fff; }
-  .half .contents .form-control:active, .half .contents .form-control:focus, .half .bg .form-control:active, .half .bg .form-control:focus {
-    outline: none;
-    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1); }
-
-.half .bg {
-  background-size: cover;
-  background-position: center; }
-
-.half a {
-  color: #888;
-  text-decoration: underline; }
-
-.half .btn {
-  height: 54px;
-  padding-left: 30px;
-  padding-right: 30px; }
-
-.half .forgot-pass {
-  position: relative;
-  top: 2px;
-  font-size: 14px; }
-
-.control {
-  display: block;
-  position: relative;
-  padding-left: 30px;
-  margin-bottom: 15px;
-  cursor: pointer;
-  font-size: 14px; }
-  .control .caption {
-    position: relative;
-    top: .2rem;
-    color: #888; }
-
-.control input {
-  position: absolute;
-  z-index: -1;
-  opacity: 0; }
-
-.control__indicator {
-  position: absolute;
-  top: 2px;
-  left: 0;
-  height: 20px;
-  width: 20px;
-  background: #e6e6e6;
-  border-radius: 4px; }
-
-.control--radio .control__indicator {
-  border-radius: 50%; }
-
-.control:hover input ~ .control__indicator,
-.control input:focus ~ .control__indicator {
-  background: #ccc; }
-
-.control input:checked ~ .control__indicator {
-  background: #fb771a; }
-
-  select {
-    background-color: #ffffff;
-    width: 100%;
-    padding: 5px 10px;
-    border-radius: 3px;
-    border: 1px;
-    border-color: #888;
-}
-.control:hover input:not([disabled]):checked ~ .control__indicator,
-.control input:checked:focus ~ .control__indicator {
-  background: #fb8633; }
-
-.control input:disabled ~ .control__indicator {
-  background: #e6e6e6;
-  opacity: 0.9;
-  pointer-events: none; }
-
-.control__indicator:after {
-  font-family: 'icomoon';
-  content: '\e5ca';
-  position: absolute;
-  display: none;
-  font-size: 16px;
-  -webkit-transition: .3s all ease;
-  -o-transition: .3s all ease;
-  transition: .3s all ease; }
-
-.control input:checked ~ .control__indicator:after {
-  display: block;
-  color: #fff; }
-.owl-carousel,.owl-carousel .owl-item{-webkit-tap-highlight-color:transparent;position:relative}.owl-carousel{display:none;width:100%;z-index:1}.owl-carousel .owl-stage{position:relative;-ms-touch-action:pan-Y;touch-action:manipulation;-moz-backface-visibility:hidden}.owl-carousel .owl-stage:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}.owl-carousel .owl-stage-outer{position:relative;overflow:hidden;-webkit-transform:translate3d(0,0,0)}.owl-carousel .owl-item,.owl-carousel .owl-wrapper{-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;-ms-backface-visibility:hidden;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0)}.owl-carousel .owl-item{min-height:1px;float:left;-webkit-backface-visibility:hidden;-webkit-touch-callout:none}.owl-carousel .owl-item img{display:block;width:100%}.owl-carousel .owl-dots.disabled,.owl-carousel .owl-nav.disabled{display:none}.no-js .owl-carousel,.owl-carousel.owl-loaded{display:block}.owl-carousel .owl-dot,.owl-carousel .owl-nav .owl-next,.owl-carousel .owl-nav .owl-prev{cursor:pointer;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.owl-carousel .owl-nav button.owl-next,.owl-carousel .owl-nav button.owl-prev,.owl-carousel button.owl-dot{background:0 0;color:inherit;border:none;padding:0!important;font:inherit}.owl-carousel.owl-loading{opacity:0;display:block}.owl-carousel.owl-hidden{opacity:0}.owl-carousel.owl-refresh .owl-item{visibility:hidden}.owl-carousel.owl-drag .owl-item{-ms-touch-action:pan-y;touch-action:pan-y;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.owl-carousel.owl-grab{cursor:move;cursor:grab}.owl-carousel.owl-rtl{direction:rtl}.owl-carousel.owl-rtl .owl-item{float:right}.owl-carousel .animated{animation-duration:1s;animation-fill-mode:both}.owl-carousel .owl-animated-in{z-index:0}.owl-carousel .owl-animated-out{z-index:1}.owl-carousel .fadeOut{animation-name:fadeOut}@keyframes fadeOut{0%{opacity:1}100%{opacity:0}}.owl-height{transition:height .5s ease-in-out}.owl-carousel .owl-item .owl-lazy{opacity:0;transition:opacity .4s ease}.owl-carousel .owl-item .owl-lazy:not([src]),.owl-carousel .owl-item .owl-lazy[src^=""]{max-height:0}.owl-carousel .owl-item img.owl-lazy{transform-style:preserve-3d}.owl-carousel .owl-video-wrapper{position:relative;height:100%;background:#000}.owl-carousel .owl-video-play-icon{position:absolute;height:80px;width:80px;left:50%;top:50%;margin-left:-40px;margin-top:-40px;background:url(owl.video.play.png) no-repeat;cursor:pointer;z-index:1;-webkit-backface-visibility:hidden;transition:transform .1s ease}.owl-carousel .owl-video-play-icon:hover{-ms-transform:scale(1.3,1.3);transform:scale(1.3,1.3)}.owl-carousel .owl-video-playing .owl-video-play-icon,.owl-carousel .owl-video-playing .owl-video-tn{display:none}.owl-carousel .owl-video-tn{opacity:0;height:100%;background-position:center center;background-repeat:no-repeat;background-size:contain;transition:opacity .4s ease}.owl-carousel .owl-video-frame{position:relative;z-index:1;height:100%;width:100%}
-.control--checkbox .control__indicator:after {
-  top: 50%;
-  left: 50%;
-  margin-top: -1px;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%); }
-
-.control--checkbox input:disabled ~ .control__indicator:after {
-  border-color: #7b7b7b; }
-
-.control--checkbox input:disabled:checked ~ .control__indicator {
-  background-color: #7e0cf5;
-  opacity: .2; }
-
-        </style>
 </body>
+</html>

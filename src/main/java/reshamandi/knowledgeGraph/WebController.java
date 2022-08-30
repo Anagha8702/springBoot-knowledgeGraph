@@ -61,18 +61,56 @@ public class WebController {
 
     @PostMapping("/retailer")
     public String retailerSubmit(@ModelAttribute Retailer ret, Model model){
-        neo.patchRetailerTransaction(ret);
+        //neo.patchRetailerTransaction(ret);
         
         model.addAttribute("ret", new Retailer());
-        model.addAttribute("status",status2);
-        model.addAttribute("skuListingStatus",skuListingStatus);
-        model.addAttribute("uom",uom2);
-        model.addAttribute("business_type",businessType);
-        return "updateDatabase";
+        model.addAttribute("formdisp", 1);
+        model.addAttribute("l1",status2);
+        model.addAttribute("l2",skuListingStatus);
+        model.addAttribute("l3",uom2);
+        model.addAttribute("l4",businessType);
+        
+        System.out.println(ret.getid());
+        System.out.println(ret.getcreated_by());
+        System.out.println(ret.getcreated_date());
+        System.out.println(ret.getcategory());
+        System.out.println(ret.getcost_price());
+        System.out.println(ret.getquantity());
+        System.out.println(ret.getselling_price());
+        System.out.println(ret.getstatus());
+        System.out.println(ret.gettype());
+        System.out.println(ret.getwarehouseid());
+        System.out.println(ret.getsold_quantity());
+        System.out.println(ret.getretailer_id());
+        System.out.println(ret.getsku_listing_status());
+        
+        System.out.println(ret.getlanding_price());
+        System.out.println(ret.getgross_amount());
+        System.out.println(ret.getuom());
+        System.out.println(ret.getgst_amount());
+        System.out.println(ret.getgst_percentage());
+        System.out.println(ret.getdiscount_amount());  
+        System.out.println(ret.getlogistics_amount());
+        
+        System.out.println(ret.getweave());
+        
+        System.out.println(ret.getcst());
+        System.out.println(ret.getigst());
+        System.out.println(ret.gettotal_amount());
+        System.out.println(ret.gettotal_pre_tax_price());
+        System.out.println(ret.getsku_count());
+        System.out.println(ret.getsku_total_quantity());
+        System.out.println(ret.getstate());
+        System.out.println(ret.getdiscount());
+        System.out.println(ret.getbusiness_type());
+        System.out.println(ret.gettransaction_id());     
+        
+        return "form";
     }
+
     @PostMapping("/weaver")
     public String retailerSubmit(@ModelAttribute Weaver w, Model model){
-        neo.patchWeaverTransaction(w);
+        //neo.patchWeaverTransaction(w);
         
         model.addAttribute("w", new Weaver());
         model.addAttribute("formdisp", 1);
@@ -80,6 +118,40 @@ public class WebController {
         model.addAttribute("l2",skuListingStatus);
         model.addAttribute("l3",uom2);
         model.addAttribute("l4",businessType);
+        System.out.println(w.getid());
+        System.out.println(w.getcreated_by());
+        System.out.println(w.getcreated_date());
+        System.out.println(w.getcategory());
+        System.out.println(w.getcost_price());
+        System.out.println(w.getquantity());
+        System.out.println(w.getselling_price());
+        System.out.println(w.getstatus());
+        System.out.println(w.gettype());
+        System.out.println(w.getwarehouseid());
+        System.out.println(w.getsold_quantity());
+        System.out.println(w.getweaver_id());
+        System.out.println(w.getsku_listing_status());
+        System.out.println(w.getdefective_count());
+        System.out.println(w.getlanding_price());
+        System.out.println(w.getgross_amount());
+        System.out.println(w.getuom());
+        System.out.println(w.getgst_amount());
+        System.out.println(w.getgst_percentage());
+        System.out.println(w.getdiscount_amount());  
+        System.out.println(w.getlogistics_amount());
+        System.out.println(w.getreturn_quantity());
+        System.out.println(w.getweave());
+        System.out.println(w.getreturned_defective_quantity());
+        System.out.println(w.getcst());
+        System.out.println(w.getigst());
+        System.out.println(w.gettotal_amount());
+        System.out.println(w.gettotal_pre_tax_price());
+        System.out.println(w.getsku_count());
+        System.out.println(w.getsku_total_quantity());
+        System.out.println(w.getstate());
+        System.out.println(w.getdiscount());
+        System.out.println(w.getbusiness_type());
+        System.out.println(w.gettransaction_id());     
         return "form";
     }
 
