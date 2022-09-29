@@ -1338,7 +1338,7 @@ public class Neo4j implements AutoCloseable {
                             int k=0;
                             String[] lists = s.get(s2).toString().split("\"");
                             atrList[i][0] = s2.toUpperCase();
-                            atrList[i][1] = s2.toUpperCase();
+                            // atrList[i][1] = s2.toUpperCase();
                             int j=2;
                             for(String s3 : lists){
                                 if(k%2==1){

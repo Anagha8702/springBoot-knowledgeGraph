@@ -47,14 +47,6 @@ public class Weaver {
         filter = a;
     }
 
-    private Hashtable dict;
-    public Hashtable getdict(){
-        return dict;
-    }
-    public void setdict(Hashtable dict){
-        this.dict = dict;
-    }
-
     public String getstate() {
         return state;
     }

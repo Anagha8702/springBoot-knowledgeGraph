@@ -449,7 +449,33 @@ input[type='radio']:checked:after {
                 <div class="w3-card w3-container" style="min-height:460px">
                 <br><label>Dummy</label>
                 <input type="text" name="dummy">
+                <!-- <h4>Filter</h4>
+                <tr 
+                th:each="student, iStat : ${students}" 
+                th:style="${iStat.odd}? 'font-weight: bold;'" 
+                th:alt-title="${iStat.even}? 'even' : 'odd'">
+                  <td th:text="${student.id}" />
+                  <td th:text="${student.name}" />
+              </tr> -->
+              <div>
                 <h4>Filter</h4>
+                <div th:each="row, stat: ${attributes}" th:if="${row[0] != 'null' && row[0] != (ne)}">
+                    <select th:name="${filters[stat.index]}" multiple size="2">
+                            <option th:each="element: ${row}" th:value="${element}" th:if="${element != 'null' && element != (ne)}"><span th:text="${element}"></span></option>
+                    </select>
+                </div>
+                <!-- <select th:each="attr: ${attributes}" th:name="${index}" multiple size="3">
+                    <option th:value="${s}">seco</option>
+                    <option th:value="r.month">Month</option>
+                    <option th:value="r.state">State</option>
+                    <option th:value="r.created_date">Year</option>
+                </select> -->
+              </div>
+
+
+<!-- 
+
+
                 <select name="filter[0]" multiple size="3">
                     <option th:value="r.month">Month</option>
                     <option th:value="r.state">State</option>
@@ -460,7 +486,7 @@ input[type='radio']:checked:after {
                     <option th:value="r.ass">Month</option>
                     <option th:value="r.df">State</option>
                     <option th:value="r.created_date">Year</option>
-                </select>
+                </select> -->
             </div> 
             </div>
             

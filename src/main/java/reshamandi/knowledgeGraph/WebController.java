@@ -65,6 +65,11 @@ public class WebController {
         model.addAttribute("l2",skuListingStatus);
         model.addAttribute("l3",uom2);
         model.addAttribute("l4",businessType);
+        String attributes[][] = {{"sf", "Srrr"}, {"ergev", "vfdsv", "rfw"}};
+        String filters[] = {"filter[0]","filter[1]"};
+        model.addAttribute("attributes", attributes);
+        model.addAttribute("filters", filters);
+
         return "form";
     }
 
@@ -130,7 +135,6 @@ public class WebController {
         System.out.println(formData);
         System.out.println(w.getlanding_price());
         System.out.println(Arrays.deepToString(w.getfilter()));
-        System.out.println(w.getdict());
         model.addAttribute("w", new Weaver());
         model.addAttribute("formdisp", 1);
         model.addAttribute("l1",status2);

@@ -411,7 +411,7 @@ input[type='radio']:checked:after {
                   <div class="float-container">
                     <div class="float-child" style="width: 100%;">
                         <h4>Attributes</h4>
-                        <div th:each="row: ${attributes}">
+                        <div th:each="row: ${attributes}" th:if="${row[0] != 'null' && row[0] != (ne)}">
                             <select th:name="${row[0]}" multiple size="2">
                                     <option th:each="element: ${row}" th:value="${element}" th:if="${element != 'null' && element != (ne)}"><span th:text="${element}"></span></option>
                             </select>
