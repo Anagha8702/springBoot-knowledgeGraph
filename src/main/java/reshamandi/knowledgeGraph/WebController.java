@@ -1,13 +1,21 @@
 package reshamandi.knowledgeGraph;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.engine.AttributeName;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
 import io.github.cdimascio.dotenv.Dotenv;
 
 @Controller
@@ -109,50 +117,96 @@ public class WebController {
         return "form";
     }
     
-    @PostMapping("/weaver")
-    public String retailerSubmit(@ModelAttribute Weaver w, Model model){
-        neo.patchWeaverTransaction(w);
-        
+    @RequestMapping(value = "/weaver",
+    method = RequestMethod.POST,
+    consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, 
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    public String retailerSubmit(@ModelAttribute Weaver w, @RequestParam Map<String, String> formData, Model model) {
+        List<String> adressList = new ArrayList<String>();
+        for (Map.Entry<String, String> entry : formData.entrySet()) {
+            adressList.add(entry.getValue());
+        }
+        System.out.println(adressList);
+        System.out.println(formData);
+        System.out.println(w.getlanding_price());
+        System.out.println(Arrays.deepToString(w.getfilter()));
+        System.out.println(w.getdict());
         model.addAttribute("w", new Weaver());
         model.addAttribute("formdisp", 1);
         model.addAttribute("l1",status2);
         model.addAttribute("l2",skuListingStatus);
         model.addAttribute("l3",uom2);
         model.addAttribute("l4",businessType);
-        System.out.println(w.getid());
-        System.out.println(w.getcreated_by());
-        System.out.println(w.getcreated_date());
-        System.out.println(w.getcategory());
-        System.out.println(w.getcost_price());
-        System.out.println(w.getquantity());
-        System.out.println(w.getselling_price());
-        System.out.println(w.getstatus());
-        System.out.println(w.gettype());
-        System.out.println(w.getwarehouseid());
-        System.out.println(w.getsold_quantity());
-        System.out.println(w.getweaver_id());
-        System.out.println(w.getsku_listing_status());
-        System.out.println(w.getdefective_count());
-        System.out.println(w.getlanding_price());
-        System.out.println(w.getgross_amount());
-        System.out.println(w.getuom());
-        System.out.println(w.getgst_amount());
-        System.out.println(w.getgst_percentage());
-        System.out.println(w.getdiscount_amount());  
-        System.out.println(w.getlogistics_amount());
-        System.out.println(w.getreturn_quantity());
-        System.out.println(w.getweave());
-        System.out.println(w.getreturned_defective_quantity());
-        System.out.println(w.getcst());
-        System.out.println(w.getigst());
-        System.out.println(w.gettotal_amount());
-        System.out.println(w.gettotal_pre_tax_price());
-        System.out.println(w.getsku_count());
-        System.out.println(w.getsku_total_quantity());
-        System.out.println(w.getstate());
-        System.out.println(w.getdiscount());
-        System.out.println(w.getbusiness_type());
-        System.out.println(w.gettransaction_id());     
+
+        return "form";
+    }
+
+    // @PostMapping("/weaver")
+    // public String retailerSubmit(@ModelAttribute Weaver w, Model model){
+    //     // neo.patchWeaverTransaction(w);
+        
+    //     model.addAttribute("w", new Weaver());
+    //     model.addAttribute("formdisp", 1);
+    //     model.addAttribute("l1",status2);
+    //     model.addAttribute("l2",skuListingStatus);
+    //     model.addAttribute("l3",uom2);
+    //     model.addAttribute("l4",businessType);
+    //     // System.out.println(w.getid());
+    //     // System.out.println(w.getcreated_by());
+    //     // System.out.println(w.getcreated_date());
+    //     // System.out.println(w.getcategory());
+    //     // System.out.println(w.getcost_price());
+    //     // System.out.println(w.getquantity());
+    //     // System.out.println(w.getselling_price());
+    //     // System.out.println(w.getstatus());
+    //     // System.out.println(w.gettype());
+    //     // System.out.println(w.getwarehouseid());
+    //     // System.out.println(w.getsold_quantity());
+    //     // System.out.println(w.getweaver_id());
+    //     // System.out.println(w.getsku_listing_status());
+    //     // System.out.println(w.getdefective_count());
+    //     System.out.println(w.getlanding_price());
+    //     // System.out.println(w.getgross_amount());
+    //     // System.out.println(w.getuom());
+    //     // System.out.println(w.getgst_amount());
+    //     // System.out.println(w.getgst_percentage());
+    //     // System.out.println(w.getdiscount_amount());  
+    //     // System.out.println(w.getlogistics_amount());
+    //     // System.out.println(w.getreturn_quantity());
+    //     // System.out.println(w.getweave());
+    //     // System.out.println(w.getreturned_defective_quantity());
+    //     // System.out.println(w.getcst());
+    //     // System.out.println(w.getigst());
+    //     // System.out.println(w.gettotal_amount());
+    //     // System.out.println(w.gettotal_pre_tax_price());
+    //     // System.out.println(w.getsku_count());
+    //     // System.out.println(w.getsku_total_quantity());
+    //     // System.out.println(w.getstate());
+    //     // System.out.println(w.getdiscount());
+    //     // System.out.println(w.getbusiness_type());
+    //     // System.out.println(w.gettransaction_id());     
+    //     return "form";
+    // }
+
+    @RequestMapping(value = "/attribute",
+    method = RequestMethod.POST,
+    consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, 
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    public String addAttribute(@RequestParam Map<String, String> formData, Model model) {
+        List<String> formValues = new ArrayList<String>();
+        for (Map.Entry<String, String> entry : formData.entrySet()) {
+            formValues.add(entry.getValue());
+        }
+        if(formValues.get(1).equals("add")) neo.pushNewAttribute(formValues.get(0));
+        else neo.removeAttribute(formValues.get(0));        
+
+        model.addAttribute("w", new Weaver());
+        model.addAttribute("formdisp", 1);
+        model.addAttribute("l1",status2);
+        model.addAttribute("l2",skuListingStatus);
+        model.addAttribute("l3",uom2);
+        model.addAttribute("l4",businessType);
+
         return "form";
     }
 
@@ -172,9 +226,12 @@ public class WebController {
 
     @GetMapping("/query")
     public String greetingForm(Model model) {
+
+        neo.getStates();
+        neo.getAttributes();
         //Statistics part
         model.addAttribute("q12", new Query1_2());
-        model.addAttribute("states", states);
+        model.addAttribute("states", neo.stateList);
         model.addAttribute("years", years);
         model.addAttribute("seasons", seasons);
 
@@ -194,6 +251,10 @@ public class WebController {
         model.addAttribute("prod_type", prod_type_list);
         model.addAttribute("prod_weave", prod_weave_list);
         model.addAttribute("filter", filter_list);
+
+        // String attributes[][] = {{"color", "black", "red", "green", "null", null},{"border", "zigzag", "straight", "floral"}};
+        System.out.println(neo.attributeList);
+        model.addAttribute("attributes", neo.attributeList);
 
         return "index";
     }
@@ -383,62 +444,78 @@ public class WebController {
         
     }
 
-    @PostMapping("/products")
-    public String greetingProductsSubmit(@ModelAttribute Products prods, Model model){
-        
-        //Statistics
-        model.addAttribute("states", states);
-        model.addAttribute("years", years);
-        model.addAttribute("seasons", seasons);
-
-        //Transactions
-        model.addAttribute("trans_states", trans_states);
-        model.addAttribute("trans_months", trans_months);
-        model.addAttribute("categories", cat_list);
-        model.addAttribute("types", types_list);
-        model.addAttribute("weaves", weave_list);
-        model.addAttribute("role", role_list);
-        model.addAttribute("ID", ID_list);
-
-        //Products
-        model.addAttribute("prods", prods);
-        model.addAttribute("prod_cat", prod_cat_list);
-        model.addAttribute("prod_type", prod_type_list);
-        model.addAttribute("prod_weave", prod_weave_list);
-        model.addAttribute("filter", filter_list);
-
-        String productdata[][];
-        try{
-            productdata = neo.productStock(prods);
-            
-            
-
-            String headData_prod[] = productdata[0];
-            String datap[][] = new String[productdata.length - 1][productdata[0].length];
-
-            for (int i = 1; i < productdata.length; i++) {
-                for (int j = 0; j < productdata[0].length; j++) {
-                    datap[i - 1][j] = productdata[i][j];
-                }
-            }
-
-            model.addAttribute("data1", datap);
-            model.addAttribute("headData", headData_prod);
-            model.addAttribute("tableDisplay", 1);
-            model.addAttribute("chart4", 1);
-            
-        } catch (Exception e) {
-            System.out.println(e);
-            
+    @RequestMapping(value = "/products",
+    method = RequestMethod.POST,
+    consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, 
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    public String pdt(@ModelAttribute Products prods, @RequestParam Map<String, String> formData, Model model) {
+        List<String> formValues = new ArrayList<String>();
+        for (Map.Entry<String, String> entry : formData.entrySet()) {
+            formValues.add(entry.getKey() + "\t" + entry.getValue());
         }
+        for(String a: formValues)
+        System.out.println(a);
 
-        System.out.println(prods.getFilter());
-        System.out.println(Arrays.deepToString(prods.getCategory()));
-        System.out.println(Arrays.deepToString(prods.getType()));
-        System.out.println(Arrays.deepToString(prods.getWeave()));
 
         return "index";
     }
+
+    // @PostMapping("/products")
+    // public String greetingProductsSubmit(@ModelAttribute Products prods, Model model){
+        
+    //     //Statistics
+    //     model.addAttribute("states", states);
+    //     model.addAttribute("years", years);
+    //     model.addAttribute("seasons", seasons);
+
+    //     //Transactions
+    //     model.addAttribute("trans_states", trans_states);
+    //     model.addAttribute("trans_months", trans_months);
+    //     model.addAttribute("categories", cat_list);
+    //     model.addAttribute("types", types_list);
+    //     model.addAttribute("weaves", weave_list);
+    //     model.addAttribute("role", role_list);
+    //     model.addAttribute("ID", ID_list);
+
+    //     //Products
+    //     model.addAttribute("prods", prods);
+    //     model.addAttribute("prod_cat", prod_cat_list);
+    //     model.addAttribute("prod_type", prod_type_list);
+    //     model.addAttribute("prod_weave", prod_weave_list);
+    //     model.addAttribute("filter", filter_list);
+
+    //     String productdata[][];
+    //     try{
+    //         productdata = neo.productStock(prods);
+            
+            
+
+    //         String headData_prod[] = productdata[0];
+    //         String datap[][] = new String[productdata.length - 1][productdata[0].length];
+
+    //         for (int i = 1; i < productdata.length; i++) {
+    //             for (int j = 0; j < productdata[0].length; j++) {
+    //                 datap[i - 1][j] = productdata[i][j];
+    //             }
+    //         }
+
+    //         model.addAttribute("data1", datap);
+    //         model.addAttribute("headData", headData_prod);
+    //         model.addAttribute("tableDisplay", 1);
+    //         model.addAttribute("chart4", 1);
+            
+    //     } catch (Exception e) {
+    //         System.out.println(e);
+            
+    //     }
+
+    //     System.out.println(prods.getFilter());
+    //     System.out.println(Arrays.deepToString(prods.getCategory()));
+    //     System.out.println(Arrays.deepToString(prods.getType()));
+    //     System.out.println(Arrays.deepToString(prods.getWeave()));
+
+    //     return "index";
+    // }
 
 
     @RequestMapping(value="/register")

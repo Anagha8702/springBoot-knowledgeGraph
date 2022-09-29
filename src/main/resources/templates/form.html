@@ -337,7 +337,7 @@ input[type='radio']:checked:after {
             <h1 style="margin-bottom: -20px;">Weavers</h1>  <br>
             <div class="w3-row-padding w3-center w3-margin-top">
 
-            <div class="w3-third">
+            <!-- <div class="w3-third">
             <div class="w3-card w3-container" style="min-height:460px">
             <br><label>ID</label>
             <input type="number" min="0"  placeholder="e.g. 1234567" name="id">
@@ -422,14 +422,15 @@ input[type='radio']:checked:after {
             <br><label >GST Percentage</label>
             <input type="text"   name="gst_percentage">
             </div>
-            </div>
+            </div> -->
 
             <div class="w3-third">
             <div class="w3-card w3-container" style="min-height:460px">
 
             <br><label>Landing Price</label>
             <input type="number" min="0"    name="landing_price">
-            <br><label>Gross Amount</label>
+
+            <!-- <br><label>Gross Amount</label>
             <input type="number" min="0"   name="gross_amount">
             <br><label>Logistics Amount</label>
             <input type="number" min="0"   name="logistics_amount">
@@ -440,8 +441,32 @@ input[type='radio']:checked:after {
             <br><label >GST Amount</label>
             <input type="number" min="0"   name="gst_amount">
             <br><label>total_amount</label>
-            <input type="number" min="0"   name="total_amount">
+            <input type="number" min="0"   name="total_amount"> -->
             </div>
+            </div>
+
+            <div class="w3-third">
+                <div class="w3-card w3-container" style="min-height:460px">
+                <br><label>Dummy</label>
+                <input type="text" name="dummy">
+                <h4>Filter</h4>
+                <select name="filter[0]" multiple size="3">
+                    <option th:value="r.month">Month</option>
+                    <option th:value="r.state">State</option>
+                    <option th:value="r.created_date">Year</option>
+                </select>
+            <h4>Filter</h4>
+                <select name="filter[1]" multiple size="3">
+                    <option th:value="r.ass">Month</option>
+                    <option th:value="r.df">State</option>
+                    <option th:value="r.created_date">Year</option>
+                </select>
+            </div> 
+            </div>
+            
+        </div>
+            </div>
+
             </div>
 
             </div>
@@ -450,6 +475,26 @@ input[type='radio']:checked:after {
             </p>
             <button class="butn"><a th:href="@{register}">New Weaver</a></button>
         </form>
+
+        <form name="Attr_form" action="#" th:action="@{/attribute}" method="post">
+            <h1 style="margin-bottom: -20px;">Attribute</h1>  <br>
+
+            <br><label>Attribute</label>
+            <input type="text" name="attribute">
+            <h4>Operation</h4>
+                    <input type="radio" id="w" name="attr"  value="add" checked>
+                    <label for="w">Add</label><br>
+                    <input type="radio" id="r" name="attr" value="delete">
+                    <label for="r">Delete</label><br>           
+            <!-- <input type="radio" name="add" value="add">
+            <input type="radio" name="delete" value="delete"> -->
+
+            <p><input type="submit" value="Submit" class="butn" /> 
+                <input type="reset" value="Reset" class="butn"/>
+            </p>
+        </form>
+
+
     </div>
     
     <div id="retailSpec" style="display: none;" class="patch">
@@ -556,8 +601,7 @@ input[type='radio']:checked:after {
             <input type="number" min="0"   name="total_amount">
             </div>
             </div>
-
-            </div>
+           
             <p><input type="submit" value="Submit" onclick="return checkformr()" class="btn2" /> 
                 <input type="reset" value="Reset" class="btn2"/>
             </p>

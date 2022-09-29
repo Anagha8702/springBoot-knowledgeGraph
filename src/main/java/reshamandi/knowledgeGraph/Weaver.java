@@ -39,6 +39,22 @@ public class Weaver {
     private String business_type;
     private int transaction_id;
 
+    private String[][] filter;
+    public String[][] getfilter() {
+        return filter;
+    }
+    public void setfilter(String a[][]) {
+        filter = a;
+    }
+
+    private Hashtable dict;
+    public Hashtable getdict(){
+        return dict;
+    }
+    public void setdict(Hashtable dict){
+        this.dict = dict;
+    }
+
     public String getstate() {
         return state;
     }

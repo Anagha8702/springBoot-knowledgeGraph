@@ -9,8 +9,17 @@ import java.util.List;
 import java.util.Collections;
 import io.github.cdimascio.dotenv.Dotenv;
 
+interface transact{
+    public float calculateGST();
+    public float calculateAmount();
+    public float calculateGross();
+}
+
 public class Neo4j implements AutoCloseable {
     dict d = new dict();
+
+    String stateList[];
+    String attributeList[][];
 
     private final Driver driver;
 
@@ -21,6 +30,44 @@ public class Neo4j implements AutoCloseable {
     @Override
     public void close() throws Exception {
         driver.close();
+    }
+
+    public void getStates(){
+        String query = "MATCH (n:State)\n"+"RETURN n.states";
+        System.out.println(query);
+        try (Session session = driver.session()) {
+            stateList = session.writeTransaction(tx -> {
+                Result result = tx.run(String.valueOf(query));
+                List<Record> list = new ArrayList<Record>(result.list());
+                System.out.println(list.size());
+                String[] states = new String[list.size()];
+                System.out.println(list);
+                int i=0;
+                for(Record r : list){
+                    for(var s : r.values()){
+                        states[i++] = s.asString();
+                    }
+                }
+                System.out.println("Hit");
+                return states;
+            });
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+        System.out.println(Arrays.deepToString(stateList));
+    }
+
+    public String monthFromSeason(int season) {
+        switch (season) {
+            case 0:
+                return ("r.month='April' or r.month='May' or r.month='June' or ");
+            case 1:
+                return ("r.month='February' or r.month='March' or ");
+            case 2:
+                return ("r.month='July' or r.month='August' or r.month='September' or ");
+            default:
+                return ("r.month='October' or r.month='November' or r.month='December' or r.month='January' or ");
+        }
     }
 
     public String monthFromSeason(String season) {
@@ -389,6 +436,7 @@ public class Neo4j implements AutoCloseable {
                 + w.getyarn_capacity() + "',type:'" + w.gettype() + "',twisted_type:'" + w.gettwisted_type()
                 + "',denier:'" + w.getdenier() + "'})";
         System.out.println(weaverNode);
+        
         try (Session session = driver.session()) {
             session.writeTransaction(tx -> {
                 tx.run(weaverNode);
@@ -1244,4 +1292,72 @@ public class Neo4j implements AutoCloseable {
     //     }
     // }
 
+    public void pushNewAttribute(String newAttribute){
+        String atr = newAttribute.toLowerCase();
+        String query = "MATCH (n:Attributes)\n"+"SET n."+atr+" = []";
+        System.out.println(query);
+        try (Session session = driver.session()) {
+            session.writeTransaction(tx -> {
+                tx.run(query);
+                System.out.println("Hit");
+                return 0;
+            });
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+    }
+
+    public void removeAttribute(String oldAttribute){
+        String atr = oldAttribute.toLowerCase();
+        String query = "MATCH (n:Attributes)\n"+"REMOVE n."+atr;
+        System.out.println(query);
+        try (Session session = driver.session()) {
+            session.writeTransaction(tx -> {
+                tx.run(query);
+                System.out.println("Hit");
+                return 0;
+            });
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+    }
+
+    public void getAttributes(){
+        String query = "MATCH (n:Attributes)\n"+"RETURN properties(n)";
+        System.out.println(query);
+        try (Session session = driver.session()) {
+            attributeList = session.writeTransaction(tx -> {
+                Result result = tx.run(String.valueOf(query));
+                List<Record> list = new ArrayList<Record>(result.list());
+                System.out.println(list.size());
+                String[][] atrList = new String[100][100];
+                int i=0;
+                for(Record r : list){
+                    for(var s : r.values()){
+                        for(var s2 : s.keys()){
+                            int k=0;
+                            String[] lists = s.get(s2).toString().split("\"");
+                            atrList[i][0] = s2.toUpperCase();
+                            atrList[i][1] = s2.toUpperCase();
+                            int j=2;
+                            for(String s3 : lists){
+                                if(k%2==1){
+                                        atrList[i][j++] = s3;
+                                    }
+                                    k++;
+                                }
+                            i++;
+                            }
+                        }
+                        }
+                System.out.println("Hit");
+                return atrList;
+            });
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        System.out.println(Arrays.deepToString(attributeList));
+    }
+
 }
+
