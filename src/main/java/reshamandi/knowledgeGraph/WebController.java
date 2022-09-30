@@ -65,7 +65,7 @@ public class WebController {
         model.addAttribute("l2",skuListingStatus);
         model.addAttribute("l3",uom2);
         model.addAttribute("l4",businessType);
-        String attributes[][] = {{"sf", "Srrr"}, {"ergev", "vfdsv", "rfw"}};
+        String attributes[][] = {{"COLOR", "Red"}, {"Border", "Zigzag", "Floral", "Straight"}};
         String filters[] = {"filter[0]","filter[1]"};
         model.addAttribute("attributes", attributes);
         model.addAttribute("filters", filters);
@@ -233,6 +233,7 @@ public class WebController {
 
         neo.getStates();
         neo.getAttributes();
+        neo.getTypes();
         //Statistics part
         model.addAttribute("q12", new Query1_2());
         model.addAttribute("states", neo.stateList);
@@ -244,7 +245,7 @@ public class WebController {
         model.addAttribute("trans_states", trans_states);
         model.addAttribute("trans_months", trans_months);
         model.addAttribute("categories", cat_list);
-        model.addAttribute("types", types_list);
+        model.addAttribute("types", neo.typeList);
         model.addAttribute("weaves", weave_list);
         model.addAttribute("role", role_list);
         model.addAttribute("ID", ID_list);
@@ -257,7 +258,7 @@ public class WebController {
         model.addAttribute("filter", filter_list);
 
         // String attributes[][] = {{"color", "black", "red", "green", "null", null},{"border", "zigzag", "straight", "floral"}};
-        System.out.println(neo.attributeList);
+        // System.out.println(neo.attributeList);
         model.addAttribute("attributes", neo.attributeList);
 
         return "index";

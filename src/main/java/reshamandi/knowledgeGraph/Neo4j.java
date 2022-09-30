@@ -20,6 +20,10 @@ public class Neo4j implements AutoCloseable {
 
     String stateList[];
     String attributeList[][];
+    String typeList[];
+    String categoryList[];
+    String weaveList[];
+
 
     private final Driver driver;
 
@@ -34,27 +38,105 @@ public class Neo4j implements AutoCloseable {
 
     public void getStates(){
         String query = "MATCH (n:State)\n"+"RETURN n.states";
-        System.out.println(query);
+        // System.out.println(query);
         try (Session session = driver.session()) {
             stateList = session.writeTransaction(tx -> {
                 Result result = tx.run(String.valueOf(query));
                 List<Record> list = new ArrayList<Record>(result.list());
-                System.out.println(list.size());
+                // System.out.println(list.size());
                 String[] states = new String[list.size()];
-                System.out.println(list);
+                // System.out.println(list);
                 int i=0;
                 for(Record r : list){
                     for(var s : r.values()){
                         states[i++] = s.asString();
                     }
                 }
-                System.out.println("Hit");
+                System.out.println("States Hit");
                 return states;
             });
         } catch (Exception e) {
             System.out.println("Error");
         }
-        System.out.println(Arrays.deepToString(stateList));
+        // System.out.println(Arrays.deepToString(stateList));
+    }
+
+    public void getCategory(){
+        String query = "MATCH (n:Category)\n"+"RETURN n.category";
+        System.out.println(query);
+        try (Session session = driver.session()) {
+            categoryList = session.writeTransaction(tx -> {
+                Result result = tx.run(String.valueOf(query));
+                List<Record> list = new ArrayList<Record>(result.list());
+                System.out.println(list.size());
+                String[] categories = new String[list.size()];
+                System.out.println(list);
+                int i=0;
+                for(Record r : list){
+                    for(var s : r.values()){
+                        if(s!=null)
+                            categories[i++] = s.asString();
+                    }
+                }
+                System.out.println("Hit");
+                return categories;
+            });
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+        System.out.println(Arrays.deepToString(categoryList));
+    }
+
+    public void getWeave(){
+        String query = "MATCH (n:Weave)\n"+"RETURN n.weave";
+        System.out.println(query);
+        try (Session session = driver.session()) {
+            weaveList = session.writeTransaction(tx -> {
+                Result result = tx.run(String.valueOf(query));
+                List<Record> list = new ArrayList<Record>(result.list());
+                System.out.println(list.size());
+                String[] weaves = new String[list.size()];
+                System.out.println(list);
+                int i=0;
+                for(Record r : list){
+                    for(var s : r.values()){
+                        if(s!=null)
+                            weaves[i++] = s.asString();
+                    }
+                }
+                System.out.println("Hit");
+                return weaves;
+            });
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+        System.out.println(Arrays.deepToString(weaveList));
+    }
+
+    public void getTypes(){
+        String query = "MATCH (n:Type)\n"+"RETURN n.type";
+        // System.out.println(query);
+        try (Session session = driver.session()) {
+            typeList = session.writeTransaction(tx -> {
+                Result result = tx.run(String.valueOf(query));
+                List<Record> list = new ArrayList<Record>(result.list());
+                // System.out.println(list.size());
+                String[] types = new String[list.size()];
+                // System.out.println(list);
+                int i=0;
+                for(Record r : list){
+                    for(var s : r.values()){
+                        if(s!=null)
+                        types[i++] = s.asString();
+                    }
+                }
+                System.out.println("Types Hit");
+                return types;
+            });
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+        // System.out.println(Arrays.deepToString(typeList));
     }
 
     public String monthFromSeason(int season) {
@@ -1324,12 +1406,12 @@ public class Neo4j implements AutoCloseable {
 
     public void getAttributes(){
         String query = "MATCH (n:Attributes)\n"+"RETURN properties(n)";
-        System.out.println(query);
+        // System.out.println(query);
         try (Session session = driver.session()) {
             attributeList = session.writeTransaction(tx -> {
                 Result result = tx.run(String.valueOf(query));
                 List<Record> list = new ArrayList<Record>(result.list());
-                System.out.println(list.size());
+                // System.out.println(list.size());
                 String[][] atrList = new String[100][100];
                 int i=0;
                 for(Record r : list){
@@ -1350,13 +1432,13 @@ public class Neo4j implements AutoCloseable {
                             }
                         }
                         }
-                System.out.println("Hit");
+                System.out.println("Attribute Hit");
                 return atrList;
             });
         } catch (Exception e) {
             System.out.println(e);
         }
-        System.out.println(Arrays.deepToString(attributeList));
+        // System.out.println(Arrays.deepToString(attributeList));
     }
 
 }
