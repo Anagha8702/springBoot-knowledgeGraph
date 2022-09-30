@@ -365,7 +365,7 @@ input[type='radio']:checked:after {
       </div>
       </div>
   </div>
-  <h1 class="resh"><span><a href="https://reshamandi.com/" style="text-decoration:none;"><img src="Logo.png" width="80" height="70" ></a>
+  <h1 class="resh"><span><a th:href="@{/query}" style="text-decoration:none;"><img src="Logo.png" width="80" height="70" ></a>
   </span> Reshamandi</h1>
   <div id="image">
       <div class="row">
@@ -482,7 +482,7 @@ input[type='radio']:checked:after {
         </div>
         
         <div id="statSpec" style="display: none; margin-top: 10px;" class="query">
-            <form action="#" th:action="@{/query}" th:object="${q12}" method="post">
+            <form action="#" th:action="@{/statistics}" th:object="${q12}" method="post">
                 <h1 style="margin-bottom: -20px;">Statistics</h1>  <br>
                 <div class="float-container">
                   <div class="float-child">
@@ -531,6 +531,23 @@ input[type='radio']:checked:after {
                     </select>
                   </div>
                 </div>
+
+                <div class="float-container">
+                    <div class="float-child" style="width: 100%;">
+                        <h4>Attributes</h4>
+                        <div th:each="row, stat: ${attributes}" th:if="${row[0] != 'null' && row[0] != (ne)}">
+                            <select th:name="${attrs[stat.index]}" multiple size="2">
+                                    <option th:each="element: ${row}" th:value="${element}" th:if="${element != 'null' && element != (ne)}"><span th:text="${element}"></span></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
                 <p><input type="submit" value="Submit" class="btn2" /> 
                     <input type="reset" value="Reset" class="btn2"/>
                 </p>

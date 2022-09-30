@@ -229,91 +229,139 @@ public class WebController {
     }
 
     @GetMapping("/query")
-    public String greetingForm(Model model) {
+    public String landing(Model model) {
 
         neo.getStates();
         neo.getAttributes();
         neo.getTypes();
+        neo.getCategory();
+        neo.getWeave();
+        neo.getYear();
+
         //Statistics part
-        model.addAttribute("q12", new Query1_2());
+        model.addAttribute("q12", new Statistics());
         model.addAttribute("states", neo.stateList);
-        model.addAttribute("years", years);
+        model.addAttribute("years", neo.yearList);
         model.addAttribute("seasons", seasons);
 
         //Transactions part
         model.addAttribute("trans", new Transactions());
-        model.addAttribute("trans_states", trans_states);
+        model.addAttribute("trans_states", neo.stateList);
         model.addAttribute("trans_months", trans_months);
-        model.addAttribute("categories", cat_list);
+        model.addAttribute("categories", neo.categoryList);
         model.addAttribute("types", neo.typeList);
-        model.addAttribute("weaves", weave_list);
+        model.addAttribute("weaves", neo.weaveList);
         model.addAttribute("role", role_list);
         model.addAttribute("ID", ID_list);
 
         //Products part
         model.addAttribute("prods", new Products());
-        model.addAttribute("prod_cat", prod_cat_list);
-        model.addAttribute("prod_type", prod_type_list);
-        model.addAttribute("prod_weave", prod_weave_list);
+        model.addAttribute("prod_cat", neo.categoryList);
+        model.addAttribute("prod_type", neo.typeList);
+        model.addAttribute("prod_weave", neo.weaveList);
         model.addAttribute("filter", filter_list);
 
-        // String attributes[][] = {{"color", "black", "red", "green", "null", null},{"border", "zigzag", "straight", "floral"}};
-        // System.out.println(neo.attributeList);
+        String attrs[] = new String[neo.attributeList.length];
+        for(int i=0;i<attrs.length;i++)
+            attrs[i] = "attr[" + i + "]";
+        // System.out.println(Arrays.deepToString(attrs));
+
+        model.addAttribute("attributes", neo.attributeList);
+        model.addAttribute("attrs", attrs);
+
+        return "index";
+    }
+
+    @PostMapping("/statistics")
+    public String statisticsQuery(@ModelAttribute Statistics s, Model model) {
+        
+        
+        System.out.println(Arrays.deepToString(s.getattr()));
+        System.out.println(s.getattr().length);
+
+
+        //Statistics part
+        model.addAttribute("q12", new Statistics());
+        model.addAttribute("states", neo.stateList);
+        model.addAttribute("years", neo.yearList);
+        model.addAttribute("seasons", seasons);
+
+        //Transactions part
+        model.addAttribute("trans", new Transactions());
+        model.addAttribute("trans_states", neo.stateList);
+        model.addAttribute("trans_months", trans_months);
+        model.addAttribute("categories", neo.categoryList);
+        model.addAttribute("types", neo.typeList);
+        model.addAttribute("weaves", neo.weaveList);
+        model.addAttribute("role", role_list);
+        model.addAttribute("ID", ID_list);
+
+        //Products part
+        model.addAttribute("prods", new Products());
+        model.addAttribute("prod_cat", neo.categoryList);
+        model.addAttribute("prod_type", neo.typeList);
+        model.addAttribute("prod_weave", neo.weaveList);
+        model.addAttribute("filter", filter_list);
+
+        String attrs[] = new String[neo.attributeList.length];
+        for(int i=0;i<attrs.length;i++)
+            attrs[i] = "attr[" + i + "]";
+        model.addAttribute("attrs", attrs);
         model.addAttribute("attributes", neo.attributeList);
 
         return "index";
     }
 
-    @PostMapping("/query")
-    public String greetingSubmit(@ModelAttribute Query1_2 q12, Model model) {
+    // @PostMapping("/statistics")
+    // public String greetingSubmit(@ModelAttribute Statistics q12, Model model) {
 
-    //    String data[][] = {{"Type","Blore","Chennai","Hyderabad"},{"Accessore","23","433","134"},{"Saree","334","34","22"}};
-        String data[][];
-        try{
-            data = neo.statistics(q12.getRole(), q12.getProductSpec(), q12.getFilter(), q12.getStates(), q12.getSeasons(), q12.getYears());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        String headData[] = data[0];
-        String data1[][] = new String[data.length-1][data[0].length];
-        for(int i=1;i<data.length;i++){
-            for(int j=0;j<data[0].length;j++)
-                data1[i-1][j] = data[i][j];
-        }
-        String param2[] = new String[data[0].length - 1];
-        for(int i=1;i<data[0].length;i++) param2[i-1]=data[0][i];
-        System.out.println(Arrays.deepToString(data));
-        System.out.println(Arrays.deepToString(data1));
-        System.out.println(Arrays.deepToString(param2));
-        model.addAttribute("q12", q12);
-        model.addAttribute("data", data);
-        model.addAttribute("data1", data1);
-        model.addAttribute("headData", headData);
-        model.addAttribute("tableDisplay", 1);
-        model.addAttribute("chart", 1);
-        model.addAttribute("data_row", data.length);
-        model.addAttribute("data_col", data[0].length);
-        model.addAttribute("param2", param2);
+    // //    String data[][] = {{"Type","Blore","Chennai","Hyderabad"},{"Accessore","23","433","134"},{"Saree","334","34","22"}};
+    //     String data[][];
+    //     try{
+    //         data = neo.statistics(q12.getRole(), q12.getProductSpec(), q12.getFilter(), q12.getStates(), q12.getSeasons(), q12.getYears());
+    //     } catch (Exception e) {
+    //         throw new RuntimeException(e);
+    //     }
+    //     String headData[] = data[0];
+    //     String data1[][] = new String[data.length-1][data[0].length];
+    //     for(int i=1;i<data.length;i++){
+    //         for(int j=0;j<data[0].length;j++)
+    //             data1[i-1][j] = data[i][j];
+    //     }
+    //     String param2[] = new String[data[0].length - 1];
+    //     for(int i=1;i<data[0].length;i++) param2[i-1]=data[0][i];
+    //     System.out.println(Arrays.deepToString(data));
+    //     System.out.println(Arrays.deepToString(data1));
+    //     System.out.println(Arrays.deepToString(param2));
+    //     model.addAttribute("q12", q12);
+    //     model.addAttribute("data", data);
+    //     model.addAttribute("data1", data1);
+    //     model.addAttribute("headData", headData);
+    //     model.addAttribute("tableDisplay", 1);
+    //     model.addAttribute("chart", 1);
+    //     model.addAttribute("data_row", data.length);
+    //     model.addAttribute("data_col", data[0].length);
+    //     model.addAttribute("param2", param2);
         
-        //Transactions
-        model.addAttribute("states", states);
-        model.addAttribute("years", years);
-        model.addAttribute("seasons", seasons);
+    //     //Transactions
+    //     model.addAttribute("states", states);
+    //     model.addAttribute("years", years);
+    //     model.addAttribute("seasons", seasons);
 
-        model.addAttribute("trans_states", trans_states);
-        model.addAttribute("trans_months", trans_months);
-        model.addAttribute("categories", cat_list);
-        model.addAttribute("types", types_list);
-        model.addAttribute("weaves", weave_list);
-        model.addAttribute("role", role_list);
-        model.addAttribute("ID", ID_list);
+    //     model.addAttribute("trans_states", trans_states);
+    //     model.addAttribute("trans_months", trans_months);
+    //     model.addAttribute("categories", cat_list);
+    //     model.addAttribute("types", types_list);
+    //     model.addAttribute("weaves", weave_list);
+    //     model.addAttribute("role", role_list);
+    //     model.addAttribute("ID", ID_list);
 
-        model.addAttribute("prod_cat", prod_cat_list);
-        model.addAttribute("prod_type", prod_type_list);
-        model.addAttribute("prod_weave", prod_weave_list);
-        model.addAttribute("filter", filter_list);
-        return "index";
-    }
+    //     model.addAttribute("prod_cat", prod_cat_list);
+    //     model.addAttribute("prod_type", prod_type_list);
+    //     model.addAttribute("prod_weave", prod_weave_list);
+    //     model.addAttribute("filter", filter_list);
+    //     return "index";
+    // }
 
     @PostMapping("/transactions")
     public String greetingTransactionSubmit(@ModelAttribute Transactions trans, Model model){
@@ -461,7 +509,34 @@ public class WebController {
         for(String a: formValues)
         System.out.println(a);
 
+        //Statistics part
+        model.addAttribute("q12", new Statistics());
+        model.addAttribute("states", neo.stateList);
+        model.addAttribute("years", neo.yearList);
+        model.addAttribute("seasons", seasons);
 
+        //Transactions part
+        model.addAttribute("trans", new Transactions());
+        model.addAttribute("trans_states", neo.stateList);
+        model.addAttribute("trans_months", trans_months);
+        model.addAttribute("categories", neo.categoryList);
+        model.addAttribute("types", neo.typeList);
+        model.addAttribute("weaves", neo.weaveList);
+        model.addAttribute("role", role_list);
+        model.addAttribute("ID", ID_list);
+
+        //Products part
+        model.addAttribute("prods", new Products());
+        model.addAttribute("prod_cat", neo.categoryList);
+        model.addAttribute("prod_type", neo.typeList);
+        model.addAttribute("prod_weave", neo.weaveList);
+        model.addAttribute("filter", filter_list);
+
+        String attrs[] = new String[neo.attributeList.length];
+        for(int i=0;i<attrs.length;i++)
+            attrs[i] = "attr[" + i + "]";
+        model.addAttribute("attrs", attrs);
+        model.addAttribute("attributes", neo.attributeList);
         return "index";
     }
 

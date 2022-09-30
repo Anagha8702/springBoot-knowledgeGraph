@@ -37,6 +37,11 @@ public class dict{
         }
     }
 
+    public String yearName(String dateStamp){
+        String[] list = dateStamp.split("-",3);
+        return list[0];
+    }
+
     public String pdtid(String type,String Category,String Weave){
         String inputType,inputCategory,inputWeave;
         try{

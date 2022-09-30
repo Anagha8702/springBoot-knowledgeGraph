@@ -23,6 +23,7 @@ public class Neo4j implements AutoCloseable {
     String typeList[];
     String categoryList[];
     String weaveList[];
+    String yearList[];
 
 
     private final Driver driver;
@@ -61,16 +62,42 @@ public class Neo4j implements AutoCloseable {
         // System.out.println(Arrays.deepToString(stateList));
     }
 
+    public void getYear(){
+        String query = "MATCH (n:Year)\n"+"RETURN n.year";
+        // System.out.println(query);
+        try (Session session = driver.session()) {
+            yearList = session.writeTransaction(tx -> {
+                Result result = tx.run(String.valueOf(query));
+                List<Record> list = new ArrayList<Record>(result.list());
+                // System.out.println(list.size());
+                String[] years = new String[list.size()];
+                // System.out.println(list);
+                int i=0;
+                for(Record r : list){
+                    for(var s : r.values()){
+                        if(s!=null)
+                            years[i++] = s.asString();
+                    }
+                }
+                System.out.println("Year Hit");
+                return years;
+            });
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+        // System.out.println(Arrays.deepToString(yearList));
+    }
+
     public void getCategory(){
         String query = "MATCH (n:Category)\n"+"RETURN n.category";
-        System.out.println(query);
+        // System.out.println(query);
         try (Session session = driver.session()) {
             categoryList = session.writeTransaction(tx -> {
                 Result result = tx.run(String.valueOf(query));
                 List<Record> list = new ArrayList<Record>(result.list());
-                System.out.println(list.size());
+                // System.out.println(list.size());
                 String[] categories = new String[list.size()];
-                System.out.println(list);
+                // System.out.println(list);
                 int i=0;
                 for(Record r : list){
                     for(var s : r.values()){
@@ -78,25 +105,25 @@ public class Neo4j implements AutoCloseable {
                             categories[i++] = s.asString();
                     }
                 }
-                System.out.println("Hit");
+                System.out.println("Category Hit");
                 return categories;
             });
         } catch (Exception e) {
             System.out.println("Error");
         }
-        System.out.println(Arrays.deepToString(categoryList));
+        // System.out.println(Arrays.deepToString(categoryList));
     }
 
     public void getWeave(){
         String query = "MATCH (n:Weave)\n"+"RETURN n.weave";
-        System.out.println(query);
+        // System.out.println(query);
         try (Session session = driver.session()) {
             weaveList = session.writeTransaction(tx -> {
                 Result result = tx.run(String.valueOf(query));
                 List<Record> list = new ArrayList<Record>(result.list());
-                System.out.println(list.size());
+                // System.out.println(list.size());
                 String[] weaves = new String[list.size()];
-                System.out.println(list);
+                // System.out.println(list);
                 int i=0;
                 for(Record r : list){
                     for(var s : r.values()){
@@ -104,13 +131,13 @@ public class Neo4j implements AutoCloseable {
                             weaves[i++] = s.asString();
                     }
                 }
-                System.out.println("Hit");
+                System.out.println("Weave Hit");
                 return weaves;
             });
         } catch (Exception e) {
             System.out.println("Error");
         }
-        System.out.println(Arrays.deepToString(weaveList));
+        // System.out.println(Arrays.deepToString(weaveList));
     }
 
     public void getTypes(){
@@ -555,7 +582,8 @@ public class Neo4j implements AutoCloseable {
                 "MERGE (t1:Category{category:'" + w.getcategory() + "'})\n" +
                 "MERGE (t2:Weave{weave:'" + w.getweave() + "'})\n" +
                 "MERGE (m:Month{month : '" + d.monthName(w.getcreated_date()) + "'})\n" +
-                "MERGE (s:State{state : '" + w.getstate() + "'})";
+                "MERGE (s:State{state : '" + w.getstate() + "'})\n"+
+                "MERGE (y:Year{year : '" + d.yearName(w.getcreated_date()) + "'})";
         System.out.println(nodes);
 
         // soldbyRelation
@@ -642,7 +670,8 @@ public class Neo4j implements AutoCloseable {
                 "MERGE (t1:Category{category:'" + r.getcategory() + "'})\n" +
                 "MERGE (t2:Weave{weave:'" + r.getweave() + "'})\n" +
                 "MERGE (m:Month{month : '" + d.monthName(r.getcreated_date()) + "'})\n" +
-                "MERGE (s:State{state : '" + r.getstate() + "'})";
+                "MERGE (s:State{state : '" + r.getstate() + "'})\n" +
+                "MERGE (y:Year{year : '" + d.yearName(r.getcreated_date()) + "'})";
         System.out.println(nodes);
 
         // BoughtbyRelation

@@ -1,6 +1,6 @@
 package reshamandi.knowledgeGraph;
 
-public class Query1_2 {
+public class Statistics {
     private String role; //boughtMonth/soldMonth
     private String productSpec; //pdt.type/pdt.category/pdt.weave
     private String filter; //r.state/r.month/left(r.created_date,4)
@@ -44,6 +44,14 @@ public class Query1_2 {
     public String[] getYears(){ return years; }
     public void setYears(String[] years){
         this.years = years;
+    }
+
+    private String[][] attr;
+    public String[][] getattr() {
+        return attr;
+    }
+    public void setattr(String a[][]) {
+        attr = a;
     }
 
 }
