@@ -275,9 +275,34 @@ public class WebController {
     @PostMapping("/statistics")
     public String statisticsQuery(@ModelAttribute Statistics s, Model model) {
         
-        
-        System.out.println(Arrays.deepToString(s.getattr()));
-        System.out.println(s.getattr().length);
+        String res[][] = s.getattr();
+        System.out.println(Arrays.deepToString(res));
+        System.out.println(Arrays.deepToString(neo.attrNames));
+
+        // String soln[][] = new String[res.length][];
+        // int rows = res.length, j=0, len;
+        // for(int i=0;i<rows;i++){
+        //     if(res[i] != null){
+        //         System.out.println(Arrays.deepToString(res[i]));
+        //     if(res[i].length == 1){
+        //         if(!res[i][0].equals(neo.attributeList[i][0])){
+        //             soln[j][0] = neo.attributeList[i][0];
+        //             soln[j++][1] = res[i][0];
+        //         }
+        //     }else{
+        //         if(res[i][0].equals(neo.attributeList[i][0])){soln[j++] = res[i]; continue;}
+        //         soln[j][0] = neo.attributeList[i][0];
+        //         len = res[i].length;
+        //         for(int k=1;k<=len;k++){
+        //             soln[j][k] = res[i][k-1];
+        //         }
+        //         j++;
+        //     }
+        // }
+        // }
+
+        // System.out.println(Arrays.deepToString(soln));
+
 
 
         //Statistics part

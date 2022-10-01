@@ -534,10 +534,11 @@ input[type='radio']:checked:after {
 
                 <div class="float-container">
                     <div class="float-child" style="width: 100%;">
-                        <h4>Attributes</h4>
-                        <div th:each="row, stat: ${attributes}" th:if="${row[0] != 'null' && row[0] != (ne)}">
+                        <h4 style="text-align: center;">Attributes</h4>
+                        <div th:each="row, stat: ${attributes}" th:if="${row[1] != (ne)}">
+                            <label for="${attrs[stat.index]}" th:text="${row[0]}" style="text-align: left; position: relative; top: -23px;"></label>
                             <select th:name="${attrs[stat.index]}" multiple size="2">
-                                    <option th:each="element: ${row}" th:value="${element}" th:if="${element != 'null' && element != (ne)}"><span th:text="${element}"></span></option>
+                                    <option th:each="element, stats: ${row}" th:value="${element}" th:if="${stats.index != 0 && element != (ne)}"><span th:text="${element}"></span></option>
                             </select>
                         </div>
                     </div>

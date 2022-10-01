@@ -20,6 +20,7 @@ public class Neo4j implements AutoCloseable {
 
     String stateList[];
     String attributeList[][];
+    String attrNames[] = new String[100];
     String typeList[];
     String categoryList[];
     String weaveList[];
@@ -1450,7 +1451,7 @@ public class Neo4j implements AutoCloseable {
                             String[] lists = s.get(s2).toString().split("\"");
                             atrList[i][0] = s2.toUpperCase();
                             // atrList[i][1] = s2.toUpperCase();
-                            int j=2;
+                            int j=1;
                             for(String s3 : lists){
                                 if(k%2==1){
                                         atrList[i][j++] = s3;
@@ -1461,9 +1462,14 @@ public class Neo4j implements AutoCloseable {
                             }
                         }
                         }
+                
                 System.out.println("Attribute Hit");
                 return atrList;
             });
+            int j=0;
+                for(;j<100;j++){
+                   attrNames[j] = attributeList[j][0];
+                }
         } catch (Exception e) {
             System.out.println(e);
         }
