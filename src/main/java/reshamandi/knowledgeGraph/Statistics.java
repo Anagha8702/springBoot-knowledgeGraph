@@ -1,5 +1,9 @@
 package reshamandi.knowledgeGraph;
 
+import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Statistics {
     private String role; //boughtMonth/soldMonth
     private String productSpec; //pdt.type/pdt.category/pdt.weave
@@ -45,6 +49,31 @@ public class Statistics {
     public void setYears(String[] years){
         this.years = years;
     }
+
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime dateTime;
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime endDateTime;
+
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
+    }
+
+    public void setEndDateTime(LocalDateTime endDateTime) {
+        this.endDateTime = endDateTime;
+    }
+
 
     private String[][] attr;
     public String[][] getattr() {

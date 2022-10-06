@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.engine.AttributeName;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -274,10 +276,28 @@ public class WebController {
 
     @PostMapping("/statistics")
     public String statisticsQuery(@ModelAttribute Statistics s, Model model) {
+
+        if (s.getDateTime() == null) {
+            s.setDateTime(LocalDateTime.now());
+        }
+
+        if (s.getEndDateTime() == null) {
+            s.setEndDateTime(LocalDateTime.now());
+        }
         
         String res[][] = s.getattr();
         System.out.println(Arrays.deepToString(res));
         System.out.println(Arrays.deepToString(neo.attrNames));
+        String startTime = String.valueOf(s.getDateTime()).substring(0,10);
+        String endTime = String.valueOf(s.getEndDateTime()).substring(0,10);
+
+        System.out.println(startTime);
+        System.out.println(endTime);
+
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        // String formattedDateTime = s.getDateTime().format(formatter); // "1986-04-08 12:30"
+        // System.out.println(formattedDateTime);
+
 
         // String soln[][] = new String[res.length][];
         // int rows = res.length, j=0, len;
@@ -522,105 +542,105 @@ public class WebController {
         
     }
 
-    @RequestMapping(value = "/products",
-    method = RequestMethod.POST,
-    consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, 
-    produces = MediaType.APPLICATION_JSON_VALUE)
-    public String pdt(@ModelAttribute Products prods, @RequestParam Map<String, String> formData, Model model) {
-        List<String> formValues = new ArrayList<String>();
-        for (Map.Entry<String, String> entry : formData.entrySet()) {
-            formValues.add(entry.getKey() + "\t" + entry.getValue());
-        }
-        for(String a: formValues)
-        System.out.println(a);
+    // @RequestMapping(value = "/products",
+    // method = RequestMethod.POST,
+    // consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, 
+    // produces = MediaType.APPLICATION_JSON_VALUE)
+    // public String pdt(@ModelAttribute Products prods, @RequestParam Map<String, String> formData, Model model) {
+    //     List<String> formValues = new ArrayList<String>();
+    //     for (Map.Entry<String, String> entry : formData.entrySet()) {
+    //         formValues.add(entry.getKey() + "\t" + entry.getValue());
+    //     }
+    //     for(String a: formValues)
+    //     System.out.println(a);
 
-        //Statistics part
-        model.addAttribute("q12", new Statistics());
-        model.addAttribute("states", neo.stateList);
-        model.addAttribute("years", neo.yearList);
-        model.addAttribute("seasons", seasons);
-
-        //Transactions part
-        model.addAttribute("trans", new Transactions());
-        model.addAttribute("trans_states", neo.stateList);
-        model.addAttribute("trans_months", trans_months);
-        model.addAttribute("categories", neo.categoryList);
-        model.addAttribute("types", neo.typeList);
-        model.addAttribute("weaves", neo.weaveList);
-        model.addAttribute("role", role_list);
-        model.addAttribute("ID", ID_list);
-
-        //Products part
-        model.addAttribute("prods", new Products());
-        model.addAttribute("prod_cat", neo.categoryList);
-        model.addAttribute("prod_type", neo.typeList);
-        model.addAttribute("prod_weave", neo.weaveList);
-        model.addAttribute("filter", filter_list);
-
-        String attrs[] = new String[neo.attributeList.length];
-        for(int i=0;i<attrs.length;i++)
-            attrs[i] = "attr[" + i + "]";
-        model.addAttribute("attrs", attrs);
-        model.addAttribute("attributes", neo.attributeList);
-        return "index";
-    }
-
-    // @PostMapping("/products")
-    // public String greetingProductsSubmit(@ModelAttribute Products prods, Model model){
-        
-    //     //Statistics
-    //     model.addAttribute("states", states);
-    //     model.addAttribute("years", years);
+    //     //Statistics part
+    //     model.addAttribute("q12", new Statistics());
+    //     model.addAttribute("states", neo.stateList);
+    //     model.addAttribute("years", neo.yearList);
     //     model.addAttribute("seasons", seasons);
 
-    //     //Transactions
-    //     model.addAttribute("trans_states", trans_states);
+    //     //Transactions part
+    //     model.addAttribute("trans", new Transactions());
+    //     model.addAttribute("trans_states", neo.stateList);
     //     model.addAttribute("trans_months", trans_months);
-    //     model.addAttribute("categories", cat_list);
-    //     model.addAttribute("types", types_list);
-    //     model.addAttribute("weaves", weave_list);
+    //     model.addAttribute("categories", neo.categoryList);
+    //     model.addAttribute("types", neo.typeList);
+    //     model.addAttribute("weaves", neo.weaveList);
     //     model.addAttribute("role", role_list);
     //     model.addAttribute("ID", ID_list);
 
-    //     //Products
-    //     model.addAttribute("prods", prods);
-    //     model.addAttribute("prod_cat", prod_cat_list);
-    //     model.addAttribute("prod_type", prod_type_list);
-    //     model.addAttribute("prod_weave", prod_weave_list);
+    //     //Products part
+    //     model.addAttribute("prods", new Products());
+    //     model.addAttribute("prod_cat", neo.categoryList);
+    //     model.addAttribute("prod_type", neo.typeList);
+    //     model.addAttribute("prod_weave", neo.weaveList);
     //     model.addAttribute("filter", filter_list);
 
-    //     String productdata[][];
-    //     try{
-    //         productdata = neo.productStock(prods);
-            
-            
-
-    //         String headData_prod[] = productdata[0];
-    //         String datap[][] = new String[productdata.length - 1][productdata[0].length];
-
-    //         for (int i = 1; i < productdata.length; i++) {
-    //             for (int j = 0; j < productdata[0].length; j++) {
-    //                 datap[i - 1][j] = productdata[i][j];
-    //             }
-    //         }
-
-    //         model.addAttribute("data1", datap);
-    //         model.addAttribute("headData", headData_prod);
-    //         model.addAttribute("tableDisplay", 1);
-    //         model.addAttribute("chart4", 1);
-            
-    //     } catch (Exception e) {
-    //         System.out.println(e);
-            
-    //     }
-
-    //     System.out.println(prods.getFilter());
-    //     System.out.println(Arrays.deepToString(prods.getCategory()));
-    //     System.out.println(Arrays.deepToString(prods.getType()));
-    //     System.out.println(Arrays.deepToString(prods.getWeave()));
-
+    //     String attrs[] = new String[neo.attributeList.length];
+    //     for(int i=0;i<attrs.length;i++)
+    //         attrs[i] = "attr[" + i + "]";
+    //     model.addAttribute("attrs", attrs);
+    //     model.addAttribute("attributes", neo.attributeList);
     //     return "index";
     // }
+
+    @PostMapping("/products")
+    public String greetingProductsSubmit(@ModelAttribute Products prods, Model model){
+        
+        //Statistics
+        model.addAttribute("states", states);
+        model.addAttribute("years", years);
+        model.addAttribute("seasons", seasons);
+
+        //Transactions
+        model.addAttribute("trans_states", trans_states);
+        model.addAttribute("trans_months", trans_months);
+        model.addAttribute("categories", cat_list);
+        model.addAttribute("types", types_list);
+        model.addAttribute("weaves", weave_list);
+        model.addAttribute("role", role_list);
+        model.addAttribute("ID", ID_list);
+
+        //Products
+        model.addAttribute("prods", prods);
+        model.addAttribute("prod_cat", prod_cat_list);
+        model.addAttribute("prod_type", prod_type_list);
+        model.addAttribute("prod_weave", prod_weave_list);
+        model.addAttribute("filter", filter_list);
+
+        String productdata[][];
+        try{
+            productdata = neo.productStock(prods);
+            
+            
+
+            String headData_prod[] = productdata[0];
+            String datap[][] = new String[productdata.length - 1][productdata[0].length];
+
+            for (int i = 1; i < productdata.length; i++) {
+                for (int j = 0; j < productdata[0].length; j++) {
+                    datap[i - 1][j] = productdata[i][j];
+                }
+            }
+
+            model.addAttribute("data1", datap);
+            model.addAttribute("headData", headData_prod);
+            model.addAttribute("tableDisplay", 1);
+            model.addAttribute("chart4", 1);
+            
+        } catch (Exception e) {
+            System.out.println(e);
+            
+        }
+
+        System.out.println(prods.getFilter());
+        System.out.println(Arrays.deepToString(prods.getCategory()));
+        System.out.println(Arrays.deepToString(prods.getType()));
+        System.out.println(Arrays.deepToString(prods.getWeave()));
+
+        return "index";
+    }
 
 
     @RequestMapping(value="/register")
