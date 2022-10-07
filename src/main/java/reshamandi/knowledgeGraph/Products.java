@@ -37,5 +37,12 @@ public class Products {
     public void setWeave(String[] weave){
         this.weave=weave;
     }
+    private String[][] attr;
+    public String[][] getattr() {
+        return attr;
+    }
+    public void setattr(String a[][]) {
+        attr = a;
+    }
     
 }

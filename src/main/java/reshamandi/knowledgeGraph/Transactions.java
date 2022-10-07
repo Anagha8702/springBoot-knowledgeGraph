@@ -64,5 +64,11 @@ public class Transactions {
     public void setCategory(String[] category){
         this.category=category;
     }
-
+    private String[][] attr;
+    public String[][] getattr() {
+        return attr;
+    }
+    public void setattr(String a[][]) {
+        attr = a;
+    }
 }

@@ -410,14 +410,15 @@ input[type='radio']:checked:after {
                   </div>
                   <div class="float-container">
                     <div class="float-child" style="width: 100%;">
-                        <h4>Attributes</h4>
-                        <div th:each="row: ${attributes}" th:if="${row[0] != 'null' && row[0] != (ne)}">
-                            <select th:name="${row[0]}" multiple size="2">
-                                    <option th:each="element: ${row}" th:value="${element}" th:if="${element != 'null' && element != (ne)}"><span th:text="${element}"></span></option>
+                        <h4 style="text-align: center;">Attributes</h4>
+                        <div th:each="row, prod: ${attributes}" th:if="${row[1] != (ne)}">
+                            <label for="${attrs[prod.index]}" th:text="${row[0]}" style="text-align: left; position: relative; top: -23px;"></label>
+                            <select th:name="${attrs[prod.index]}" multiple size="2">
+                                    <option th:each="element, prods: ${row}" th:value="${element}" th:if="${prods.index != 0 && element != (ne)}"><span th:text="${element}"></span></option>
                             </select>
                         </div>
-                      </div> 
                     </div>
+                </div>
 
                 <p><input type="submit" value="Submit" class="btn2" /> 
                     <input type="reset" value="Reset" class="btn2"/>
@@ -474,6 +475,17 @@ input[type='radio']:checked:after {
                         <option th:each="type: ${types}" th:value="${type}" th:text="${type}"></option>
                     </select>
                   </div>
+                </div>
+                <div class="float-container">
+                    <div class="float-child" style="width: 100%;">
+                        <h4 style="text-align: center;">Attributes</h4>
+                        <div th:each="row, tran: ${attributes}" th:if="${row[1] != (ne)}">
+                            <label for="${attrs[tran.index]}" th:text="${row[0]}" style="text-align: left; position: relative; top: -23px;"></label>
+                            <select th:name="${attrs[tran.index]}" multiple size="2">
+                                    <option th:each="element, trans: ${row}" th:value="${element}" th:if="${trans.index != 0 && element != (ne)}"><span th:text="${element}"></span></option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <p><input type="submit" value="Submit" class="btn2" /> 
                     <input type="reset" value="Reset" class="btn2"/>

@@ -25,7 +25,7 @@ public class Neo4j implements AutoCloseable {
     String categoryList[];
     String weaveList[];
     String yearList[];
-
+    int count1=0;
 
     private final Driver driver;
 
@@ -423,15 +423,15 @@ public class Neo4j implements AutoCloseable {
     Dotenv dotenv = Dotenv.load();
     Neo4j neo = new Neo4j(dotenv.get("NEO4J_URI"), dotenv.get("NEO4j_AUTH_USER"),
     dotenv.get("NEO4j_AUTH_PASSWORD"));
-    System.out.println(Arrays.deepToString(neo.transactionQuery(t)[1]));
+    //System.out.println(Arrays.deepToString(neo.transactionQuery(t)[1]));
     // System.out.println(neo.transactionQuery(t)[0]);
-    System.out.println(neo.transactionQuery(t)[1][2]);
+    //System.out.println(neo.transactionQuery(t)[1][2]);
 
     System.out.println("hello");
     return;
     }
 
-    public String[][] transactionQuery(Transactions t) {
+    public String[][] transactionQuery(Transactions t,String[][] res, String[] soln) {
         String query = "";
         int i;
         boolean flag = false;
@@ -504,6 +504,22 @@ public class Neo4j implements AutoCloseable {
 
         if (flag)
             query += "WHERE " + qstates + qmonths + qtypes + qweaves + qcategories + "\n";
+            int k=0;
+            if(res!=null){
+                for(String st:soln){
+                    if(res[k]!=null && res[k].length!=0){
+                        if (flag)
+                        query +="and (";
+            else
+                        query +="WHERE (";
+                    flag = true;
+    
+                        for (i = 0; i < res[k].length-1; i++)
+                        query +="r."+soln[k].toLowerCase()+"='"+res[k][i]+"' or ";
+                        query +="r."+soln[k].toLowerCase()+"='"+res[k][i]+"' ) ";
+                }k++;
+                    }    
+                } 
 
         if (t.getRole().equals("Weaver"))
             query = "MATCH (n:Weaver)-[r:soldBy]->(w:Product)\n" + query
@@ -524,9 +540,9 @@ public class Neo4j implements AutoCloseable {
                 queryAnswer[0] = list.get(0).keys().toArray(new String[0]);
                 for (int j = 0; j < 11; j++)
                     queryAnswer[0][j] = queryAnswer[0][j].replace('_', ' ');
-                for (int k = 0; k < list.size(); k++)
+               for (int kt = 0; kt < list.size(); kt++)
                     for (int j = 0; j < 11; j++)
-                        queryAnswer[k + 1][j] = list.get(k).get(j).asString();
+                    queryAnswer[kt + 1][j] = String.valueOf(list.get(kt).get(j)).replaceAll("^\"|\"$", ""); 
                 return queryAnswer;
             });
         } catch (Exception e) {
@@ -752,7 +768,7 @@ public class Neo4j implements AutoCloseable {
     ////////////////////////// /////////////////////////////////////////////
 
     /////////////////////// topTenProducts////////////////////////
-    public String[][] topTenProduct(Transactions t) {
+    public String[][] topTenProduct(Transactions t,String[][] res, String[] soln) {
         dict d = new dict();
         StringBuilder mainQuery = new StringBuilder();
         StringBuilder catList = new StringBuilder();
@@ -828,10 +844,22 @@ public class Neo4j implements AutoCloseable {
 
         mainQuery.append(" ").append("\nWHERE ").append(monthList).append(" and ").append(stateList).append(" and ")
                 .append(catList).append(" and ");
-        mainQuery.append(typeList).append(" and ").append(weaveList)
-                .append("\nRETURN r.pdt_id,sum(toFloat(r.quantity)) AS Quantity,r.type,r.category,r.weave\n" +
+        mainQuery.append(typeList).append(" and ").append(weaveList);
+        if(soln!=null){
+            int k=0;
+            for(String st:soln){
+            if(res[k]!=null && res[k].length!=0){
+               mainQuery.append(" and (r."+soln[k].toLowerCase()+" = ").append('"' + res[k][0] + '"');
+                      for (int i = 1; i < res[k].length; i++) {
+                       mainQuery.append(" or r."+soln[k].toLowerCase()+" = ");
+                       mainQuery.append('"' + t.getState()[i] + '"');
+                      }
+                      mainQuery.append(")");
+            } k++;
+          } }
+                mainQuery.append("\nRETURN r.pdt_id,sum(toFloat(r.quantity)) AS Quantity,r.type,r.category,r.weave\n" +
                         "ORDER BY Quantity DESC LIMIT 10");
-
+       System.out.println("TOP TEN PRODUCTS: " + mainQuery);
         String[][] tableData1 = new String[11][5];
         try (Session session = driver.session()) {
             session.writeTransaction(tx -> {
@@ -864,9 +892,8 @@ public class Neo4j implements AutoCloseable {
 
     /////////////////////// topTenWeavers////////////////////////
     int weaver = 0;
-    public String[][] topTenWeavers(Transactions t) {
+    public String[][] topTenWeavers(Transactions t,String[][] res, String[] soln) {
        dict d = new dict();
-   
        StringBuilder mainQuery = new StringBuilder();
        StringBuilder catList = new StringBuilder();
        StringBuilder typeList = new StringBuilder();
@@ -942,6 +969,18 @@ public class Neo4j implements AutoCloseable {
        mainQuery.append(" ").append("\nWHERE ").append(monthList).append(" and ").append(stateList).append(" and ")
                .append(catList).append(" and ");
        mainQuery.append(typeList).append(" and ").append(weaveList);
+       if(soln!=null){
+        int k=0;
+        for(String st:soln){
+        if(res[k]!=null && res[k].length!=0){
+           mainQuery.append(" and (r."+soln[k].toLowerCase()+" = ").append('"' + res[k][0] + '"');
+                  for (int i = 1; i < res[k].length; i++) {
+                   mainQuery.append(" or r."+soln[k].toLowerCase()+" = ");
+                   mainQuery.append('"' + t.getState()[i] + '"');
+                  }
+                  mainQuery.append(")");
+        } k++;
+      } }
        if (t.getRole().equals("Weaver"))
                mainQuery.append("\nRETURN r.weaver_id,sum(toFloat(r.quantity)) AS Quantity\n" +
                        "ORDER BY Quantity DESC LIMIT 10");
@@ -984,7 +1023,7 @@ public class Neo4j implements AutoCloseable {
    
     ///////////////////////// Product Stock
     ///////////////////////// ///////////////////////////////////////////////
-    public String[][] productStock(Products t) {
+    public String[][] productStock(Products t, String soln[], String res[][]) {
         StringBuilder catList = new StringBuilder();
         StringBuilder typeList = new StringBuilder();
         StringBuilder weaveList = new StringBuilder();
@@ -997,6 +1036,7 @@ public class Neo4j implements AutoCloseable {
         String[][] inQData = new String[0][];
         String[][] outQData = new String[0][];
         String[][] pdtData3 = new String[0][];
+        String[][] pdtData4 = new String[0][];
         String[] slist = new String[0];
         int noOfPdt, noOfInq, noOfout2, noOfStates;
         if (t.getCategory() != null) {
@@ -1029,7 +1069,27 @@ public class Neo4j implements AutoCloseable {
         } else
             weaveList.append("(true)");
 
-        if (t.getFilter().equals("Total")) {
+            if (t.getFilter().equals("Total")) {
+                int k=0; StringBuilder a= new StringBuilder("a0");
+                StringBuilder A=new StringBuilder("A0");
+                if(res!=null){
+                    for(String st:soln){
+                        if(res[k]!=null && res[k].length!=0){
+                            mainQuery1.append("MATCH ("+a+":"+st.substring(0,1)+st.substring(1,st.length()).toLowerCase()+")-["+A+":"+st.toLowerCase()+"Name]->(p1:Product)\n");
+                            mainQuery1.append("WHERE ("+A+"."+st.toLowerCase()+" = ");
+                            mainQuery1.append('"' + res[k][0] + '"');
+                            for (int i = 1; i < res[k].length; i++) {
+                                mainQuery1.append(" or "+A+"."+st.toLowerCase()+" = ");
+                                mainQuery1.append('"' + res[k][i] + '"');
+                    }
+                        mainQuery1.append(")"); mainQuery1.append("\n WITH p1\n");
+                        } 
+                        k++;
+                        a.append(k);
+                        A.append(k);
+                    } 
+                    System.out.println("main " + mainQuery1);
+                } 
             mainQuery1.append("MATCH (c:Category)-[r1:categoryName]->(p1:Product)\n");
             mainQuery1.append("WHERE ").append(catList).append("\nWITH p1 \n");
             mainQuery1.append("MATCH (t:Type)-[r2:typeName]->(p1)\n");
@@ -1044,20 +1104,36 @@ public class Neo4j implements AutoCloseable {
                     "WITH p1,sum(toFloat(r5.quantity)) AS outQuantity\n" +
                     "RETURN p1.pdtId,ceil(outQuantity) AS Stock,p1.type,p1.category,p1.weave\n" +
                     "ORDER BY p1.pdtId\n");
-            pquery.append(mainQuery1).append("RETURN p1.pdtId,p1.type,p1.category,p1.weave\n" +
-                    "ORDER BY p1.pdtId\n");
+                    pquery.append(mainQuery1).append("RETURN p1.pdtId,p1.type,p1.category,p1.weave,p1.id");
+                    if(res!=null){
+                        int l=0;
+                        for(String st:soln){
+                            System.out.println(l+" "+res[l]);
+                            if(res[l]!=null && res[l].length!=0) pquery.append(",p1."+st.toLowerCase()); 
+                            l++;
+                        }}
+                        pquery.append( "\n ORDER BY p1.pdtId\n");
             System.out.println(pquery);
             System.out.println(query1);
             System.out.println(query2);
 
             try (Session session = driver.session()) {
 
+
                 // listing all products with given combination
                 pdtData = session.writeTransaction(tx -> {
                     Result result = tx.run(String.valueOf(pquery));
                     List<Record> list = new ArrayList<Record>(result.list());
                     System.out.println(list.size());
-                    String[][] tableData1 = new String[list.size() + 1][5];
+                    String[][] tableData1;
+                    int al=0,count=0; 
+                    if(res!=null){
+                    for(al=0;al<soln.length;al++){
+                        if(res[al]!=null && res[al].length!=0) count++;
+                    }}
+                    count1=count;
+                    if(res!=null) tableData1=new String[list.size() + 1][5+count];
+                    else tableData1=new String[list.size() + 1][5];
                     tableData1[0][0] = new String("Product ID");
                     tableData1[0][1] = "Type";
                     tableData1[0][2] = "Category";
@@ -1178,10 +1254,38 @@ public class Neo4j implements AutoCloseable {
             } catch (Exception e) {
                 System.out.println(e);
             }
+            int index=5,index1=0;
+            if(res!=null){
+            while(index<5+count1){
+                if(res[index1]!=null && res[index1].length!=0)
+            {pdtData[0][index] = soln[index1];
+                index=index+1;}
+                index1++;
+            }}
             System.out.println();
             return pdtData;
 
         } else {
+            int k=0; StringBuilder a= new StringBuilder("a0");
+            StringBuilder A=new StringBuilder("A0");
+            if(res!=null){
+            for(String st:soln){
+                if(res[k]!=null && res[k].length!=0){
+                    mainQuery1.append("MATCH ("+a+":"+st.substring(0,1)+st.substring(1,st.length()).toLowerCase()+")-["+A+":"+st.toLowerCase()+"Name]->(p1:Product)\n");
+                    mainQuery1.append("WHERE ("+A+"."+st.toLowerCase()+" = ");
+                    mainQuery1.append('"' + res[k][0] + '"');
+                    for (int i = 1; i < res[k].length; i++) {
+                        mainQuery1.append(" or "+A+"."+st.toLowerCase()+" = ");
+                        mainQuery1.append('"' + res[k][i] + '"');
+            }
+                mainQuery1.append(")"); mainQuery1.append("\n WITH p1\n");
+                } 
+                k++;
+                a.append(k);
+                A.append(k);
+            } 
+            System.out.println("main " + mainQuery1);
+        }
             mainQuery1.append("MATCH (c:Category)-[r1:categoryName]->(p1:Product)\n");
             mainQuery1.append("WHERE ").append(catList).append("\nWITH p1 \n");
             mainQuery1.append("MATCH (t:Type)-[r2:typeName]->(p1)\n");
