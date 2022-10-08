@@ -2025,9 +2025,11 @@ public class Neo4j implements AutoCloseable {
             });
             int j=0;String str;
                 for(;j<100;j++){
+                    if(attributeList[j][0] != null){
                     str = attributeList[j][0].toLowerCase();
                     str = str.substring(0, 1).toUpperCase() + str.substring(1);
                    attrNames[j] = str;
+                    }
                 }
         } catch (Exception e) {
             System.out.println(e);
