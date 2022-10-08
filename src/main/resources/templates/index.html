@@ -506,11 +506,10 @@ input[type='radio']:checked:after {
                   </div>
                   <div class="float-child">
                     <h4>Product Spec</h4>
-                    <select name="productSpec" size="3">
-                        <option th:value="pdt.type">Type</option>
-                        <option th:value="pdt.category">Category</option>
-                        <option th:value="pdt.weave">Weave</option>
+                    <select name="productSpec" size="3" >
+                        <option th:each="spec: ${productSpecs}" th:value="${spec}" th:if="${spec != (ne)}"><span th:text="${spec}"></span></option>
                     </select>
+                    
                   </div>
                 </div>
 
@@ -535,9 +534,9 @@ input[type='radio']:checked:after {
                   <div class="float-child">
                     <h4>Filter</h4>
                     <select name="filter" size="3">
-                        <option th:value="r.month">Month</option>
-                        <option th:value="r.state">State</option>
-                        <option th:value="r.created_date">Year</option>
+                        <option th:value="Month">Month</option>
+                        <option th:value="State">State</option>
+                        <option th:value="Year">Year</option>
                     </select>
                   </div>
                   <div class="float-child">

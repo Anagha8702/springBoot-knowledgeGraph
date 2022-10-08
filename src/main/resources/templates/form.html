@@ -2,12 +2,9 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Reshmandi</title>
-    <link th:href="@{/css/sample.css}" rel="stylesheet" />
-    <script type="text/javascript" th:src="@{/js/sample.js}"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -20,195 +17,837 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../static/styles.css">
+    <!-- <link rel="stylesheet" href="../static/styles.css"> -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
-    <script src="../static/scripts.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.js" integrity="sha512-Lii3WMtgA0C0qmmkdCpsG0Gjr6M0ajRyQRQSbTF6BsrVh/nhZdHpVZ76iMIPvQwz1eoXC3DmAg9K51qT5/dEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <style type="text/css">
-    body{
-    margin: 0 !important;
-    font-family: 'Montserrat', sans-serif;
-    background-color: #f7f7f7;
-}
+</head>
+<body onload="switchForms()">
+  <div class="w3-top" style="background-color: white;">
+    <div class="w3-bar w3-left-align w3-large" style="padding-top:5px;color: #9acd30;"><div id="navbar">
+        <a href="https://www.facebook.com/fbreshamandi"><i class="fa fa-facebook w3-hover-opacity" style="text-indent: 7.5em;">&emsp;</i></a>
+        <a href="https://www.instagram.com/resha_mandi/"><i class="fa fa-instagram w3-hover-opacity">&emsp;</i></a>
+        <a href="https://www.linkedin.com/company/inreshamandi?original_referer=https%3A%2F%2Freshamandi.com%2F"><i class="fa fa-linkedin w3-hover-opacity">&emsp;</i></a>
+        <a href="https://twitter.com/reshamandi"><i class="fa fa-twitter w3-hover-opacity"></i></a>
+        <a href="tel:+917338694594" style="text-indent: 47em;font-size: 15px;text-decoration: none;">&ensp;<i class="fa fa-phone"></i>+91 7338694594</a>
+        <a href="mailto:support@reshamandi.com?subject=Support information need" style="text-indent: 0.5em;font-size: 15px;text-decoration: none;">&ensp;<i class="fa fa-envelope">&ensp;</i>support@reshamandi.com</a>
+        <br><hr style=" margin: 0.3em auto;">
+    </div>
+        <a href="https://reshamandi.com/" style="text-decoration:none;padding-left: 7.5em;"><img src="navlogo.png" width="55" height="55" ></a>
+    </div><hr style=" margin: 0.3em auto;">
+</div>
+<br><br><br><br><br><br>
 
-.resh{
-    font-family: 'Merienda', cursive;
-    text-align: center;
-    background-color: #f7f7f7;
-    color: #152D35;
-    margin: 0 ;
-    font-size: 50px;
-    padding: 50px 0 10px;
-}
+            <form action="#" method="post" class="formSelector" id="formSelector">    
+              <div class="row align-items-center justify-content-center col-md-10">
+              <p>
+                <label><input type="button" class="btn2" name="form" value="Weaver" checked="checked" /></label>
+                <label><input type="button" class="btn2" name="form" value="Retailer" /></label>
+                <label><input type="button" class="btn2" name="form" value="Attribute" /></label>
+                <label><button class="btn2" name="form" ><a th:href="@{register1}">New Registration</a></button></label>
+              </p>
+              </div>
+              </form>
 
-.line{
-    border: 3px solid #152D35;
-    width: 20%;
-}
-.tableLayout{
-    margin: 50px 20px 30px;
-    max-width: 1400px;
-    overflow-x: auto;
-    padding: 20px 0;
-    background-color: #f7f7f7;
-}
+           
+            <form action="#" id="form1" name="Weav_form" th:action="@{/weaver}" th:object="${w}"  method="post">
+              <div id="image">
+                
+                <div class="contents order-2 order-md-1">
+                  <div class="container">
+                    <div class="row align-items-center justify-content-center">
+                      <div class="col-md-10 py-8">
 
-#example_filter{
-    margin: 20px 0 20px 1188px;
-    position: absolute;
-    width: max-content;
-}
-.transactions{
-    background-color: transparent;
-    margin: 50px auto 20px;
-    text-align: center;
-    overflow-y: scroll;
-    height: fit-content;
-    width: fit-content;
-    max-height: 457px;
-    box-shadow: 15px 8px 20px #505050;
-    display: block;
-}
+                        <h1>Weaver Transactions Form</h1>
 
-th, td{
-    border: transparent;
-    padding: 15px 20px;
-}
+                        <div class="tabs">
+                          <span data-tab-value="#tab_1">Basic Details</span>
+                          <span data-tab-value="#tab_2">Product Details</span>
+                          <span data-tab-value="#tab_3">Sku Details</span>
+                          <span data-tab-value="#tab_4">Taxing Details</span>
+                          <span data-tab-value="#tab_5">Billing Details</span>
+                          <span data-tab-value="#tab_6">Attributes</span>
+                        </div><br>
 
-/* .transactions thead tr{
-    background-color: #a7bea4 !important;
-    cursor: pointer;
-    position: sticky;
-    top: 0;
-    height: 60px;
-}
+                        <div class="tab-content">
+                          <div class="tabs__tab active" id="tab_1" data-tab-info>
+                            <div class="row">
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                      <label>ID</label>
+                                      <input type="number" min="0" class="form-control" placeholder="e.g. 1234567" name="id">
+                                  </div>    
+                              </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                      <label>Created By</label>
+                                      <input type="text" class="form-control" placeholder="e.g. Smith" name="created_by">
+                                  </div>    
+                              </div>
+                            </div>
 
-.transactions tr:nth-child(even){
-    background-color: #b0d1ba;
-}
+                            <div class="row">
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                      <label>Created Date</label>
+                                      <input type="date" class="form-control" placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" name="created_date">
+                                  </div>    
+                              </div>
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                    <label>State</label>
+                                    <input type="text" class="form-control" placeholder="e.g. Smith" name="state">
+                                </div>    
+                              </div>
+                            </div>
 
-.transactions tr:nth-child(odd){
-    background-color: #e1ffe2;
-} */
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                    <label>Weaver ID</label>
+                                    <input type="number" class="form-control" placeholder="e.g. Smith" name="weaver_id">
+                                </div>    
+                              </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                      <label>Status</label>
+                                      <select name="status" class="form-control">
+                                        <option th:each="s: ${l1}" th:value="${s}" th:text="${s}"></option>
+                                      </select>
+                                  </div>    
+                              </div>
+                            </div>
 
-.top{
-    background-color: #efefef;
-    margin: 50px;
-    box-shadow: 10px 5px 15px #989898;
-}
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                    <label>Transaction ID</label>
+                                    <input type="number" class="form-control" placeholder="e.g. Smith" name="transaction_id">
+                                </div>    
+                              </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                      <label>Business Type</label>
+                                      <select name="business_type" class="form-control">
+                                        <option th:each="s: ${l4}" th:value="${s}" th:text="${s}"></option>
+                                     </select>
+                                  </div>    
+                              </div>
+                            </div>
 
-.container{
-    display: inline-block;
-    padding: 40px 115px
-}
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                    <label>Cost price</label>
+                                    <input type="number" class="form-control" placeholder="e.g. Smith" name="cost_price">
+                                </div>    
+                              </div>
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                    <label>Selling Price</label>
+                                    <input type="number" class="form-control" placeholder="e.g. Smith" name="selling_price">
+                                </div>    
+                              </div>
+                            </div>
 
-thead{
-    background-color: #abaaaa;
-}
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                  <span data-tab-value="#tab_2"><button id="clickMe" class="btn2" data-stay>Next</button></span>
+                                </div>    
+                              </div>
+                            </div>                                  
+                          </div>
 
-tr:nth-child(even){
-    background-color: #c3c3c3;
-}
+                          <div class="tabs__tab" id="tab_2" data-tab-info>
+                  
+                            <div class="row">
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>Category</label>
+                                    <input type="text" class="form-control"  name="category">
+                                  </div>    
+                              </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>Type</label>
+                                    <input type="text" class="form-control" name="type">
+                                  </div>    
+                              </div>
+                            </div>
 
-#example thead{
-    background-color: #dfdfdf;
-}
+                            <div class="row">
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>Weave</label>
+                                    <input type="text" class="form-control"  name="weave">
+                                  </div>    
+                              </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>Warehouse ID</label>
+                                    <input type="number" class="form-control" name="warehouseid">
+                                  </div>    
+                              </div>
+                            </div>
 
-.top h2{
-    text-align: center;
-    color: #727272;
-    padding-top: 50px;
-}
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                  <label>Quantity</label>
+                                  <input type="number" min="0" class="form-control" name="quantity">
+                                </div>    
+                            </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>Sold Quantity</label>
+                                    <input type="number" min="0" class="form-control" name="sold_quantity">
+                                  </div>    
+                              </div>
+                            </div>
 
-h2{
-    text-align: center;
-    color: #34573c;
-}
+                            <span data-tab-value="#tab_3"><button id="clickMe"class="btn2" data-stay>Next</button></span>
+                          </div>
+                        
+                          <div class="tabs__tab" id="tab_3" data-tab-info>
 
-#productSpec, #transSpec, #statSpec{
-    margin: 50px auto;
-    padding: 5px 5px 30px;
-    width: 30%;
-    border-radius: 8px;
-    background-color: white;
-    text-align: center;
-    box-shadow: 5px 5px 20px #c0c0c0;
-}
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                  <label>Sku count</label>
+                                  <input type="number" min="0" class="form-control" name="sku_count">
+                                </div>    
+                            </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>Defective Count</label>
+                                    <input type="number" min="0" class="form-control" name="defective_count">
+                                  </div>    
+                              </div>
+                            </div>
 
-h4{
-    text-align: left;
-    padding-left: 60px;
-    margin-bottom: 5px;
-    color: #152D35;
-}
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                  <label>Sku Total Quantity</label>
+                                  <input type="number" min="0" class="form-control" name="sku_total_quantity">
+                                </div>    
+                            </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>Sku Listing Status</label>
+                                    <select name="sku_listing_status" class="form-control">
+                                      <option th:each="s: ${l2}" th:value="${s}" th:text="${s}"></option>
+                                   </select>
+                                  </div>    
+                              </div>
+                            </div>
+                            
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                  <label>Return Quantity</label>
+                                  <input type="number" min="0" class="form-control" name="return_quantity">
+                                </div>    
+                            </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>Returned Defective Quantity</label>
+                                    <input type="number" min="0" class="form-control" name="returned_defective_quantity">
+                                  </div>    
+                              </div>
+                            </div>
+                            <span data-tab-value="#tab_4"><button id="clickMe" class="btn2" data-stay>Next</button></span>
+                          </div>
 
-h1{
-    color: #345B63;
-}
+                          <div class="tabs__tab" id="tab_4" data-tab-info>
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                  <label>CST</label>
+                                  <input type="number" min="0" class="form-control" name="cst">
+                                </div>    
+                            </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>IGST</label>
+                                    <input type="number" min="0" class="form-control" name="igst">
+                                  </div>    
+                              </div>
+                            </div>
 
-p{
-    text-align: center;
-}
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                  <label>Discount</label>
+                                  <input type="number" min="0" class="form-control" name="cst">
+                                </div>    
+                            </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>GST Percentage</label>
+                                    <input type="number" min="0" class="form-control" name="gst_percentage">
+                                  </div>    
+                              </div>
+                            </div>
+                            
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                  <label>UOM</label>
+                                  <select name="uom" class="form-control">
+                                    <option th:each="s: ${l3}" th:value="${s}" th:text="${s}"></option>
+                                 </select>
+                                </div>    
+                            </div>
+                            </div>
+                            <span data-tab-value="#tab_5"><button id="clickMe" class="btn2" data-stay>Next</button></span>
 
-.butn{
-    font-weight: lighter;
-    border: 1px solid #80d741;
-    padding: 15px 30px;
-    font-size: 30px;
-    background-color: #80d741;
-    border-radius: 5px;
-    color: white;
-    margin: 100px 0 0 193px;
-    transition: transform 0.5s ease;
-}
+                          </div>
 
-.butn:hover{
-    transition-duration: 0.5s;
-    transform: translateY(-5px);
-    cursor: pointer;
-    background-color: white;
-    color: #80d741;
-}
+                          <div class="tabs__tab" id="tab_5" data-tab-info>
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                  <label>Landing Price</label>
+                                  <input type="number" min="0" class="form-control" name="landing_price">
+                                </div>    
+                            </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>Gross Amount</label>
+                                    <input type="number" min="0" class="form-control" name="gross_amount">
+                                  </div>    
+                              </div>
+                            </div>
+                            
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                  <label>Logistics Amount</label>
+                                  <input type="number" min="0" class="form-control" name="logistics_amount">
+                                </div>    
+                            </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>Discount Amount</label>
+                                    <input type="number" min="0" class="form-control" name="discount_amount">
+                                  </div>    
+                              </div>
+                            </div>
 
-canvas{
-    margin: 15px;
-    width: 98%;
-}
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                  <label>Total Pre Tax Price</label>
+                                  <input type="number" min="0" class="form-control" name="total_pre_tax_price">
+                                </div>    
+                            </div>
+                              <div class="col-md-5">
+                                  <div class="form-group first">
+                                    <label>GST Amount</label>
+                                    <input type="number" min="0" class="form-control" name="gst_amount">
+                                  </div>    
+                              </div>
+                            </div>
 
-.input {
-    width: 78%;
-    padding: 5px;
-    border-radius: 3px;
-    border: none;
-    vertical-align: middle;
-    background-color: #f5f5f5;
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group first">
+                                  <label>Total Amount</label>
+                                  <input type="number" min="0" class="form-control" name="total_amount">
+                                </div>    
+                              </div>
+                            </div>
+                            <span data-tab-value="#tab_6"><button id="clickMe" class="btn2" data-stay>Next</button></span>
+                          </div> 
 
-}
-.input:hover, select:hover{
-    cursor: pointer;
-    background-color: #f5f5f5;
-}
+                          <div class="tabs__tab" id="tab_6" data-tab-info>
 
-select {
-    background-color: #f5f5f5;
-    width: 80%;
-    padding: 5px 10px;
-    border-radius: 3px;
-    border: none;
-}
+                            <div class="row">
+                              <div class="col-md-5">
+                                <div class="form-group last mb-3">
+                                  <div>
+                                    <h4>Filter</h4>
+                                    <div th:each="row, stat: ${attributes}" th:if="${row[0] != 'null' && row[0] != (ne)}">
+                                      <label th:for="${row[0]}" th:text="${row[0]}"></label>
+                                      <input class="form-control" type="text" th:name="${row[0]}" />
+                                      </select>
+                                  </div>
+                                  
+                                  </div>
+                                  </div>
+                                  <input type="submit" value="Submit" class="btn2">
+                                </div>
+                              </div> 
+                              </div>
+                          </div>      
+                          
+                          </div>
+                      </div>
 
-.btn2{
+          </div>
+        </div>
+      </div>
+      </div>
+</form>
+            
+<form action="#" name="Retail_form" id="form2" th:action="@{/retailer}" th:object="${ret}" style="display: none;" method="post">
+  <div id="image">
+                
+    <div class="contents order-2 order-md-1">
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-10 py-8">
+
+            <h1>Retailer Transactions Form</h1>
+
+            <div class="tabs">
+              <span data-tab-value="#ret_tab_1">Basic Details</span>
+              <span data-tab-value="#ret_tab_2">Product Details</span>
+              <span data-tab-value="#ret_tab_3">Sku Details</span>
+              <span data-tab-value="#ret_tab_4">Taxing Details</span>
+              <span data-tab-value="#ret_tab_5">Billing Details</span>
+              <span data-tab-value="#ret_tab_6">Attributes</span>
+            </div><br>
+
+            <div class="tab-content">
+              <div class="tabs__tab active" id="ret_tab_1" data-tab-info>
+                <div class="row">
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                          <label>ID</label>
+                          <input type="number" min="0" class="form-control" placeholder="e.g. 1234567" name="id">
+                      </div>    
+                  </div>
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                          <label>Created By</label>
+                          <input type="text" class="form-control" placeholder="e.g. Smith" name="created_by">
+                      </div>    
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                          <label>Created Date</label>
+                          <input type="date" class="form-control" placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" name="created_date">
+                      </div>    
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                        <label>State</label>
+                        <input type="text" class="form-control" placeholder="e.g. Smith" name="state">
+                    </div>    
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                        <label>Retailer ID</label>
+                        <input type="number" class="form-control" placeholder="e.g. Smith" name="retailer_id">
+                    </div>    
+                  </div>
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                          <label>Status</label>
+                          <select name="status" class="form-control">
+                            <option th:each="s: ${l1}" th:value="${s}" th:text="${s}"></option>
+                          </select>
+                      </div>    
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                        <label>Transaction ID</label>
+                        <input type="number" class="form-control" placeholder="e.g. Smith" name="transaction_id">
+                    </div>    
+                  </div>
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                          <label>Business Type</label>
+                          <select name="business_type" class="form-control">
+                            <option th:each="s: ${l4}" th:value="${s}" th:text="${s}"></option>
+                         </select>
+                      </div>    
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                        <label>Cost price</label>
+                        <input type="number" class="form-control" placeholder="e.g. Smith" name="cost_price">
+                    </div>    
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                        <label>Selling Price</label>
+                        <input type="number" class="form-control" placeholder="e.g. Smith" name="selling_price">
+                    </div>    
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                      <span data-tab-value="#ret_tab_2"><button id="clickMe" class="btn2" data-stay>Next</button></span>
+                    </div>    
+                  </div>
+                </div>                                  
+              </div>
+
+              <div class="tabs__tab" id="ret_tab_2" data-tab-info>
+      
+                <div class="row">
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                        <label>Category</label>
+                        <input type="text" class="form-control"  name="category">
+                      </div>    
+                  </div>
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                        <label>Type</label>
+                        <input type="text" class="form-control" name="type">
+                      </div>    
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                        <label>Weave</label>
+                        <input type="text" class="form-control"  name="weave">
+                      </div>    
+                  </div>
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                        <label>Warehouse ID</label>
+                        <input type="number" class="form-control" name="warehouseid">
+                      </div>    
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                      <label>Quantity</label>
+                      <input type="number" min="0" class="form-control" name="quantity">
+                    </div>    
+                </div>
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                        <label>Sold Quantity</label>
+                        <input type="number" min="0" class="form-control" name="sold_quantity">
+                      </div>    
+                  </div>
+                </div>
+
+                <span data-tab-value="#ret_tab_3"><button id="clickMe" class="btn2" data-stay>Next</button></span>
+              </div>
+            
+              <div class="tabs__tab" id="ret_tab_3" data-tab-info>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                      <label>Sku count</label>
+                      <input type="number" min="0" class="form-control" name="sku_count">
+                    </div>    
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                      <label>Sku Listing Status</label>
+                      <select name="sku_listing_status" class="form-control">
+                        <option th:each="s: ${l2}" th:value="${s}" th:text="${s}"></option>
+                     </select>
+                    </div>    
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                      <label>Sku Total Quantity</label>
+                      <input type="number" min="0" class="form-control" name="sku_total_quantity">
+                    </div>    
+                  </div>
+                  
+                </div>
+                <span data-tab-value="#ret_tab_4"><button id="clickMe" class="btn2" data-stay>Next</button></span>
+              </div>
+
+              <div class="tabs__tab" id="ret_tab_4" data-tab-info>
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                      <label>CST</label>
+                      <input type="number" min="0" class="form-control" name="cst">
+                    </div>    
+                </div>
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                        <label>IGST</label>
+                        <input type="number" min="0" class="form-control" name="igst">
+                      </div>    
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                      <label>Discount</label>
+                      <input type="number" min="0" class="form-control" name="cst">
+                    </div>    
+                </div>
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                        <label>GST Percentage</label>
+                        <input type="number" min="0" class="form-control" name="gst_percentage">
+                      </div>    
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                      <label>UOM</label>
+                      <select name="uom" class="form-control">
+                        <option th:each="s: ${l3}" th:value="${s}" th:text="${s}"></option>
+                     </select>
+                    </div>    
+                </div>
+                </div>
+                <span data-tab-value="#ret_tab_5"><button id="clickMe" class="btn2" data-stay>Next</button></span>
+
+              </div>
+
+              <div class="tabs__tab" id="ret_tab_5" data-tab-info>
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                      <label>Landing Price</label>
+                      <input type="number" min="0" class="form-control" name="landing_price">
+                    </div>    
+                </div>
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                        <label>Gross Amount</label>
+                        <input type="number" min="0" class="form-control" name="gross_amount">
+                      </div>    
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                      <label>Logistics Amount</label>
+                      <input type="number" min="0" class="form-control" name="logistics_amount">
+                    </div>    
+                </div>
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                        <label>Discount Amount</label>
+                        <input type="number" min="0" class="form-control" name="discount_amount">
+                      </div>    
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                      <label>Total Pre Tax Price</label>
+                      <input type="number" min="0" class="form-control" name="total_pre_tax_price">
+                    </div>    
+                </div>
+                  <div class="col-md-5">
+                      <div class="form-group first">
+                        <label>GST Amount</label>
+                        <input type="number" min="0" class="form-control" name="gst_amount">
+                      </div>    
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group first">
+                      <label>Total Amount</label>
+                      <input type="number" min="0" class="form-control" name="total_amount">
+                    </div>    
+                  </div>
+                </div>
+                <span data-tab-value="#ret_tab_6"><button id="clickMe" class="btn2" data-stay>Next</button></span>
+                
+              </div>      
+
+              <div class="tabs__tab" id="ret_tab_6" data-tab-info>
+                <div class="row">
+  
+                  <div class="col-md-5">
+                    <div class="form-group last mb-3">
+                      <div>
+                        <h4>Filter</h4>
+                        <div th:each="row, stat: ${attributes}" th:if="${row[0] != 'null' && row[0] != (ne)}">
+                          <label th:for="${row[0]}" th:text="${row[0]}"></label>
+                          <input class="form-control" type="text" th:name="${row[0]}" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <input type="submit" value="Submit" onclick = "return checkformret()" class="btn2" />
+              </div>
+              </div>
+          </div>
+
+</div>
+</div>
+</div>
+</div>
+</form>
+    
+<form id="form3" name="Attr_form" action="#" th:action="@{/attribute}" style="display: none;" method="post">
+  <div id="image">
+    <div class="contents order-2 order-md-1">
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-10 py-8">
+
+            <h3>Attributes</h3>
+
+            <div class="row">
+            <div class="col-md-5">
+                <div class="form-group first">
+                    <label>Attribute name</label>
+                    <input type="text" min="0" class="form-control" placeholder="e.g. 1234567" name="attribute">
+                </div>    
+            </div>
+            <div class="col-md-5">
+                <div class="form-group first">
+                    <label>Operation</label><br>
+                    <input type="radio" id="w" name="attr"  value="add" checked>
+                    <label for="w">Add</label><br>
+                    <input type="radio" id="r" name="attr" value="delete">
+                    <label for="r">Delete</label><br>
+                </div>    
+            </div>
+            </div>
+  
+            <div class="row">
+              
+              <div class="col-md-5">
+                <div class="form-group last mb-3">
+                  <input type="submit" value="Submit" onclick = "return checkformattr()" class="btn2">
+                  <input type="reset" value="Reset" class="btn2">
+                </div>
+              </div>
+
+              <div class="col-md-5">
+                <div class="form-group last mb-3">
+                  <div id = "myalert3" class="alert alert-info collapse" style ="display: none;">
+                    <p style = "color:#000;" id="mytext3">_</p>
+                </div>
+                </div>
+              </div> 
+              </div>
+          </div>      
+      
+</div>
+</div>
+</div>
+</div>
+</form>
+  
+  
+        <script>
+            function checkform(){
+                // var flag = 1;
+                // console.log("flag " + flag);
+                // if(!document.Weav_form1.id.value || !document.Weav_form1.name.value || !document.Weav_form1.state.value||
+                // !document.Weav_form1.type.value|| !document.Weav_form1.yarn_capacity.value|| !document.Weav_form1.phone.value|| 
+                // !document.Weav_form1.denier.value|| !document.Weav_form1.twisted_type.value|| !document.Weav_form1.yarn_cocoon_type.value
+                // ){
+                //     mytext.innerHTML = "<strong> Incomplete! </strong> Please enter all the details!";
+                //     flag = 0;
+                // }
+                // console.log("flag " + flag);
+                // if(flag) { document.Weav_form1.submit();   }
+                // else{
+                //     $('#myalert').show('fade');
+                //     setTimeout(function(){
+                //         $('#myalert').hide('fade');
+                //     },5000);
+                //     return false;
+                // }
+            }
+        </script>
+        <script>
+          function checkformret(){
+              // var flag = 1;
+              // console.log("flag " + flag);
+              // if(!document.Retail_form1.id.value || !document.Retail_form1.name.value || !document.Retail_form1.phone.value || 
+              // !document.Retail_form1.state.value || !document.Retail_form1.majority_sourced_textile.value || !document.Retail_form1.retail_of.value
+              // ){
+              //     mytext.innerHTML = "<strong> Incomplete! </strong> Please enter all the details!";
+              //     flag = 0;
+              // }
+              // console.log("flag " + flag);
+              // if(flag) { document.Retail_form1.submit();   }
+              // else{
+              //     $('#myalert').show('fade');
+              //     setTimeout(function(){
+              //         $('#myalert').hide('fade');
+              //     },5000);
+              //     return false;
+              // }
+          }
+      </script>
+        <style>
+          body {
+  font-family: "Roboto", sans-serif;
+  background-color: #fff; }
+
+p {
+  color: #b3b3b3;
+  font-weight: 300; }
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: "Roboto", sans-serif; }
+
+a {
+  -webkit-transition: .3s all ease;
+  -o-transition: .3s all ease;
+  transition: .3s all ease; }
+  a:hover {
+    text-decoration: none !important; }
+
+.content {
+  padding: 7rem 0; }
+
+h2 {
+  font-size: 20px; }
+
+.half, .half .container > .row {
+  height: 100vh;
+  min-height: 900px; }
+
+  .btn2{
     margin-top: 30px;
     display: inline-block;
-    width: 80%;
-    padding: 15px;
-    font-size: 15px;
+    width: 250px;
+    padding: 5px;
+    font-size: 20px;
     border-radius: 5px;
     background-color: #80d741;
     color: white;
@@ -223,44 +862,139 @@ select {
     cursor: pointer;
 }
 
-input[type='radio']:after {
-    width: 15px;
-    height: 15px;
-    border-radius: 15px;
-    top: -2px;
-    left: -1px;
+@media (max-width: 991.98px) {
+  .half .bg {
+    height: 200px; } }
+
+.half .contents {
+  background: #f6f7fc; }
+
+.half .contents {
+  width: 80%; }
+
+.half .bg {
+  width: 20%; }
+
+@media (max-width: 991.98px) {
+  .half .contents, .half .bg {
+    width: 100%; } }
+
+.half .contents .form-control, .half .bg .form-control {
+  border: none;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  height: 54px;
+  background: #fff; }
+  .half .contents .form-control:active, .half .contents .form-control:focus, .half .bg .form-control:active, .half .bg .form-control:focus {
+    outline: none;
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1); }
+
+.half .bg {
+  background-size: cover;
+  background-position: center; }
+
+.half a {
+  color: #888;
+  text-decoration: underline; }
+
+.half .btn {
+  height: 54px;
+  padding-left: 30px;
+  padding-right: 30px; }
+
+.half .forgot-pass {
+  position: relative;
+  top: 2px;
+  font-size: 14px; }
+
+.control {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-size: 14px; }
+  .control .caption {
     position: relative;
-    background-color: white;
-    content: '';
-    display: inline-block;
-    visibility: visible;
-    border: 2px solid #80d741;
+    top: .2rem;
+    color: #888; }
+
+.control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0; }
+
+.control__indicator {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background: #e6e6e6;
+  border-radius: 4px; }
+
+.control--radio .control__indicator {
+  border-radius: 50%; }
+
+.control:hover input ~ .control__indicator,
+.control input:focus ~ .control__indicator {
+  background: #ccc; }
+
+.control input:checked ~ .control__indicator {
+  background: #fb771a; }
+
+  select {
+    background-color: #ffffff;
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 1px;
+    border-color: #888;
 }
+.control:hover input:not([disabled]):checked ~ .control__indicator,
+.control input:checked:focus ~ .control__indicator {
+  background: #fb8633; }
 
-input[type='radio']:checked:after {
-    width: 15px;
-    height: 15px;
-    border-radius: 15px;
-    top: -2px;
-    left: -1px;
-    position: relative;
-    background-color: #80d741;
-    content: '';
-    display: inline-block;
-    visibility: visible;
-    border: 2px solid #80d741;
-}
+.control input:disabled ~ .control__indicator {
+  background: #e6e6e6;
+  opacity: 0.9;
+  pointer-events: none; }
 
-/* #image{
-    height: 1000px;
-    background-image: url('Logo.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-} */
+.control__indicator:after {
+  font-family: 'icomoon';
+  content: '\e5ca';
+  position: absolute;
+  display: none;
+  font-size: 16px;
+  -webkit-transition: .3s all ease;
+  -o-transition: .3s all ease;
+  transition: .3s all ease; }
+
+.control input:checked ~ .control__indicator:after {
+  display: block;
+  color: #fff; }
+.owl-carousel,.owl-carousel .owl-item{-webkit-tap-highlight-color:transparent;position:relative}.owl-carousel{display:none;width:100%;z-index:1}.owl-carousel .owl-stage{position:relative;-ms-touch-action:pan-Y;touch-action:manipulation;-moz-backface-visibility:hidden}.owl-carousel .owl-stage:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}.owl-carousel .owl-stage-outer{position:relative;overflow:hidden;-webkit-transform:translate3d(0,0,0)}.owl-carousel .owl-item,.owl-carousel .owl-wrapper{-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;-ms-backface-visibility:hidden;-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0)}.owl-carousel .owl-item{min-height:1px;float:left;-webkit-backface-visibility:hidden;-webkit-touch-callout:none}.owl-carousel .owl-item img{display:block;width:100%}.owl-carousel .owl-dots.disabled,.owl-carousel .owl-nav.disabled{display:none}.no-js .owl-carousel,.owl-carousel.owl-loaded{display:block}.owl-carousel .owl-dot,.owl-carousel .owl-nav .owl-next,.owl-carousel .owl-nav .owl-prev{cursor:pointer;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.owl-carousel .owl-nav button.owl-next,.owl-carousel .owl-nav button.owl-prev,.owl-carousel button.owl-dot{background:0 0;color:inherit;border:none;padding:0!important;font:inherit}.owl-carousel.owl-loading{opacity:0;display:block}.owl-carousel.owl-hidden{opacity:0}.owl-carousel.owl-refresh .owl-item{visibility:hidden}.owl-carousel.owl-drag .owl-item{-ms-touch-action:pan-y;touch-action:pan-y;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.owl-carousel.owl-grab{cursor:move;cursor:grab}.owl-carousel.owl-rtl{direction:rtl}.owl-carousel.owl-rtl .owl-item{float:right}.owl-carousel .animated{animation-duration:1s;animation-fill-mode:both}.owl-carousel .owl-animated-in{z-index:0}.owl-carousel .owl-animated-out{z-index:1}.owl-carousel .fadeOut{animation-name:fadeOut}@keyframes fadeOut{0%{opacity:1}100%{opacity:0}}.owl-height{transition:height .5s ease-in-out}.owl-carousel .owl-item .owl-lazy{opacity:0;transition:opacity .4s ease}.owl-carousel .owl-item .owl-lazy:not([src]),.owl-carousel .owl-item .owl-lazy[src^=""]{max-height:0}.owl-carousel .owl-item img.owl-lazy{transform-style:preserve-3d}.owl-carousel .owl-video-wrapper{position:relative;height:100%;background:#000}.owl-carousel .owl-video-play-icon{position:absolute;height:80px;width:80px;left:50%;top:50%;margin-left:-40px;margin-top:-40px;background:url(owl.video.play.png) no-repeat;cursor:pointer;z-index:1;-webkit-backface-visibility:hidden;transition:transform .1s ease}.owl-carousel .owl-video-play-icon:hover{-ms-transform:scale(1.3,1.3);transform:scale(1.3,1.3)}.owl-carousel .owl-video-playing .owl-video-play-icon,.owl-carousel .owl-video-playing .owl-video-tn{display:none}.owl-carousel .owl-video-tn{opacity:0;height:100%;background-position:center center;background-repeat:no-repeat;background-size:contain;transition:opacity .4s ease}.owl-carousel .owl-video-frame{position:relative;z-index:1;height:100%;width:100%}
+.control--checkbox .control__indicator:after {
+  top: 50%;
+  left: 50%;
+  margin-top: -1px;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); }
+
+.control--checkbox input:disabled ~ .control__indicator:after {
+  border-color: #7b7b7b; }
+
+.control--checkbox input:disabled:checked ~ .control__indicator {
+  background-color: #7e0cf5;
+  opacity: .2; }
 
 
-.box {
+
+
+  .box {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -311,403 +1045,109 @@ input[type='radio']:checked:after {
             margin-right: auto;
          }
      </style>
-</head>
-<body>
-<div class="w3-top" style="background-color: white;">
-    <div class="w3-bar w3-left-align w3-large" style="padding-top:5px;color: #9acd30;"><div id="navbar">
-        <a href="https://www.facebook.com/fbreshamandi"><i class="fa fa-facebook w3-hover-opacity" style="text-indent: 7.5em;">&emsp;</i></a>
-        <a href="https://www.instagram.com/resha_mandi/"><i class="fa fa-instagram w3-hover-opacity">&emsp;</i></a>
-        <a href="https://www.linkedin.com/company/inreshamandi?original_referer=https%3A%2F%2Freshamandi.com%2F"><i class="fa fa-linkedin w3-hover-opacity">&emsp;</i></a>
-        <a href="https://twitter.com/reshamandi"><i class="fa fa-twitter w3-hover-opacity"></i></a>
-        <a href="tel:+917338694594" style="text-indent: 47em;font-size: 15px;text-decoration: none;">&ensp;<i class="fa fa-phone"></i>+91 7338694594</a>
-        <a href="mailto:support@reshamandi.com?subject=Support information need" style="text-indent: 0.5em;font-size: 15px;text-decoration: none;">&ensp;<i class="fa fa-envelope">&ensp;</i>support@reshamandi.com</a>
-        <br><hr style=" margin: 0.3em auto;">
-    </div>
-        <a href="https://reshamandi.com/" style="text-decoration:none;padding-left: 7.5em;"><img src="navlogo.png" width="95" height="95" ></a>
-    </div><hr style=" margin: 0.3em auto;">
-</div>
-<br><br><br><br><br><br>
-<h1 class="resh">Reshamandi</h1>
-<div id="image">
-    <button onclick="toggle(weaveSpec)" class="butn">Weavers</button>
-    <button onclick="toggle(retailSpec)" class="butn">Retailers</button>
+     <style> 
 
-    <div id="weaveSpec" style="display: none;" class="patch">
-        <form name="Weav_form" action="#" th:action="@{/weaver}" th:object="${w}" method="post">
-            <h1 style="margin-bottom: -20px;">Weavers</h1>  <br>
-            <div class="w3-row-padding w3-center w3-margin-top">
+        [data-tab-info] {
+        display: none;
+    }
+      
+    .active[data-tab-info] {
+        display: block;
+    }
+      
+      
+    .tabs {
+        display: flex;
+    }
+      
+    .tabs span {
+        position: relative;
+        top: 0;
+        transition: top ease 0.5s;
+        background: #80d741;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid rgb(255, 255, 255);
+    }
+      
+    .tabs span:hover {
+        top: -5px;
+        background: rgb(255, 255, 255);
+        cursor: pointer;
+        color: #80d741;
+    }
 
-            <!-- <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px">
-            <br><label>ID</label>
-            <input type="number" min="0"  placeholder="e.g. 1234567" name="id">
-            <br><label>Created by</label>
-            <input type="text"  placeholder="e.g. Smith" name="created_by">
-            <br><label for="email">Created Date</label>
-            <input type="date"    placeholder="dd-mm-yyyy"
-               min="1997-01-01" max="2030-12-31" name="created_date">
-               <input type="text"   name="type">
-            <br><label>Status</label><br>
-            <select name="status">
-              <option th:each="s: ${l1}" th:value="${s}" th:text="${s}"></option>
-            </select>
-            <br><label>Cost Price</label>
-            <input type="number" min="0"  name="cost_price">
-            <br><label>Selling Price</label>
-            <input type="number" min="0"   name="selling_price">
-            <br><label>Transaction ID</label>
-            <input type="number" min="0"   name="transaction_id">
-            <br><label>Weaver ID</label>
-            <input type="number" min="0"   name="weaver_id">
-            <br><label>Business type</label>
-            <select name="business_type">
-               <option th:each="s: ${l4}" th:value="${s}" th:text="${s}"></option>
-            </select>
-            <br><label>state</label>
-            <input type="text"   name="state">
-            </div>
-            </div>
+        </style>
+<script>
+    function switchForms() {
+      var sz = document.forms['formSelector'].elements['form'];
 
-            <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px">
-            <br><label>Category</label>
-            <input type="text"   name="category">
-            <br><label>Type</label>
-            <input type="text"   name="type">
-            <br><label >Weave</label>
-            <input type="text"   name="weave">
-            <br><label>Quantity</label>
-            <input type="number" min="0"   name="quantity">
-            <br><label>Warehouse ID</label>
-            <input type="number" min="0"   name="warehouseid">
-            <br><label>Sold Quantity</label>
-            <input type="number" min="0"   name="sold_quantity">
-            </div>
-            </div>
-
-            <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px">
-            
-            <br><label>Sku Listing Status</label>
-            <select name="sku_listing_status">
-               <option th:each="s: ${l2}" th:value="${s}" th:text="${s}"></option>
-            </select>
-            <br>
-            <br><label>sku_total_quantity</label>
-            <input type="number" min="0"   name="sku_total_quantity">
-            <br><label>sku_count</label>
-            <input type="number" min="0"   name="sku_count">
-            <br><label>Defective Count</label>
-            <input type="number" min="0"   name="defective_count">
-            <br><label >Return Quantity</label>
-            <input type="number" min="0"   name="return_quantity">
-            <br><label>Returned Defective Quantity</label>
-            <input type="number" min="0"   name="returned_defective_quantity">
-            </div>
-            </div>
-            
-            <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px">
-
-            <br><label>UOM</label><br>
-            <select name="uom">
-               <option th:each="s: ${l3}" th:value="${s}" th:text="${s}"></option>
-            </select>
-            <br><label>cst</label>
-            <input type="number" min="0"  name="cst">
-            <br><label>IGST</label>
-            <input type="number" min="0"   name="igst">
-            <br><label>discount</label>
-            <input type="number" min="0"   name="discount">
-            <br><label >GST Percentage</label>
-            <input type="text"   name="gst_percentage">
-            </div>
-            </div> -->
-
-            <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px">
-
-            <br><label>Landing Price</label>
-            <input type="number" min="0"    name="landing_price">
-
-            <!-- <br><label>Gross Amount</label>
-            <input type="number" min="0"   name="gross_amount">
-            <br><label>Logistics Amount</label>
-            <input type="number" min="0"   name="logistics_amount">
-            <br><label>Discount Amount</label>
-            <input type="number" min="0"   name="discount_amount">
-            <br><label>Total pre tax price</label>
-            <input type="number" min="0"   name="total_pre_tax_price">
-            <br><label >GST Amount</label>
-            <input type="number" min="0"   name="gst_amount">
-            <br><label>total_amount</label>
-            <input type="number" min="0"   name="total_amount"> -->
-            </div>
-            </div>
-
-            <div class="w3-third">
-                <div class="w3-card w3-container" style="min-height:460px">
-                <br><label>Dummy</label>
-                <input type="text" name="dummy">
-                <!-- <h4>Filter</h4>
-                <tr 
-                th:each="student, iStat : ${students}" 
-                th:style="${iStat.odd}? 'font-weight: bold;'" 
-                th:alt-title="${iStat.even}? 'even' : 'odd'">
-                  <td th:text="${student.id}" />
-                  <td th:text="${student.name}" />
-              </tr> -->
-              <div>
-                <h4>Filter</h4>
-                <div th:each="row, stat: ${attributes}" th:if="${row[0] != 'null' && row[0] != (ne)}">
-                    <select th:name="${filters[stat.index]}" multiple size="2">
-                            <option th:each="element: ${row}" th:value="${element}" th:if="${element != 'null' && element != (ne)}"><span th:text="${element}"></span></option>
-                    </select>
-                </div>
-                <!-- <select th:each="attr: ${attributes}" th:name="${index}" multiple size="3">
-                    <option th:value="${s}">seco</option>
-                    <option th:value="r.month">Month</option>
-                    <option th:value="r.state">State</option>
-                    <option th:value="r.created_date">Year</option>
-                </select> -->
-              </div>
-
-
-<!-- 
-
-
-                <select name="filter[0]" multiple size="3">
-                    <option th:value="r.month">Month</option>
-                    <option th:value="r.state">State</option>
-                    <option th:value="r.created_date">Year</option>
-                </select>
-            <h4>Filter</h4>
-                <select name="filter[1]" multiple size="3">
-                    <option th:value="r.ass">Month</option>
-                    <option th:value="r.df">State</option>
-                    <option th:value="r.created_date">Year</option>
-                </select> -->
-            </div> 
-            </div>
-            
-        </div>
-            </div>
-
-            </div>
-
-            </div>
-            <p><input type="submit" value="Submit" onclick="return checkform()" class="btn2" /> 
-                <input type="reset" value="Reset" class="btn2"/>
-            </p>
-            <button class="butn"><a th:href="@{register}">New Weaver</a></button>
-        </form>
-
-        <form name="Attr_form" action="#" th:action="@{/attribute}" method="post">
-            <h1 style="margin-bottom: -20px;">Attribute</h1>  <br>
-
-            <br><label>Attribute</label>
-            <input type="text" name="attribute">
-            <h4>Operation</h4>
-                    <input type="radio" id="w" name="attr"  value="add" checked>
-                    <label for="w">Add</label><br>
-                    <input type="radio" id="r" name="attr" value="delete">
-                    <label for="r">Delete</label><br>           
-            <!-- <input type="radio" name="add" value="add">
-            <input type="radio" name="delete" value="delete"> -->
-
-            <p><input type="submit" value="Submit" class="butn" /> 
-                <input type="reset" value="Reset" class="butn"/>
-            </p>
-        </form>
-
-
-    </div>
-    
-    <div id="retailSpec" style="display: none;" class="patch">
-        <form name="Retail_form" action="#" th:action="@{/retailer}" th:object="${ret}" method="post">
-          <div class="w3-row-padding w3-center w3-margin-top">
-
-            <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px">
-            <br><label>ID</label>
-            <input type="number" min="0"  placeholder="e.g. 1234567" name="id">
-            <br><label>Created by</label>
-            <input type="text"  placeholder="e.g. Smith" name="created_by">
-            <br><label for="email">Created Date</label>
-            <input type="date"    placeholder="dd-mm-yyyy"
-               min="1997-01-01" max="2030-12-31" name="created_date">
-               <input type="text"   name="type">
-            <br><label>Status</label><br>
-            <select name="status">
-              <option th:each="s: ${l1}" th:value="${s}" th:text="${s}"></option>
-            </select>
-            <br><label>Cost Price</label>
-            <input type="number" min="0"  name="cost_price">
-            <br><label>Selling Price</label>
-            <input type="number" min="0"   name="selling_price">
-            <br><label>Transaction ID</label>
-            <input type="number" min="0"   name="transaction_id">
-            <br><label>Retailer ID</label>
-            <input type="number" min="0"   name="retailer_id">
-            <br><label>Business type</label>
-            <select name="business_type">
-               <option th:each="s: ${l4}" th:value="${s}" th:text="${s}"></option>
-            </select>
-            <br><label>state</label>
-            <input type="text"   name="state">
-            </div>
-            </div>
-
-            <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px">
-            <br><label>Category</label>
-            <input type="text"   name="category">
-            <br><label>Type</label>
-            <input type="text"   name="type">
-            <br><label >Weave</label>
-            <input type="text"   name="weave">
-            <br><label>Quantity</label>
-            <input type="number" min="0"   name="quantity">
-            <br><label>Warehouse ID</label>
-            <input type="number" min="0"   name="warehouseid">
-            <br><label>Sold Quantity</label>
-            <input type="number" min="0"   name="sold_quantity">
-            </div>
-            </div>
-
-            <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px">
-            
-            <br><label>Sku Listing Status</label>
-            <select name="sku_listing_status">
-               <option th:each="s: ${l2}" th:value="${s}" th:text="${s}"></option>
-            </select>
-            <br>
-            <br><label>sku_total_quantity</label>
-            <input type="number" min="0"   name="sku_total_quantity">
-            <br><label>sku_count</label>
-            <input type="number" min="0"   name="sku_count">
-            </div>
-            </div>
-            
-            <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px">
-
-            <br><label>UOM</label><br>
-            <select name="uom">
-               <option th:each="s: ${l3}" th:value="${s}" th:text="${s}"></option>
-            </select>
-            <br><label>cst</label>
-            <input type="number" min="0"  name="cst">
-            <br><label>IGST</label>
-            <input type="number" min="0"   name="igst">
-            <br><label>discount</label>
-            <input type="number" min="0"   name="discount">
-            <br><label >GST Percentage</label>
-            <input type="text"   name="gst_percentage">
-            </div>
-            </div>
-
-            <div class="w3-third">
-            <div class="w3-card w3-container" style="min-height:460px">
-
-            <br><label>Landing Price</label>
-            <input type="number" min="0"    name="landing_price">
-            <br><label>Gross Amount</label>
-            <input type="number" min="0"   name="gross_amount">
-            <br><label>Logistics Amount</label>
-            <input type="number" min="0"   name="logistics_amount">
-            <br><label>Discount Amount</label>
-            <input type="number" min="0"   name="discount_amount">
-            <br><label>Total pre tax price</label>
-            <input type="number" min="0"   name="total_pre_tax_price">
-            <br><label >GST Amount</label>
-            <input type="number" min="0"   name="gst_amount">
-            <br><label>total_amount</label>
-            <input type="number" min="0"   name="total_amount">
-            </div>
-            </div>
-           
-            <p><input type="submit" value="Submit" onclick="return checkformr()" class="btn2" /> 
-                <input type="reset" value="Reset" class="btn2"/>
-            </p>
-            <button class="butn"><a th:href="@{register}">New Retailer</a></button>
-        </form>
-    </div>
-    <script th:inline="javascript">
-
-      function toggle(ele){
-          const divs = document.querySelectorAll('.query');
-          for(let i = 0;i<divs.length;i++){
-              divs[i].style.display = "none";
+      // loop through list
+      
+      for (var i=0, len=sz.length; i<len; i++) {
+        sz[i].onclick = function() { // assign onclick handler  function to each
+          // change the 'display' style property of the forms to show and hide them
+          var display;
+          var dntDisplay;
+          var dntDisplay2;
+          if (this.value=='Weaver') {
+            display = 1;
+            dntDisplay = 2;
+            dntDisplay2 = 3;
           }
-          ele.style.display = "block";
+          else if(this.value=='Retailer') 
+          {
+            display=2;
+            dntDisplay=1;
+            dntDisplay2 = 3;
+          }
+          else{
+            display=3;
+            dntDisplay=1;
+            dntDisplay2 = 2;
+          }
+          document.getElementById('form' + display).style.display = "block";
+          document.getElementById('form' + dntDisplay).style.display = "none";
+          document.getElementById('form' + dntDisplay2).style.display = "none";
+        };
       }
-      $(document).ready(function () {
-          $('#example').DataTable({
-              pagingType: 'full_numbers',
-          });
-      });
+    }
+</script>
+<script>
 
-      function checkform(){
-                var flag = 1;
-                console.log("flag " + flag);
-                if(!document.Weav_form.created_by.value || !document.Weav_form.gross_amount.value || !document.Weav_form.uom.value||
-                !document.Weav_form.type.value|| !document.Weav_form.landing_price.value|| !document.Weav_form.gst_amount.value|| 
-                !document.Weav_form.status.value|| !document.Weav_form.defective_count.value|| !document.Weav_form.gst_percentage.value ||
-                !document.Weav_form.selling_price.value || !document.Weav_form.sku_listing_status.value || !document.Weav_form.discount_amount.value ||
-                !document.Weav_form.cost_price.value|| !document.Weav_form.weaver_id.value|| !document.Weav_form.logistics_amount.value ||
-                !document.Weav_form.category.value || !document.Weav_form.sold_quantity.value || !document.Weav_form.return_quantity.value ||
-                !document.Weav_form.created_date.value || !document.Weav_form.warehouseid.value || !document.Weav_form.weave.value ||
-                !document.Weav_form.id.value ||!document.Weav_form.returned_defective_quantity.value||
-                !document.Weav_form.cst.value || !document.Weav_form.igst.value|| !document.Weav_form.total_amount.value||
-                !document.Weav_form.total_pre_tax_price.value|| !document.Weav_form.sku_count.value|| !document.Weav_form.sku_total_quantity.value||
-                !document.Weav_form.state.value|| !document.Weav_form.business_type.value || !document.Weav_form.discount.value ||
-                !document.Weav_form.transaction_id.value ){
-                    mytext.innerHTML = "<strong> Incomplete! </strong> Please enter all the details!";
-                    flag = 0;
-                }
-                console.log("flag " + flag);
-                if(flag) { document.Weav_form.submit();  alert("Successful form submission"); }
-                else{
-                    $('#myalert').show('fade');
-                    setTimeout(function(){
-                        $('#myalert').hide('fade');
-                    },5000);
-                    return false;
-                }
-            }
+  function dontGo(event) {
+      event.preventDefault();
+  }
+  const stays=document.querySelectorAll('[data-stay]');
+  const tabInfos1 = document.querySelectorAll('[data-tab-info]')
+  stays.forEach(tab=>{
+      tab.addEventListener('click', dontGo);
+  })
+  
+  
+</script>
+<script type="text/javascript">
+  const tabs = document.querySelectorAll('[data-tab-value]')
+  const tabInfos = document.querySelectorAll('[data-tab-info]')
 
-            function checkformr(){
-                var flag = 1;
-                console.log("flag " + flag);
-                if(!document.Retail_form.created_by.value || !document.Retail_form.gross_amount.value || !document.Retail_form.uom.value||
-                !document.Retail_form.type.value|| !document.Retail_form.landing_price.value|| !document.Retail_form.gst_amount.value|| 
-                !document.Retail_form.status.value|| !document.Retail_form.gst_percentage.value ||
-                !document.Retail_form.selling_price.value || !document.Retail_form.sku_listing_status.value || !document.Retail_form.discount_amount.value ||
-                !document.Retail_form.cost_price.value|| !document.Retail_form.weaver_id.value|| !document.Retail_form.logistics_amount.value ||
-                !document.Retail_form.category.value || !document.Retail_form.sold_quantity.value || 
-                !document.Retail_form.created_date.value || !document.Retail_form.warehouseid.value || !document.Retail_form.weave.value ||
-                !document.Retail_form.id.value ||
-                !document.Retail_form.cst.value || !document.Retail_form.igst.value|| !document.Retail_form.total_amount.value||
-                !document.Retail_form.total_pre_tax_price.value|| !document.Retail_form.sku_count.value|| !document.Retail_form.sku_total_quantity.value||
-                !document.Retail_form.state.value|| !document.Retail_form.business_type.value || !document.Retail_form.discount.value ||
-                !document.Retail_form.transaction_id.value ){
-                    mytext.innerHTML = "<strong> Incomplete! </strong> Please enter all the details!";
-                    flag = 0;
-                }
-                console.log("flag " + flag);
-                if(flag) { document.Retail_form.submit();  alert("Successful form submission"); }
-                else{
-                    $('#myalert').show('fade');
-                    setTimeout(function(){
-                        $('#myalert').hide('fade');
-                    },5000);
-                    return false;
-                }
-            }
-        </script>
+  tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+          const target = document
+              .querySelector(tab.dataset.tabValue);
+
+          tabInfos.forEach(tabInfo => {
+              tabInfo.classList.remove('active')
+          })
+          target.classList.add('active');
+      })
+  })
+</script> 
+<script>
+  function showattr(){
 
 
+   // document.getElementById('myattr').innerHTML = ;
+}
+</script>
 </body>
 </html>
