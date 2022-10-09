@@ -344,7 +344,9 @@ public class WebController {
         int j=3;
         for(int i=0;i<100;i++){
             if(neo.attrNames[i] != null){
-                productSpecs[j++] = neo.attrNames[i];}
+                str = neo.attrNames[i].toLowerCase();
+                str = str.substring(0, 1).toUpperCase() + str.substring(1);
+                productSpecs[j++] = str;}
         }
 
         // System.out.println("sfgsdfsd------------------");
@@ -441,7 +443,9 @@ public class WebController {
         int j=3;
         for(int i=0;i<100;i++){
             if(neo.attrNames[i] != null){
-                productSpecs[j++] = neo.attrNames[i];}
+                str = neo.attrNames[i].toLowerCase();
+                str = str.substring(0, 1).toUpperCase() + str.substring(1);
+                productSpecs[j++] = str;}
         }
 
         //Statistics part
