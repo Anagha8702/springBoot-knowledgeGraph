@@ -1327,6 +1327,7 @@ public class Neo4j implements AutoCloseable {
                     int j = 0;
                     for (var s1 : r.values()) {
                         tableData1[i][j] = new String(s1.toString());
+                        if(j!=1) tableData1[i][j] = tableData1[i][j].substring(1,tableData1[i][j].length()-1);
                         j++;
                     }
                     i++;
@@ -1456,6 +1457,7 @@ public class Neo4j implements AutoCloseable {
                    int j = 0;
                    for (var s1 : r.values()) {
                        tableData1[i][j] = new String(s1.toString());
+                       if(j!=1) tableData1[i][j] = tableData1[i][j].substring(1,tableData1[i][j].length()-1);
                        j++;
                    }
                    i++;
@@ -1595,7 +1597,11 @@ public class Neo4j implements AutoCloseable {
                     for (Record r : list) {
                         int j = 0;
                         for (var s1 : r.values()) {
-                            tableData1[i][j] = s1.asString();
+                            if(j==0) 
+                           { tableData1[i][j] = s1.toString(); 
+                            tableData1[i][j] = tableData1[i][j].substring(1,tableData1[i][j].length()-1);
+                           }
+                           else tableData1[i][j] = s1.asString(); 
                             j++;
                         }
                         i++;
@@ -1626,8 +1632,9 @@ public class Neo4j implements AutoCloseable {
                     for (Record r : list) {
                         int j = 0;
                         for (var s1 : r.values()) {
-                            if (j == 1) {
+                            if (j == 1 || j==0) {
                                 tableData1[i][j] = s1.toString();
+                                if(j==0) tableData1[i][j] = tableData1[i][j].substring(1,tableData1[i][j].length()-1);
                                 j++;
                             } else {
                                 tableData1[i][j] = s1.asString();
@@ -1662,8 +1669,9 @@ public class Neo4j implements AutoCloseable {
                     for (Record r : list) {
                         int j = 0;
                         for (var s1 : r.values()) {
-                            if (j == 1) {
+                            if (j == 1 || j==0) {
                                 tableData1[i][j] = s1.toString();
+                                if(j==0) tableData1[i][j] = tableData1[i][j].substring(1,tableData1[i][j].length()-1);
                                 j++;
                             } else {
                                 tableData1[i][j] = s1.asString();
@@ -1696,12 +1704,12 @@ public class Neo4j implements AutoCloseable {
                     }
                 }
 
-                for (String[] s1 : pdtData) {
-                    for (String s2 : s1) {
-                        System.out.print(s2 + "   ");
-                    }
-                    System.out.println("");
-                }
+                // for (String[] s1 : pdtData) {
+                //     for (String s2 : s1) {
+                //         System.out.print(s2 + "   ");
+                //     }
+                //     System.out.println("");
+                // }
 
             } catch (Exception e) {
                 System.out.println(e);
@@ -1776,7 +1784,11 @@ public class Neo4j implements AutoCloseable {
                     for (Record r : list) {
                         int j = 0;
                         for (var s1 : r.values()) {
-                            tableData1[i][j] = s1.asString();
+                            if(j==0) {
+                                tableData1[i][j] = s1.toString();
+                                tableData1[i][j] = tableData1[i][j].substring(1,tableData1[i][j].length()-1);
+                            }
+                            else tableData1[i][j] = s1.asString();
                             j++;
                         }
                         i++;
@@ -1831,8 +1843,9 @@ public class Neo4j implements AutoCloseable {
                     for (Record r : list) {
                         int j = 0;
                         for (var s1 : r.values()) {
-                            if (j == 2) {
+                            if (j == 2 || j==0) {
                                 tableData1[i][j] = s1.toString();
+                                if(j==0) tableData1[i][j] = tableData1[i][j].substring(1,tableData1[i][j].length()-1);
                                 j++;
                             } else {
                                 tableData1[i][j] = s1.asString();
@@ -1841,6 +1854,7 @@ public class Neo4j implements AutoCloseable {
                         }
                         i++;
                     }
+                    System.out.println("INQ DATA");
                     // for (String[] s1 : tableData1) {
                     // for (String s2 : s1) {
                     // System.out.print(s2 + " ");
@@ -1868,8 +1882,9 @@ public class Neo4j implements AutoCloseable {
                     for (Record r : list) {
                         int j = 0;
                         for (var s1 : r.values()) {
-                            if (j == 2) {
+                            if (j == 2 || j==0) {
                                 tableData1[i][j] = s1.toString();
+                                if(j==0) tableData1[i][j] = tableData1[i][j].substring(1,tableData1[i][j].length()-1);
                                 j++;
                             } else {
                                 tableData1[i][j] = s1.asString();
@@ -1878,12 +1893,14 @@ public class Neo4j implements AutoCloseable {
                         }
                         i++;
                     }
+                    System.out.println("OUTQ DATA");
                     // for (String[] s1 : tableData1) {
                     // for (String s2 : s1) {
                     // System.out.print(s2 + " ");
                     // }
                     // System.out.println("");
                     // }
+                    System.out.println(tableData1[0][2]);
                     return tableData1;
                 });
                 noOfout2 = Integer.parseInt(outQData[0][6]);
@@ -1906,23 +1923,28 @@ public class Neo4j implements AutoCloseable {
                     }
                 }
 
-                
-
                 int m = 1, n = 1;
                 for (int i = 1; i < noOfPdt; i++) {
+                    // System.out.println(pdtData2[i][0]);
+                    // System.out.println(inQData[m][0]);
+                    // System.out.println(m);
                     if (pdtData2[i][0].equals(inQData[m][0])) {
+                        System.out.println("1");
                         for (int j = 0; j < noOfStates; j++) {
                             if (m < noOfInq && pdtData2[i][0].equals(inQData[m][0])
-                                    && pdtData2[0][j+4].equals(inQData[m][1])) {
-                                pdtData2[i][j+4] = inQData[m][2];
+                                    && (inQData[m][1]==null ||pdtData2[0][j+4].equals(inQData[m][1]))) {
+                                        System.out.println("2");
+                                pdtData2[i][j+4] = Float.toString(
+                                    Float.parseFloat(pdtData2[i][j+4]) + Float.parseFloat(inQData[m][2]));
                                 m++;
                             }
                         }
                     }
+                    System.out.println("look here"+ Float.parseFloat(pdtData2[2][10]));
                     if (pdtData2[i][0].equals(outQData[n][0])) {
                         for (int j = 0; j < noOfStates; j++) {
                             if (n < noOfout2 && pdtData2[i][0].equals(outQData[n][0])
-                                    && pdtData2[0][j+4].equals(outQData[n][1])) {
+                            && (inQData[m][1]==null || pdtData2[0][j+4].equals(outQData[n][1]))) {
                                 pdtData2[i][j+4] = Float.toString(
                                         Float.parseFloat(pdtData2[i][j+4]) - Float.parseFloat(outQData[n][2]));
                                 n++;
@@ -1937,12 +1959,12 @@ public class Neo4j implements AutoCloseable {
                 System.out.println(e);
             }
             // System.out.println();
-            for (String[] s1 : pdtData3) {
-                for (String s2 : s1) {
-                System.out.print(s2 + " ");
-                }
-                System.out.println("");
-                }
+            // for (String[] s1 : pdtData3) {
+            //     for (String s2 : s1) {
+            //     System.out.print(s2 + " ");
+            //     }
+            //     System.out.println("");
+            //     }
             return pdtData3;
         }
     }
@@ -2026,7 +2048,7 @@ public class Neo4j implements AutoCloseable {
             int j=0;String str;
                 for(;j<100;j++){
                     if(attributeList[j][0] != null){
-                   attrNames[j] = attributeList[j][0];
+                        attrNames[j] = attributeList[j][0];
                     }
                 }
         } catch (Exception e) {
@@ -2171,8 +2193,9 @@ public class Neo4j implements AutoCloseable {
         int yearNo = 0;
         if(stats.getYears()!=null){
             int i=0;
+            yearNo = stats.getYears().length;
             for(String yearName : stats.getYears()){
-                yearNo++;
+                // yearNo++;
                 if(i==0){
                     yearQ.append("("+"r.year = "+'"'+yearName+'"');
                 }else{
@@ -2183,6 +2206,26 @@ public class Neo4j implements AutoCloseable {
             yearQ.append(")");
         }else{
             yearQ.append("(true)");
+            getYear();
+            yearNo = yearList.length;
+        }
+
+        StringBuilder yearQ2 = new StringBuilder();
+        if(stats.getYears()!=null){
+            int i=0;
+            yearNo = stats.getYears().length;
+            for(String yearName : stats.getYears()){
+                // yearNo++;
+                if(i==0){
+                    yearQ2.append("("+"split(r.created_date,'-' )[0] = "+'"'+yearName+'"');
+                }else{
+                    yearQ2.append(" or"+" split(r.created_date,'-' )[0] = "+'"'+yearName+'"');
+                }
+                i++;
+            }
+            yearQ2.append(")");
+        }else{
+            yearQ2.append("(true)");
             getYear();
             yearNo = yearList.length;
         }
@@ -2315,9 +2358,9 @@ public class Neo4j implements AutoCloseable {
         mainQuery.append(query2).append(query3);
         mainQuery.append(query1);
         if(fflag == 3){
-            mainQuery.append("WHERE "+"split(r.created_date,'-' )[0]=sname and "+attrQ+" and "+stateQ2+" and "+yearQ+" and "+squery+dateQ);
+            mainQuery.append("WHERE "+"split(r.created_date,'-' )[0]=sname and "+attrQ+" and "+stateQ2+" and "+yearQ2+" and "+squery+dateQ);
         }else{
-            mainQuery.append("WHERE "+attrQ+" and "+stateQ2+" and "+yearQ+" and "+squery+dateQ);
+            mainQuery.append("WHERE "+attrQ+" and "+stateQ2+" and "+yearQ2+" and "+squery+dateQ);
         }
 
         // if(fflag == 3){
@@ -2357,7 +2400,7 @@ public class Neo4j implements AutoCloseable {
                     case 3 :getWeave();
                             arr = weaveList.length;
                             break;
-                    default : if(attributes[Integer.valueOf(attrs.toString().trim())]!=null){
+                    default : if(attributes!= null && attributes[Integer.valueOf(attrs.toString().trim())]!=null){
                         arr = attributes[Integer.valueOf(attrs.toString().trim())].length;
                     }else{
                         getOthers(stats.getProductSpec()); 
@@ -2379,20 +2422,27 @@ public class Neo4j implements AutoCloseable {
                                
                             }
                             break;
+
                     case 3 :for(int m=0;m!=weaveList.length;m++){
                                 statList[m+1][0] = weaveList[m];
                             }
                             break;
-                    default : if(attributes[Integer.valueOf(attrs.toString().trim())]==null){
-                        for(int m=0;m!=othersList.length;m++){
-                            statList[m+1][0] = othersList[m];
-                        }
-                    }else{
-                        for(int m=0;m!=attributes[Integer.valueOf(attrs.toString().trim())].length;m++){
-                            statList[m+1][0] = attributes[Integer.valueOf(attrs.toString().trim())][m];
-                        }
-                    }
-                    break;
+
+                    default :if(attributes==null){
+                                for(int m=0;m!=othersList.length;m++){
+                                    statList[m+1][0] = othersList[m];
+                                }
+                            }else if(attributes!=null && attributes[Integer.valueOf(attrs.toString().trim())]==null){
+                                for(int m=0;m!=othersList.length;m++){
+                                    statList[m+1][0] = othersList[m];
+                                }
+                            }else{
+                                if(attributes!=null){
+                                for(int m=0;m!=attributes[Integer.valueOf(attrs.toString().trim())].length;m++){
+                                    statList[m+1][0] = attributes[Integer.valueOf(attrs.toString().trim())][m];
+                                }}
+                            }
+                            break;
                 }
 
                 // System.out.println(mon[0]);
@@ -2502,7 +2552,6 @@ public class Neo4j implements AutoCloseable {
                     }
                     System.out.println(" ");
                 }
-
                 return statList;
             });
         } catch (Exception e) {
@@ -2510,7 +2559,8 @@ public class Neo4j implements AutoCloseable {
         }
         return stt;    
     }
-    // public String[][] newStatistics(Statistics stats,String[][] attributes,String[] keys,String sDate,String eDate){
+
+ // public String[][] newStatistics(Statistics stats,String[][] attributes,String[] keys,String sDate,String eDate){
     //     String[][] stt = new String[0][];
     //     StringBuilder squery = new StringBuilder();
     //     StringBuilder stateQ = new StringBuilder();

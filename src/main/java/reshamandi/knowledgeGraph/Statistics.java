@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Statistics {
-    private String role; //boughtMonth/soldMonth
+    private String role; //Weaver/Retailer
     private String productSpec; //Type,Category,Weave,Color
-    private String filter; //r.state/r.month/left(r.created_date,4)
+    private String filter; //State/Month/Year
     private String[] states; //Andaman and Nicobar Islands, Andhra Pradesh, Arunachal Pradesh , Assam, Bihar, Chandigarh, Chhattisgarh,
                           // Dadra and Nagar Haveli, Daman and Diu, Goa, Gujarat, Haryana, Himachal Pradesh, Jammu and Kashmir,
     //                      Jharkhand, Karnataka, Kerala, Lakshadweep, Madhya Pradesh, Maharashtra, Manipur, Meghalaya, Mizoram,

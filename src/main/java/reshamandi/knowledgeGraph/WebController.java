@@ -402,14 +402,15 @@ public class WebController {
         }
         
         String res[][] = s.getattr();
-        System.out.println(Arrays.deepToString(res));
-        System.out.println(Arrays.deepToString(neo.attrNames));
+
         String startTime = String.valueOf(s.getDateTime()).substring(0,10);
         String endTime = String.valueOf(s.getEndDateTime()).substring(0,10);
-        System.out.println(startTime);
-        System.out.println(endTime);
+        // System.out.println(startTime);
+        // System.out.println(endTime);
         System.out.println(s.getProductSpec());
-
+        // neo.getAttributes();
+        System.out.println(Arrays.deepToString(res));
+        System.out.println(Arrays.deepToString(neo.attrNames));
         String data[][];
         try{
             data = neo.newStatistics(s, res, neo.attrNames, startTime, endTime);
@@ -419,8 +420,8 @@ public class WebController {
         String headData[] = data[0];
         String data1[][] = new String[data.length-1][data[0].length];
         for(int i=1;i<data.length;i++){
-            for(int j=0;j<data[0].length;j++)
-                data1[i-1][j] = data[i][j];
+            for(int j1=0;j1<data[0].length;j1++)
+                data1[i-1][j1] = data[i][j1];
         }
         String param2[] = new String[data[0].length - 1];
         for(int i=1;i<data[0].length;i++) param2[i-1]=data[0][i];
